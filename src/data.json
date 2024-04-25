@@ -1,0 +1,143 @@
+[
+  {
+    "id": 1,
+    "rules": "No smoking. No pets allowed.",
+    "rating": 4.8,
+    "comments": "Stunning city views and modern amenities.",
+    "gpsPosition": { "lat": 40.712776, "long": -74.005974 }
+  },
+  {
+    "id": 2,
+    "rules": "Quiet hours start at 10pm.",
+    "rating": 4.6,
+    "comments": "Charming place with a cozy atmosphere.",
+    "gpsPosition": { "lat": 34.052235, "long": -118.243683 }
+  },
+  {
+    "id": 3,
+    "rules": "No loud music after 9pm.",
+    "rating": 4.7,
+    "comments": "Perfect for a weekend getaway, close to nature.",
+    "gpsPosition": { "lat": 48.856613, "long": 2.352222 }
+  },
+  {
+    "id": 4,
+    "rules": "No parties or events.",
+    "rating": 4.9,
+    "comments": "Luxurious space with top-notch facilities.",
+    "gpsPosition": { "lat": 51.507351, "long": -0.127758 }
+  },
+  {
+    "id": 5,
+    "rules": "Pets allowed with prior approval.",
+    "rating": 4.4,
+    "comments": "A quiet, pet-friendly apartment with a lovely garden.",
+    "gpsPosition": { "lat": 55.755825, "long": 37.617298 }
+  },
+  {
+    "id": 6,
+    "rules": "Smoking allowed in designated areas.",
+    "rating": 4.3,
+    "comments": "Vintage decor and a homely feel.",
+    "gpsPosition": { "lat": 35.689487, "long": 139.691711 }
+  },
+  {
+    "id": 7,
+    "rules": "Check-in after 3pm. Check-out by 11am.",
+    "rating": 4.5,
+    "comments": "Centrally located with easy access to public transport.",
+    "gpsPosition": { "lat": 41.902782, "long": 12.496366 }
+  },
+  {
+    "id": 8,
+    "rules": "No overnight guests without prior notice.",
+    "rating": 4.2,
+    "comments": "Great value for the price, with all the essentials.",
+    "gpsPosition": { "lat": 52.520008, "long": 13.404954 }
+  },
+  {
+    "id": 9,
+    "rules": "Balcony is off-limits after midnight.",
+    "rating": 4.1,
+    "comments": "Breathtaking balcony view, especially at sunset.",
+    "gpsPosition": { "lat": 37.774929, "long": -122.419418 }
+  },
+  {
+    "id": 10,
+    "rules": "Use of pool area until 10pm.",
+    "rating": 4.0,
+    "comments": "Resort-like feel with a fantastic pool area.",
+    "gpsPosition": { "lat": -33.86882, "long": 151.20929 }
+  },
+
+  {
+    "id": 11,
+    "rules": "No loud noises after 11pm.",
+    "rating": 4.7,
+    "comments": "The apartment is spacious and well-lit.",
+    "gpsPosition": { "lat": 48.856614, "long": 2.352222 }
+  },
+  {
+    "id": 12,
+    "rules": "Parking available for one vehicle only.",
+    "rating": 4.3,
+    "comments": "Ideal for business trips, quiet and comfortable.",
+    "gpsPosition": { "lat": 41.878113, "long": -87.629799 }
+  },
+  {
+    "id": 13,
+    "rules": "Use of gym facilities until 9pm.",
+    "rating": 4.9,
+    "comments": "Modern amenities and a state-of-the-art gym.",
+    "gpsPosition": { "lat": 51.50735, "long": -0.127758 }
+  },
+  {
+    "id": 14,
+    "rules": "No alterations or redecorations without consent.",
+    "rating": 4.2,
+    "comments": "A quaint and charming place with a vintage feel.",
+    "gpsPosition": { "lat": 52.367984, "long": 4.903561 }
+  },
+  {
+    "id": 15,
+    "rules": "Balcony usage allowed until 10pm.",
+    "rating": 4.8,
+    "comments": "Fantastic view and a great balcony space.",
+    "gpsPosition": { "lat": 40.416775, "long": -3.70379 }
+  },
+  {
+    "id": 16,
+    "rules": "No barbecues on the terrace.",
+    "rating": 4.4,
+    "comments": "The terrace is perfect for morning coffee.",
+    "gpsPosition": { "lat": 43.653225, "long": -79.383186 }
+  },
+  {
+    "id": 17,
+    "rules": "Recycling mandatory.",
+    "rating": 4.6,
+    "comments": "Eco-friendly living with great community initiatives.",
+    "gpsPosition": { "lat": 45.501689, "long": -73.567256 }
+  },
+  {
+    "id": 18,
+    "rules": "No bicycles in the hallway.",
+    "rating": 4.1,
+    "comments": "Cozy and close to local bike trails.",
+    "gpsPosition": { "lat": 37.774929, "long": -122.419416 }
+  },
+  {
+    "id": 19,
+    "rules": "Guests must register with security.",
+    "rating": 4.5,
+    "comments": "Secure building with friendly staff.",
+    "gpsPosition": { "lat": -33.86882, "long": 151.209296 }
+  },
+  {
+    "id": 20,
+    "rules": "No pets in the pool area.",
+    "rating": 4.0,
+    "comments": "The pool area is clean and well-maintained.",
+    "gpsPosition": { "lat": 34.052234, "long": -118.243685 }
+  }
+]
