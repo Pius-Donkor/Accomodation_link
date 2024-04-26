@@ -8,7 +8,7 @@ export default function Logo({ type = "small", text = "show" }) {
     },
     big: {
       logo: `flex items-center text-xl font-bold  text-slate-700`,
-      imageWidth: "w-[15rem]",
+      imageWidth: "w-[10rem]",
     },
   };
 
