@@ -9,6 +9,7 @@ export default function Button({ children, type }) {
     colored:
       ` border-transparent bg-green-600  text-slate-100 transition-all hover:bg-green-700` +
       baseStyle,
+    greenLight: ` flex justify-center gap-1 rounded-sm bg-[#9adf9a] px-2 py-1  text-xl shadow-sm transition-all hover:bg-slate-500 hover:text-slate-100  `,
   };
   return <button className={buttonStyles[type]}>{children}</button>;
 }
