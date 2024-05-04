@@ -16,13 +16,13 @@ export default function SwiperArrowButtons() {
       <span role="button" onClick={() => swipeLeft()}>
         <MdOutlineArrowCircleLeft
           role="button"
-          className=" -z-10 rounded-full bg-[#ffffffbe] p-1 text-4xl"
+          className=" -z-10 rounded-full bg-[#ffffffbe] p-1 text-4xl transition-all hover:scale-125"
         />
       </span>
       <span role="button" onClick={() => swipeRight()}>
         <MdOutlineArrowCircleRight
           role="button"
-          className=" -z-10 rounded-full bg-[#ffffffbe] p-1 text-4xl"
+          className=" -z-10 rounded-full bg-[#ffffffbe] p-1 text-4xl transition-all hover:scale-125"
         />
       </span>
     </div>
