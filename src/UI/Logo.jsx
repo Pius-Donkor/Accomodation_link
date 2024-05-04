@@ -19,7 +19,11 @@ export default function Logo({ type = "small", text = "show" }) {
         alt="webLogo"
         className={logoImageStyle[type].imageWidth}
       />
-      {text === "show" ? <span>AccommodationLink</span> : ""}
+      {text === "show" ? (
+        <span className=" hidden md:block">AccommodationLink</span>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
