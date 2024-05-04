@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { Swiper, SwiperSlide, useSwiper } from "swiper/react";
-
+import { IoBedOutline } from "react-icons/io5";
+import { LuBath } from "react-icons/lu";
+import { IoMdHeartEmpty } from "react-icons/io";
+import { IoHeart } from "react-icons/io5";
+import { CiLocationOn } from "react-icons/ci";
+import { FaCommentDots } from "react-icons/fa";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/bundle";
 import SwiperArrowButtons from "./SwiperArrowButtons";
+import Button from "./Button";
 
 export default function PropertiesCard() {
+  const [liked, setLiked] = useState(false);
+  const [tempLiked, setTempLiked] = useState(false);
+
   return (
-    <div className="h-[22rem] w-[18rem] rounded-md bg-[#f9faff] p-4 shadow-xl">
+    <div className="flex min-h-[28rem] w-[22rem] flex-col items-center  gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl ">
       <div className=" relative h-[60%] w-[100%] rounded-md bg-slate-500 ">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           pagination={true}
-          className=" h-[100%] w-[100%] bg-slate-400"
+          className=" h-[100%] w-[100%] rounded-md bg-slate-400"
           spaceBetween={0}
           slidesPerView={1}
           onSlideChange={() => console.log("slide change")}
@@ -30,7 +39,7 @@ export default function PropertiesCard() {
           </SwiperSlide>
           <SwiperSlide>
             <img
-              className=" h-[100%] w-[100%]"
+              className=" h-[100%] w-[100%] rounded-md"
               src="/public/18a-min.jpeg"
               alt="carousel_picture"
             />
@@ -51,7 +60,59 @@ export default function PropertiesCard() {
           </SwiperSlide>
         </Swiper>
       </div>
-      {/* swipper arrows */}
+      {/* card details */}
+      <div className="flex w-[100%] flex-col  gap-2 ">
+        <div className=" flex w-[100%] justify-between  ">
+          <h1 className=" text-xl font-bold ">lincolns building</h1>{" "}
+          <p className=" text-xl  font-bold">$7,000 </p>
+        </div>
+        <div className="flex justify-center gap-8 ">
+          <span
+            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2   `}
+          >
+            <IoBedOutline />3
+          </span>
+          <span
+            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 `}
+          >
+            <LuBath />4
+          </span>
+          <span
+            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 `}
+          >
+            size : 200sqft
+          </span>
+        </div>
+        <div className=" flex justify-center gap-12">
+          <button className=" rounded-3xl bg-[#f5e3e9] px-2 py-[0.1rem] text-lg text-[#b33479] shadow-md ">
+            <FaCommentDots />
+          </button>
+          <span
+            onMouseEnter={() => setTempLiked(!tempLiked)}
+            onMouseLeave={() => setTempLiked(!tempLiked)}
+            onClick={() => setLiked(!liked)}
+            className="flex items-center justify-center gap-1 rounded-3xl bg-[#f5e3e9] p-2 transition-all  "
+          >
+            {liked || tempLiked ? (
+              <IoHeart className=" cursor-pointer text-xl text-[#b33479] transition-all " />
+            ) : (
+              <IoMdHeartEmpty className=" cursor-pointer text-xl text-[#b33479] transition-all " />
+            )}
+          </span>
+          <p className=" flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg  ">
+            ⭐4.7{" "}
+          </p>
+        </div>
+        <span
+          className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2  `}
+        >
+          <CiLocationOn className=" text-xl text-[#0d291c] " />{" "}
+          <span>North Legon Road, Accra, Ghana</span>
+        </span>
+        <div className=" self-center">
+          <Button type={"transparent"}>View Listing</Button>
+        </div>
+      </div>
     </div>
   );
 }
