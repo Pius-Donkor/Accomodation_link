@@ -20,7 +20,7 @@ export default function Logo({ type = "small", text = "show" }) {
         className={logoImageStyle[type].imageWidth}
       />
       {text === "show" ? (
-        <span className=" hidden md:block">AccommodationLink</span>
+        <span className=" hidden md:hidden lg:block">AccommodationLink</span>
       ) : (
         ""
       )}
