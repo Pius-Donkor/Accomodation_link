@@ -18,8 +18,8 @@ export default function PropertiesCard() {
   const [tempLiked, setTempLiked] = useState(false);
 
   return (
-    <div className="flex min-h-[28rem] w-[22rem] flex-col items-center  gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl ">
-      <div className=" relative h-[60%] w-[100%] rounded-md bg-slate-500 ">
+    <div className="flex h-[34rem] w-[22rem] flex-col items-center gap-4 rounded-md  border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl md:w-[70%] lg:w-[22rem] ">
+      <div className=" relative h-[50%] w-[100%] rounded-md bg-slate-500 ">
         <Swiper
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           pagination={true}
@@ -27,7 +27,7 @@ export default function PropertiesCard() {
           spaceBetween={0}
           slidesPerView={1}
           onSlideChange={() => console.log("slide change")}
-          onSwiper={(swiper) => console.log(swiper)}
+          // onSwiper={(swiper) => console.log(swiper)}
         >
           <SwiperArrowButtons />
           <SwiperSlide>
@@ -61,30 +61,32 @@ export default function PropertiesCard() {
         </Swiper>
       </div>
       {/* card details */}
-      <div className="flex w-[100%] flex-col  gap-2 ">
+      <div className="flex w-[100%] flex-col  gap-3 ">
         <div className=" flex w-[100%] justify-between  ">
-          <h1 className=" text-xl font-bold ">lincolns building</h1>{" "}
-          <p className=" text-xl  font-bold">$7,000 </p>
+          <h1 className=" text-xl font-bold md:text-3xl lg:text-lg ">
+            lincolns building
+          </h1>{" "}
+          <p className=" text-xl  font-bold md:text-3xl lg:text-lg ">$7,000 </p>
         </div>
         <div className="flex justify-center gap-8 ">
           <span
-            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2   `}
+            className={`flex items-center  justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 md:text-2xl lg:text-base  `}
           >
             <IoBedOutline />3
           </span>
           <span
-            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 `}
+            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 md:text-2xl lg:text-base `}
           >
             <LuBath />4
           </span>
           <span
-            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 `}
+            className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 md:text-2xl  lg:text-base `}
           >
             size : 200sqft
           </span>
         </div>
         <div className=" flex justify-center gap-12">
-          <button className=" rounded-3xl bg-[#f5e3e9] px-2 py-[0.1rem] text-lg text-[#b33479] shadow-md ">
+          <button className=" rounded-3xl bg-[#f5e3e9] px-2 py-[0.1rem] text-lg text-[#b33479] shadow-md md:px-3 md:text-2xl lg:px-[0.6rem] lg:text-lg ">
             <FaCommentDots />
           </button>
           <span
@@ -94,20 +96,22 @@ export default function PropertiesCard() {
             className="flex items-center justify-center gap-1 rounded-3xl bg-[#f5e3e9] p-2 transition-all  "
           >
             {liked || tempLiked ? (
-              <IoHeart className=" cursor-pointer text-xl text-[#b33479] transition-all " />
+              <IoHeart className=" cursor-pointer text-xl text-[#b33479] transition-all md:text-3xl lg:text-xl " />
             ) : (
-              <IoMdHeartEmpty className=" cursor-pointer text-xl text-[#b33479] transition-all " />
+              <IoMdHeartEmpty className=" cursor-pointer text-xl text-[#b33479] transition-all md:text-3xl lg:text-xl " />
             )}
           </span>
-          <p className=" flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg  ">
+          <p className=" flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg md:text-2xl lg:text-base  ">
             ⭐4.7{" "}
           </p>
         </div>
         <span
-          className={`flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2  `}
+          className={`flex items-center justify-center gap-1 overflow-hidden rounded-3xl bg-[#e3f5e3] p-2   `}
         >
-          <CiLocationOn className=" text-xl text-[#0d291c] " />{" "}
-          <span>North Legon Road, Accra, Ghana</span>
+          <CiLocationOn className=" text-xl  text-[#0d291c] md:text-2xl  lg:text-xl " />
+          <span className="w-[100%] overflow-hidden  text-ellipsis text-nowrap">
+            North Legon Road, Accra, Ghana
+          </span>
         </span>
         <div className=" self-center">
           <Button type={"transparent"}>View Listing</Button>
