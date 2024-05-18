@@ -6,7 +6,7 @@ import { IoLogoInstagram } from "react-icons/io5";
 import { FaWhatsapp } from "react-icons/fa";
 export default function Footer() {
   return (
-    <footer className=" flex justify-center bg-[#bbd2e7] px-14  ">
+    <footer className=" flex flex-col items-center justify-center bg-[#bbd2e7]   px-14 md:flex-row  ">
       <div className=" flex items-center gap-4 p-5">
         <Logo type="big" text={"none"} />
         <div className="flex flex-col  items-center gap-4">
