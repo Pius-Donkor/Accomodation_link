@@ -24,6 +24,7 @@ export default function PropertiesCard() {
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           pagination={true}
           className=" h-[100%] w-[100%] rounded-md bg-slate-400"
+          
           spaceBetween={0}
           slidesPerView={1}
           onSlideChange={() => console.log("slide change")}
