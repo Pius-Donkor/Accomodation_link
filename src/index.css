@@ -10,8 +10,7 @@
   box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
-body,
-html {
+body {
   width: 100%;
   overflow-x: hidden;
   height: 100%;
