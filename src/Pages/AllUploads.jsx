@@ -71,8 +71,10 @@ export default function AllUploads() {
   // dbUploads();
   const handleUploads = async () => {
     await imageUploads();
-    await dbUploads();
   };
+  useEffect(() => {
+    dbUploads();
+  }, [imageURLs]);
   useEffect(() => {
     fetch("http://localhost:5001/properties")
       .then((response) => response.json())
