@@ -1,6 +1,9 @@
 import React, { useRef, useState } from "react";
 import { IoFilterOutline } from "react-icons/io5";
 import Button from "./Button";
+import SortBy from "./SortBy";
+import Modal from "./Modal";
+import FilterWindow from "./FilterWindow";
 export default function OptionsBar() {
   const [navFoldOpen, setNavFoldOpen] = useState(false);
   // checking for small mobile screens
@@ -13,30 +16,20 @@ export default function OptionsBar() {
     md:w-[100%] md:flex-row md:items-center md:justify-between md:gap-12 md:bg-slate-100  `}
     >
       <div className=" flex justify-center ">
-        <Button type={"greenLight"}>
-          <IoFilterOutline className="mt-1 " /> filter
-        </Button>
+        <Modal>
+          <Modal.Window openName={"filter"}>
+            <FilterWindow />
+          </Modal.Window>
+          <Modal.Open openName={"filter"}>
+            <Button type={"greenLight"}>
+              <IoFilterOutline className="mt-1 " /> filter
+            </Button>
+          </Modal.Open>
+        </Modal>
       </div>
       <div className=" flex items-center">
         <h1 className=" text-lg font-semibold">Sort By:</h1>
-        <select
-          className="  flex justify-center gap-1 rounded-sm bg-[#9adf9a] px-2  py-1 text-lg shadow-sm outline-none transition-all hover:bg-green-500 hover:text-slate-100 md:text-lg"
-          name="sort"
-          id="sort"
-        >
-          <option className=" text-sm md:text-lg  " value="all">
-            All
-          </option>
-          <option className=" text-sm md:text-lg " value="low-Price">
-            Low to high Price{" "}
-          </option>
-          <option className=" text-sm md:text-lg " value="high-price">
-            High to low Price{" "}
-          </option>
-          <option className=" text-sm md:text-lg " value="recent">
-            Most recent{" "}
-          </option>
-        </select>
+        <SortBy />
       </div>
 
       <p>
