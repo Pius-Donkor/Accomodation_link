@@ -26,9 +26,9 @@ function Window({ children, openName: open }) {
     //overlay
     <div className=" fixed left-0 top-0 z-[1500] h-[100vh] w-[100%] bg-[#ffffff4f] backdrop-blur-md">
       {/* modal window */}
-      <div className=" absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-md shadow-md ">
+      <div className=" absolute left-[50%] top-[50%] inline-flex translate-x-[-50%] translate-y-[-50%] rounded-md shadow-md ">
         <button
-          className=" absolute left-3 top-3 translate-x-[0.8rem] p-1"
+          className=" absolute left-0 top-0 translate-x-[0.8rem] p-1"
           onClick={close}
         >
           {<MdOutlineClose className="text-[2rem]" />}
