@@ -1,5 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useReducer, useRef, useState } from "react";
 import { IoFilterOutline } from "react-icons/io5";
+import { IoIosArrowDown } from "react-icons/io";
+import { IoIosArrowUp } from "react-icons/io";
+
 import Button from "./Button";
 import SortBy from "./SortBy";
 import Modal from "./Modal";
@@ -40,9 +43,13 @@ export default function OptionsBar() {
         onClick={() => setNavFoldOpen((prev) => !prev)}
         onDrag={() => setNavFoldOpen((prev) => !prev)}
         draggable
-        className={` absolute bottom-[-1.7rem] cursor-pointer  rounded-md ${navFoldOpen ? " bg-[#b46c6c] " : "bg-slate-300"}   p-1 shadow-md hover:scale-105 md:hidden `}
+        className={`  absolute bottom-[-1.9rem] cursor-pointer  rounded-md ${navFoldOpen ? " bg-[#b46c6c] " : "bg-slate-300"}   p-1 shadow-md hover:scale-105 md:hidden `}
       >
-        toggle
+        {navFoldOpen ? (
+          <IoIosArrowUp className="w-10 text-3xl" />
+        ) : (
+          <IoIosArrowDown className="w-10 text-3xl" />
+        )}
       </button>
     </nav>
   );
