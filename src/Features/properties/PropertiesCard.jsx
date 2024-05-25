@@ -24,7 +24,7 @@ export default function PropertiesCard({ property }) {
         <Swiper
           modules={[Navigation, Pagination]}
           pagination={{ clickable: true }}
-          navigation={true}
+          navigation={false}
           loop={true} // Ensure loop is set to true
           className="h-[100%] w-[100%] rounded-md bg-slate-400"
           spaceBetween={0}
