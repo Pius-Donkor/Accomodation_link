@@ -40,6 +40,7 @@ export default function FilterWindow({ onCloseModal }) {
           field="min"
           title={"minimum"}
           name={"price-range"}
+          value={state.priceRange.min}
         />
         {isSmallScreen ? <span>&#124;</span> : <span>&#8212;</span>}
         <FilterInput
@@ -48,6 +49,7 @@ export default function FilterWindow({ onCloseModal }) {
           field="max"
           title={"maximum"}
           name={"price-range"}
+          value={state.priceRange.max}
         />
       </div>
       <div className=" flex flex-col items-center gap-4  md:flex-row ">
@@ -61,6 +63,7 @@ export default function FilterWindow({ onCloseModal }) {
           name={"rating"}
           isCurrency={false}
           onChange={handleInputChange}
+          value={state.rating.min}
         />
         {isSmallScreen ? <span>&#124;</span> : <span>&#8212;</span>}
         <FilterInput
@@ -70,6 +73,7 @@ export default function FilterWindow({ onCloseModal }) {
           name={"rating"}
           isCurrency={false}
           onChange={handleInputChange}
+          value={state.rating.max}
         />
       </div>
 
