@@ -7,8 +7,10 @@ import Button from "./Button";
 import SortBy from "./SortBy";
 import Modal from "./Modal";
 import FilterWindow from "./FilterWindow";
+import useFilterSort from "../hooks/useFilterSort";
 export default function OptionsBar() {
   const [navFoldOpen, setNavFoldOpen] = useState(false);
+  const { sortedProperties } = useFilterSort();
   // checking for small mobile screens
   const isSmallScren = useRef(window.innerWidth).current < 768;
   const toggleNavFoldOpening = navFoldOpen && isSmallScren;
@@ -36,7 +38,8 @@ export default function OptionsBar() {
       </div>
 
       <p>
-        <span className=" font-bold">654 </span> <span> listings found</span>{" "}
+        <span className=" font-bold">{sortedProperties.length} </span>{" "}
+        <span> listings found</span>{" "}
       </p>
 
       <button
