@@ -7,6 +7,7 @@ export default function FilterInput({
   name,
   isCurrency = true,
   onChange,
+  value,
 }) {
   return (
     <div className="flex ">
@@ -26,6 +27,7 @@ export default function FilterInput({
             type="number"
             autoFocus={true}
             name={name}
+            value={value || ""}
           />
           {isCurrency && <span className="opacity-60">/year</span>}
         </div>
