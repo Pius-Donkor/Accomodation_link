@@ -1,25 +1,13 @@
 import React, { useEffect, useState } from "react";
 import PropertiesCard from "./PropertiesCard";
-import useGetProperties from "./useGetProperties";
 import Button from "../../UI/Button";
-import { useSearchParams } from "react-router-dom";
-
-import { moneyToNumber } from "../../utils/helper";
 import PageError from "../../UI/PageError";
 import LoadingProperties from "./LoadingProperties";
-import { useFilterContext } from "../../hooks/FilterState";
-export default function Properties() {
-  const { properties, propertiesError, isLoading } = useGetProperties();
-  const [currentPage, setCurrentPage] = useState(0);
-  const [searchParams] = useSearchParams();
-  const sortParameter = searchParams.get("sortBy");
-  const {
-    state: { priceRange, rating, rentType },
-  } = useFilterContext();
-  console.log(priceRange, rating, rentType);
-  let filteredProperties;
-  let sortedProperties;
+import useFilterSort from "../../hooks/useFilterSort";
 
+export default function Properties() {
+  const { sortedProperties, isLoading, propertiesError } = useFilterSort();
+  const [currentPage, setCurrentPage] = useState(0);
   const propertiesPerPage = 9;
 
   const scrollToTop = () => {
@@ -37,34 +25,9 @@ export default function Properties() {
   if (propertiesError) {
     return <PageError errorMessage={propertiesError.message} />;
   }
-  if (priceRange.min && priceRange.max) {
-    filteredProperties = properties
-      .slice()
-      .filter(
-        (property) =>
-          moneyToNumber(property.price) > priceRange.min &&
-          moneyToNumber(property.price) < priceRange.max,
-      );
-  } else {
-    filteredProperties = properties.slice();
-  }
-
-  if (sortParameter === "all") {
-    sortedProperties = filteredProperties.slice();
-  } else if (sortParameter === "low-price") {
-    sortedProperties = filteredProperties
-      .slice()
-      .sort((a, b) => moneyToNumber(a.price) - moneyToNumber(b.price));
-  } else if (sortParameter === "high-price") {
-    sortedProperties = filteredProperties
-      .slice()
-      .sort((a, b) => moneyToNumber(b.price) - moneyToNumber(a.price));
-  } else {
-    sortedProperties = filteredProperties.slice();
-  }
 
   // Calculate the total number of pages
-  const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
+  const totalPages = Math.ceil(sortedProperties.length / propertiesPerPage);
 
   // Calculate the properties to display for the current page
   const currentProperties = sortedProperties.slice(
