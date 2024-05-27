@@ -24,9 +24,9 @@ function Window({ children, openName: open }) {
   if (open !== openName) return null;
   return createPortal(
     //overlay
-    <div className=" fixed left-0 top-0 z-[1500] h-[100vh] w-[100%] bg-[#ffffff4f] backdrop-blur-md">
+    <div className=" fixed left-0 top-0 z-[1500] h-[100vh] w-[100%] bg-[#ffffff4f] backdrop-blur-md transition-all">
       {/* modal window */}
-      <div className=" absolute left-[50%] top-[50%] inline-flex translate-x-[-50%] translate-y-[-50%] rounded-md shadow-md ">
+      <div className=" absolute left-[50%] top-[50%] inline-flex translate-x-[-50%] translate-y-[-50%] rounded-md  ">
         <button
           className=" absolute left-0 top-0 translate-x-[0.8rem] p-1"
           onClick={close}
