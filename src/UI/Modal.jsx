@@ -6,6 +6,7 @@ import React, {
 } from "react";
 import { MdOutlineClose } from "react-icons/md";
 import { createPortal } from "react-dom";
+import useOutsideClick from "../hooks/useOutsideClick";
 
 const ModalContext = createContext();
 export default function Modal({ children }) {
@@ -21,6 +22,7 @@ export default function Modal({ children }) {
 
 function Window({ children, openName: open }) {
   const { close, openName } = useContext(ModalContext);
+  const { ref } = useOutsideClick(close);
   if (open !== openName) return null;
   return createPortal(
     //overlay
@@ -33,7 +35,7 @@ function Window({ children, openName: open }) {
         >
           {<MdOutlineClose className="text-[2rem]" />}
         </button>
-        <div> {cloneElement(children, { onCloseModal: close })} </div>
+        <div ref={ref}> {cloneElement(children, { onCloseModal: close })} </div>
       </div>
     </div>,
     document.body,
