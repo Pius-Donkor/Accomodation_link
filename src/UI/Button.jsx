@@ -1,12 +1,14 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 export default function Button({
   children,
   type = "greenLight",
   onclick = () => {},
   disable = false,
   onClick,
+  link,
 }) {
+  const navigate = useNavigate();
   const baseStyle = " border-2 px-3 py-1 text-xl transition-all";
   const buttonStyles = {
     transparent:
@@ -17,13 +19,25 @@ export default function Button({
       baseStyle,
     greenLight: ` flex justify-center gap-1 rounded-sm bg-[#9adf9a] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-xl shadow-sm transition-all hover:bg-slate-500 hover:text-slate-100  `,
   };
-  return (
-    <button
-      disabled={disable}
-      onClick={onClick ? onClick : onclick}
-      className={buttonStyles[type]}
-    >
-      {children}
-    </button>
-  );
+  if (link) {
+    return (
+      <button
+        disabled={disable}
+        onClick={() => navigate(link)}
+        className={buttonStyles[type]}
+      >
+        {children}
+      </button>
+    );
+  } else {
+    return (
+      <button
+        disabled={disable}
+        onClick={onClick ? onClick : onclick}
+        className={buttonStyles[type]}
+      >
+        {children}
+      </button>
+    );
+  }
 }
