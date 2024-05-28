@@ -92,7 +92,9 @@ export default function PropertiesCard({ property }) {
           </span>
         </span>
         <div className="self-center">
-          <Button type="transparent">View Listing</Button>
+          <Button type="transparent" link={`propertyDetails/${property.id}`}>
+            View Listing
+          </Button>
         </div>
       </div>
     </div>
