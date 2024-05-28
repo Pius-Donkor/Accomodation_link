@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { db } from "./firebase";
 
 export async function getAllProperties() {
@@ -15,4 +15,16 @@ export async function getAllProperties() {
       "Error: could not get properties , please check your internet connection",
     );
   return properties;
+}
+export async function getProperty(id) {
+  let property = {};
+  const docRef = doc(db, "properties", id);
+  const querySnapshot = await getDoc(docRef);
+  if (!querySnapshot.exists())
+    throw new Error(
+      "Error: could not get properties , please check your internet connection",
+    );
+  property = querySnapshot.data();
+  console.log(property);
+  return property;
 }
