@@ -42,9 +42,11 @@ function Window({ children, openName: open }) {
   );
 }
 
-function Open({ children, openName }) {
+function Open({ children, openName, isButton = true }) {
   const { open } = useContext(ModalContext);
-  return cloneElement(children, { onClick: () => open(openName) });
+  if (isButton)
+    return cloneElement(children, { onClick: () => open(openName) });
+  return <div>{cloneElement(children, { onClick: () => open(openName) })}</div>;
 }
 
 Modal.Open = Open;
