@@ -18,6 +18,7 @@ export default function Button({
       ` border-transparent bg-green-600  text-slate-100 transition-all hover:bg-green-700` +
       baseStyle,
     greenLight: ` flex justify-center gap-1 rounded-sm bg-[#9adf9a] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-xl shadow-sm transition-all hover:bg-slate-500 hover:text-slate-100  `,
+    nav: ` flex items-center rounded-lg bg-[#edf3ff] px-2 py-1 shadow-lg transition-colors duration-300 hover:bg-[#bde2bd] `,
   };
   if (link) {
     return (
@@ -34,7 +35,7 @@ export default function Button({
       <button
         disabled={disable}
         onClick={onClick ? onClick : onclick}
-        className={buttonStyles[type]}
+        className={buttonStyles[`${type}`]}
       >
         {children}
       </button>
