@@ -5,6 +5,7 @@ import PropertyCarousel from "../UI/PropertyCarousel";
 import Button from "../UI/Button";
 import { BiSolidLeftArrow } from "react-icons/bi";
 import { BiSolidRightArrow } from "react-icons/bi";
+import { BiDetail } from "react-icons/bi";
 import { FaHome } from "react-icons/fa";
 import { useMoveBack } from "../hooks/useMoveBack";
 import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
@@ -12,6 +13,7 @@ import { FaMapMarkedAlt } from "react-icons/fa";
 import SingleDetail from "../UI/SingleDetail";
 import Accordion from "../UI/Accordion";
 import AccordionChild from "../UI/AccordionChild";
+import MapComponent from "../Features/mapping/MapComponent";
 
 export default function PropertyDetails() {
   const { id } = useParams();
@@ -55,10 +57,19 @@ export default function PropertyDetails() {
           <PropertyCarousel images={property.image} />
         </div>
         {/* map */}
-        <div className=" h-[37rem] w-[32rem] bg-slate-400 "></div>
+        <div className=" h-[37rem] w-[32rem] bg-slate-400 ">
+          <MapComponent />
+        </div>
       </section>
       {/* other property details */}
       <div className=" flex flex-col gap-12">
+        {/* Description */}
+        <SingleDetail
+          title={"Description"}
+          value={property.description}
+          type="long"
+        />
+        <SingleDetail title={"Rules"} value={property.rules} type="long" />
         <div className=" flex flex-grow flex-wrap gap-8 ">
           <SingleDetail title={"Price"} value={property.price} />
           <SingleDetail title={"Rating"} value={property.rating} />
