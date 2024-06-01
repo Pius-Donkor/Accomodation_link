@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 
 export default function Accordion({ heading, children }) {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [height, setHeight] = useState("auto");
   const contentRef = useRef(null);
 
@@ -13,7 +13,7 @@ export default function Accordion({ heading, children }) {
   }, [isOpen]);
 
   return (
-    <div className="inline-flex flex-col justify-center gap-3 rounded-3xl bg-slate-50 shadow-md">
+    <div className="inline-flex h-fit flex-col justify-center gap-3 rounded-3xl bg-slate-50 shadow-md ">
       <div
         className="flex cursor-pointer items-center justify-between gap-20 px-3 py-1"
         onClick={() => setIsOpen((prev) => !prev)}
