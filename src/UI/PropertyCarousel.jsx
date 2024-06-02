@@ -4,15 +4,25 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useOutsideClick from "../hooks/useOutsideClick";
-export default function PropertyCarousel({ images }) {
+export default function PropertyCarousel({
+  images,
+  setScreenState = () => {},
+}) {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const [isFullScreen, setIsFullScreen] = useState(false);
   const close = () => setIsFullScreen(false);
   const { ref } = useOutsideClick(close);
 
+  useEffect(() => {
+    setScreenState(isFullScreen);
+  }, [isFullScreen]);
+
+  function handleZoom() {
+    setIsFullScreen(true);
+  }
   const size = {
     normal: {
       overlay: "",
@@ -54,7 +64,7 @@ export default function PropertyCarousel({ images }) {
           {images.map((image, i) => (
             <SwiperSlide key={i}>
               <img
-                onClick={setIsFullScreen}
+                onClick={handleZoom}
                 src={image}
                 className="h-full w-full "
                 alt="propertyImage"
