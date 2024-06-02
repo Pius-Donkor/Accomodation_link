@@ -8,7 +8,7 @@ export default function NavBar() {
   const windowWidth = useRef(window.innerWidth);
   const isSmallScreen = windowWidth.current < 768;
   const [isSCMenuOpen, setIsSCMenuOpen] = useState(false);
-  console.log(isSmallScreen, windowWidth);
+  // console.log(isSmallScreen, windowWidth);
   return (
     <nav className=" fixed z-[9999] flex w-[100%]  justify-between bg-slate-200 px-2 py-2 md:items-center md:px-14 md:py-0 ">
       <Logo />
