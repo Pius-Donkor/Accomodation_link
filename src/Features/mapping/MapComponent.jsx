@@ -6,13 +6,14 @@ import {
   Marker,
   Popup,
   Polyline,
-  useMap,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet-rotatedmarker";
+import "leaflet-fullscreen";
+import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 const apartmentLocation = [6.673771638600438, -1.571871062809676];
-const MapComponent = () => {
+const MapComponent = ({ carouselScreenState }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [userHeading, setUserHeading] = useState(0);
   const [route, setRoute] = useState([]);
@@ -40,7 +41,7 @@ const MapComponent = () => {
 
   useEffect(() => {
     if (userLocation && apartmentLocation) {
-      console.log("fetching");
+      // console.log("fetching");
       fetchRoute(userLocation, apartmentLocation);
     }
   }, [userLocation]);
@@ -53,17 +54,22 @@ const MapComponent = () => {
     const routeCoordinates = data.routes[0].geometry.coordinates.map(
       (coord) => [coord[1], coord[0]],
     );
-    console.log(data);
+    // console.log(data);
     setDistance(data.routes[0].distance);
     setDuration(data.routes[0].duration);
     setRoute(routeCoordinates);
   };
-
+  // console.log(carouselScreenState);
   return (
     <MapContainer
       center={apartmentLocation}
       zoom={13}
-      style={{ height: "100%", width: "100%" }}
+      style={{
+        height: "100%",
+        width: "100%",
+      }}
+      zoomControl={!carouselScreenState}
+      fullscreenControl={true}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
