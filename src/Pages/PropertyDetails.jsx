@@ -4,43 +4,55 @@ import PageError from "../UI/PageError";
 import PropertyCarousel from "../UI/PropertyCarousel";
 import Button from "../UI/Button";
 import { BiSolidLeftArrow } from "react-icons/bi";
-import { BiSolidRightArrow } from "react-icons/bi";
-import { BiDetail } from "react-icons/bi";
+import { IoChatbubblesOutline } from "react-icons/io5";
+import { LuGitPullRequestDraft } from "react-icons/lu";
 import { FaHome } from "react-icons/fa";
 import { useMoveBack } from "../hooks/useMoveBack";
-import { FaLocationDot, FaLocationPin } from "react-icons/fa6";
+import { FaLocationDot } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import SingleDetail from "../UI/SingleDetail";
 import Accordion from "../UI/Accordion";
 import AccordionChild from "../UI/AccordionChild";
 import MapComponent from "../Features/mapping/MapComponent";
+import { useState } from "react";
 
 export default function PropertyDetails() {
   const { id } = useParams();
   const { property, propertyLoading, propertyError } = useGetProperty(id);
   const moveBack = useMoveBack();
+  const [carouselScreenState, setCarouselScreenState] = useState(false);
 
   if (propertyLoading)
     return <p className=" mt-[10rem] text-7xl ">loading...</p>;
   if (propertyError) return <PageError errorMessage={propertyError.message} />;
 
   return (
-    <div className="mx-12 mb-[5rem] mt-[6rem] flex flex-col justify-center gap-16  ">
+    <main className="mx-12 mb-[5rem] mt-[6rem] flex flex-col justify-center gap-16  ">
       {/* navigation buttons */}
-      <div className=" flex gap-8">
-        <Button link={"/"} type="nav">
-          <FaHome className=" mr-2 text-slate-700 " /> home
-        </Button>
-        <Button type="nav" onClick={moveBack}>
-          <BiSolidLeftArrow className=" text-slate-700" /> back
-        </Button>
-      </div>
+      <header className="flex w-full justify-between">
+        <div className=" flex gap-8">
+          <Button link={"/"} type="nav">
+            <FaHome className=" mr-2 text-slate-700 " /> home
+          </Button>
+          <Button type="nav" onClick={moveBack}>
+            <BiSolidLeftArrow className=" text-slate-700" /> back
+          </Button>
+        </div>
+        <div className=" flex gap-8">
+          <Button type="reddish">
+            <LuGitPullRequestDraft className=" text-slate-50" /> Request to rent
+          </Button>
+          <Button type="transparentRed">
+            <IoChatbubblesOutline className=" text-slate-700" /> Chat with owner
+          </Button>
+        </div>
+      </header>
       {/* property name and small details */}
-      <div className=" flex justify-between ">
+      <section className=" flex justify-between ">
         <div className=" w-[40rem]">
           <h1 className=" text-left text-3xl font-medium ">{property.name}</h1>
           <span className=" flex gap-1">
-            <FaLocationDot className="text-[#b33479] " />
+            <FaLocationDot className="text-[#b33479]  " />
             {property.location}
           </span>
         </div>
@@ -48,21 +60,26 @@ export default function PropertyDetails() {
           <FaMapMarkedAlt className=" text-[#1c5e1c]" /> Use map below to find
           the location of this property
         </p>
-      </div>
+      </section>
 
       {/* image carousel and map */}
       <section className="flex w-[100%] justify-between ">
         {/* CAROUSEL */}
         <div className=" shadow-md transition-all duration-300 ">
-          <PropertyCarousel images={property.image} />
+          <PropertyCarousel
+            setScreenState={setCarouselScreenState}
+            images={property.image}
+          />
         </div>
         {/* map */}
-        <div className=" h-[37rem] w-[32rem] bg-slate-400 ">
-          <MapComponent />
+        <div
+          className={`${carouselScreenState ? "hidden" : ""} relative  h-[37rem] w-[32rem] bg-slate-400`}
+        >
+          <MapComponent carouselScreenState={carouselScreenState} />
         </div>
       </section>
       {/* other property details */}
-      <div className=" flex flex-col gap-12">
+      <section className=" flex flex-col gap-12">
         {/* Description */}
         <SingleDetail
           title={"Description"}
@@ -96,7 +113,7 @@ export default function PropertyDetails() {
             ))}
           </Accordion>
         </div>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }
