@@ -16,6 +16,7 @@
     "firebase": "^10.12.0",
     "json-server": "^1.0.0-beta.0",
     "leaflet": "^1.9.4",
+    "leaflet-fullscreen": "^1.0.2",
     "leaflet-rotatedmarker": "^0.2.0",
     "match-sorter": "^6.3.4",
     "osrm-text-instructions": "^0.15.0",
