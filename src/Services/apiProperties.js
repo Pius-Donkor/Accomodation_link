@@ -25,6 +25,6 @@ export async function getProperty(id) {
       "Error: could not get properties , please check your internet connection",
     );
   property = querySnapshot.data();
-  console.log(property);
+  // console.log(property);
   return property;
 }
