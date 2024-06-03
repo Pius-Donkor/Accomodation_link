@@ -27,9 +27,9 @@ export default function PropertyDetails() {
   if (propertyError) return <PageError errorMessage={propertyError.message} />;
 
   return (
-    <main className="mx-12 mb-[5rem] mt-[6rem] flex flex-col justify-center gap-16  ">
+    <main className="mx-12 mb-[5rem] mt-[8rem] flex  flex-col justify-center gap-16 md:mt-[6rem]  ">
       {/* navigation buttons */}
-      <header className="flex w-full justify-between">
+      <header className="flex w-full flex-col gap-12  md:flex-row md:justify-between">
         <div className=" flex gap-8">
           <Button link={"/"} type="nav">
             <FaHome className=" mr-2 text-slate-700 " /> home
@@ -38,7 +38,7 @@ export default function PropertyDetails() {
             <BiSolidLeftArrow className=" text-slate-700" /> back
           </Button>
         </div>
-        <div className=" flex gap-8">
+        <div className=" flex flex-col gap-8 md:flex-row">
           <Button type="reddish">
             <LuGitPullRequestDraft className=" text-slate-50" /> Request to rent
           </Button>
@@ -48,24 +48,26 @@ export default function PropertyDetails() {
         </div>
       </header>
       {/* property name and small details */}
-      <section className=" flex justify-between ">
-        <div className=" w-[40rem]">
-          <h1 className=" text-left text-3xl font-medium ">{property.name}</h1>
+      <section className=" flex flex-col gap-8 md:flex-row md:justify-between ">
+        <div className=" flex w-full  flex-col items-center justify-center md:block md:w-[40rem] ">
+          <h1 className=" text-center text-3xl font-medium md:text-left  ">
+            {property.name}
+          </h1>
           <span className=" flex gap-1">
             <FaLocationDot className="text-[#b33479]  " />
             {property.location}
           </span>
         </div>
-        <p className="mr-4 flex items-center gap-1 text-xl ">
+        <p className="mr-4 flex flex-wrap items-center justify-center gap-1 text-xl md:justify-start ">
           <FaMapMarkedAlt className=" text-[#1c5e1c]" /> Use map below to find
           the location of this property
         </p>
       </section>
 
       {/* image carousel and map */}
-      <section className="flex w-[100%] justify-between ">
+      <section className="flex w-[100%] flex-col items-center gap-20  lg:flex-row lg:justify-between ">
         {/* CAROUSEL */}
-        <div className=" shadow-md transition-all duration-300 ">
+        <div className=" w-full shadow-md transition-all duration-300 lg:w-fit ">
           <PropertyCarousel
             setScreenState={setCarouselScreenState}
             images={property.image}
@@ -73,9 +75,12 @@ export default function PropertyDetails() {
         </div>
         {/* map */}
         <div
-          className={`${carouselScreenState ? "hidden" : ""} relative  h-[37rem] w-[32rem] bg-slate-400`}
+          className={`${carouselScreenState ? "hidden" : ""} relative h-[37rem] w-[100%] flex-grow bg-slate-400 lg:w-[inherit]`}
         >
-          <MapComponent carouselScreenState={carouselScreenState} />
+          <MapComponent
+            carouselScreenState={carouselScreenState}
+            propertyId={property.id}
+          />
         </div>
       </section>
       {/* other property details */}
@@ -91,12 +96,12 @@ export default function PropertyDetails() {
           <SingleDetail title={"Price"} value={property.price} />
           <SingleDetail title={"Rating"} value={property.rating} />
           <SingleDetail title={"Year_built"} value={property.year_built} />
-          <SingleDetail title={"rules"} value={property.rules} />
+
           <SingleDetail title={"Size"} value={property.size} />
           <SingleDetail title={"Bedrooms"} value={property.bedrooms} />
           <SingleDetail title={"Bathrooms"} value={property.bathrooms} />
         </div>
-        <div className=" flex gap-12">
+        <div className=" flex flex-wrap gap-12">
           <Accordion heading={"neighboring facilities"}>
             {property.neighborhood.map((facility, i) => (
               <AccordionChild key={i}>{facility}</AccordionChild>
