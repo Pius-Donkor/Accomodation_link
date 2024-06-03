@@ -1,5 +1,5 @@
 // MapComponent.js
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -12,14 +12,41 @@ import L from "leaflet";
 import "leaflet-rotatedmarker";
 import "leaflet-fullscreen";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
-const apartmentLocation = [6.673771638600438, -1.571871062809676];
-const MapComponent = ({ carouselScreenState }) => {
+import { MdOutlineDirectionsRun } from "react-icons/md";
+import { GiDuration } from "react-icons/gi";
+const coordinates = [
+  { latitude: 5.555, longitude: -0.1971 }, // Independence Square (Black Star Square)
+  { latitude: 5.558, longitude: -0.2065 }, // Kwame Nkrumah Memorial Park
+  { latitude: 5.556, longitude: -0.2056 }, // National Museum of Ghana
+  { latitude: 5.5471, longitude: -0.1565 }, // Labadi Beach
+  { latitude: 5.5401, longitude: -0.2239 }, // Jamestown Lighthouse
+  { latitude: 5.5432, longitude: -0.2019 }, // Makola Market
+  { latitude: 5.547, longitude: -0.187 }, // Osu Castle (Fort Christiansborg)
+  { latitude: 5.558, longitude: -0.1877 }, // W.E.B. Du Bois Center
+  { latitude: 5.5563, longitude: -0.1985 }, // Accra Arts Centre
+  { latitude: 5.5401, longitude: -0.2251 }, // James Town
+  { latitude: 5.5613, longitude: -0.2251 }, // Korle Bu Teaching Hospital
+  { latitude: 5.5516, longitude: -0.1922 }, // Accra International Conference Centre
+  { latitude: 5.56, longitude: -0.1696 }, // Teshie-Nungua Beach
+  { latitude: 5.5564, longitude: -0.1848 }, // Osu Oxford Street
+  { latitude: 5.556, longitude: -0.2056 }, // Kwame Nkrumah Mausoleum
+  { latitude: 5.6385, longitude: -0.1784 }, // Accra Mall
+  { latitude: 5.556, longitude: -0.207 }, // Loom Art Gallery
+  { latitude: 5.5402, longitude: -0.2285 }, // Holy Trinity Cathedral
+  { latitude: 5.558, longitude: -0.1877 }, // W.E.B. Du Bois Memorial Centre for Pan-African Culture
+  { latitude: 5.6141, longitude: -0.2177 }, // Achimota Forest
+];
+
+const MapComponent = ({ carouselScreenState, propertyId }) => {
   const [userLocation, setUserLocation] = useState(null);
   const [userHeading, setUserHeading] = useState(0);
   const [route, setRoute] = useState([]);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
-
+  const apartmentLocation = useMemo(
+    () => [coordinates[propertyId].latitude, coordinates[propertyId].longitude],
+    [propertyId],
+  );
   useEffect(() => {
     const handlePosition = (position) => {
       const { latitude, longitude, heading } = position.coords;
@@ -44,7 +71,7 @@ const MapComponent = ({ carouselScreenState }) => {
       // console.log("fetching");
       fetchRoute(userLocation, apartmentLocation);
     }
-  }, [userLocation]);
+  }, [userLocation, apartmentLocation]);
 
   const fetchRoute = async (start, end) => {
     const response = await fetch(
@@ -87,20 +114,22 @@ const MapComponent = ({ carouselScreenState }) => {
           rotationAngle={userHeading}
           rotationOrigin="center"
         >
-          <Popup autoClose={false} keepInView={true}>
-            Your Location
-          </Popup>
+          <Popup autoPan={false}>Your Location</Popup>
         </Marker>
       )}
       {apartmentLocation && (
-        <Marker position={apartmentLocation}>
-          <Popup>Apartment Location</Popup>
+        <Marker autoPan={false} position={apartmentLocation}>
+          <Popup keepInView={true}>Apartment Location</Popup>
         </Marker>
       )}
       {route.length > 0 && <Polyline positions={route} color="blue" />}
-      <div className=" absolute right-2 top-2 z-[500] w-96 rounded-sm bg-[#ffffffdc] p-1 shadow-sm ">
-        <p>Distance: {(distance / 1000).toFixed(2)} km</p>
-        <p>Duration: {(duration / 60).toFixed(2)} mins</p>
+      <div className=" absolute right-2 top-2 z-[500]   rounded-sm bg-[#ffffffdc] p-1 shadow-sm ">
+        <p className="flex items-center gap-1 text-sm ">
+          <MdOutlineDirectionsRun /> Distance: {(distance / 1000).toFixed(2)} km
+        </p>
+        <p className="flex items-center gap-1 text-sm">
+          <GiDuration /> Duration: {(duration / 60).toFixed(2)} mins
+        </p>
       </div>
     </MapContainer>
   );
