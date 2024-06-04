@@ -27,7 +27,7 @@ export default function PropertyCarousel({
     normal: {
       overlay: "",
       cover: "",
-      swiper: "mb-2 h-[20rem] md:h-[30rem]  flex-none lg:w-[40rem] w-full  ",
+      swiper: "mb-2 h-[20rem] md:h-[30rem]  flex-none lg:w-[40rem] w-full   ",
       thumbs: "w-[40rem]",
     },
     zoom: {
