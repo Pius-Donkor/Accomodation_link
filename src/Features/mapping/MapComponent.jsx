@@ -118,7 +118,7 @@ const MapComponent = ({ carouselScreenState, propertyId }) => {
         </Marker>
       )}
       {apartmentLocation && (
-        <Marker autoPan={false} position={apartmentLocation}>
+        <Marker autoPan={false}  position={apartmentLocation}>
           <Popup keepInView={true}>Apartment Location</Popup>
         </Marker>
       )}
