@@ -96,7 +96,6 @@ export default function PropertyDetails() {
           <SingleDetail title={"Price"} value={property.price} />
           <SingleDetail title={"Rating"} value={property.rating} />
           <SingleDetail title={"Year_built"} value={property.year_built} />
-
           <SingleDetail title={"Size"} value={property.size} />
           <SingleDetail title={"Bedrooms"} value={property.bedrooms} />
           <SingleDetail title={"Bathrooms"} value={property.bathrooms} />
