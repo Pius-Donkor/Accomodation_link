@@ -21,10 +21,12 @@ export default function Button({
     nav: ` flex items-center rounded-2xl bg-[#edf3ff] px-2 py-1 shadow-lg transition-colors duration-300 hover:bg-[#bde2bd] `,
     reddish: ` flex items-center justify-center rounded-2xl bg-[#b33479] px-2 py-1 shadow-lg text-[white] transition-colors duration-300  hover:bg-[#9c5f81] `,
     transparentRed: ` flex items-center justify-center rounded-2xl bg-[transparent]  border-[#b33479] border-[1px] px-2 py-0 shadow-lg text-[#b33479] transition-colors duration-300 hover:bg-[#9c5f81]  hover:text-[white]`,
+    submit: ` flex justify-center gap-1 rounded-3xl bg-[#9adf9a] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-lg shadow-sm transition-all duration-[300ms] hover:bg-slate-500 hover:text-slate-100  `,
   };
   if (link) {
     return (
       <button
+        type={type === "submit" ? "submit" : "button"}
         disabled={disable}
         onClick={() => navigate(link, { replace: true })}
         className={buttonStyles[type]}
@@ -35,6 +37,7 @@ export default function Button({
   } else {
     return (
       <button
+        type={type === "submit" ? "submit" : "button"}
         disabled={disable}
         onClick={onClick ? onClick : onclick}
         className={buttonStyles[`${type}`]}
