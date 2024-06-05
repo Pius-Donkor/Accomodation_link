@@ -6,6 +6,8 @@ export default function Input({
   required = "This field is required",
   field,
   disabled = false,
+  validate = () => {},
+  placeholder = "",
 }) {
   return (
     <input
@@ -13,7 +15,8 @@ export default function Input({
       id={field}
       disabled={disabled}
       type={type}
-      {...register(field, { required: required })}
+      placeholder={placeholder}
+      {...register(field, { required: required, validate: validate })}
     />
   );
 }
