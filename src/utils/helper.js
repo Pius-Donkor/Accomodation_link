@@ -9,3 +9,16 @@ export function moneyToNumber(string) {
 
   return number;
 }
+
+export function validateEmail(email) {
+  // Regular expression for validating an Email
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return regex.test(email);
+}
+
+export function validatePhoneNumber(phoneNumber) {
+  // Regular expression for validating a phone number
+  // This example regex checks for a phone number format like (123) 456-7890 or 123-456-7890 or 123.456.7890 or 1234567890 or +31636363634
+  const regex = /^\+?(\d.*){3,}$/;
+  return regex.test(phoneNumber);
+}
