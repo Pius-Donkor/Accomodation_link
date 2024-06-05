@@ -7,6 +7,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FilterStateProvider } from "./hooks/FilterState";
 import PropertyDetails from "./Pages/PropertyDetails";
 import SignUp from "./Pages/SignUp";
+import LogIn from "./Pages/LogIn";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,6 +31,7 @@ function App() {
             </Route>
 
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<LogIn />} />
             <Route path="/uploads" element={<AllUploads />} />
           </Routes>
         </BrowserRouter>
