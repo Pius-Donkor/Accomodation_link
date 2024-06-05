@@ -40,7 +40,9 @@ export default function NavBar() {
       >
         <div className="mt-20 flex gap-4 md:mt-0  ">
           <Button type={"transparent"}>Login</Button>
-          <Button type={"colored"}>SignUp</Button>
+          <Button link={"signup"} type={"colored"}>
+            SignUp
+          </Button>
         </div>
       </div>
     </nav>
