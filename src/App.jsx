@@ -8,6 +8,10 @@ import { FilterStateProvider } from "./hooks/FilterState";
 import PropertyDetails from "./Pages/PropertyDetails";
 import SignUp from "./Pages/SignUp";
 import LogIn from "./Pages/LogIn";
+import User from "./Pages/User";
+import MyListings from "./Pages/MyListings";
+import EditUser from "./Pages/EditUser";
+import DisplayOptionsBarProvider from "./contexts/DisplayOptionsContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,26 +22,32 @@ const queryClient = new QueryClient({
 });
 function App() {
   return (
-    <FilterStateProvider>
-      <QueryClientProvider client={queryClient}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route
-                path="/propertyDetails/:id"
-                element={<PropertyDetails />}
-              />
-            </Route>
-
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route path="/uploads" element={<AllUploads />} />
-          </Routes>
-        </BrowserRouter>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </FilterStateProvider>
+    <DisplayOptionsBarProvider>
+      <FilterStateProvider>
+        <QueryClientProvider client={queryClient}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route
+                  path="/propertyDetails/:id"
+                  element={<PropertyDetails />}
+                />
+              </Route>
+              <Route path="/user" element={<User />}>
+                <Route path="mylistings" element={<MyListings />} />
+                <Route path="edituser" element={<EditUser />} />
+              </Route>
+              <Route path="/signup" element={<SignUp />} />
+              <Route path="/login" element={<LogIn />} />
+              <Route path="/uploads" element={<AllUploads />} />
+              <Route path="*" element={<p>page not found</p>} />
+            </Routes>
+          </BrowserRouter>
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </FilterStateProvider>
+    </DisplayOptionsBarProvider>
   );
 }
 
