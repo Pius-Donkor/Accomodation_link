@@ -14,7 +14,7 @@ import Button from "../../UI/Button";
 import { validatePhoneNumber, validateEmail } from "../../utils/helper";
 import Select from "../../UI/Select";
 
-export default function SignUpForm() {
+export default function SignUpForm({ id }) {
   const {
     handleSubmit,
     getValues,
@@ -136,7 +136,7 @@ export default function SignUpForm() {
       </FormRow>
       <FormRow childElement="button">
         <div className="mt-4 flex w-full justify-end ">
-          <Button type="submit"> Submit Form </Button>
+          <Button type="submit">{id ? "Edit user" : "Sign Up"} </Button>
         </div>
       </FormRow>
     </Form>
