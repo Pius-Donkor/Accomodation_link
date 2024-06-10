@@ -35,6 +35,7 @@ function App() {
                 />
               </Route>
               <Route path="/user" element={<User />}>
+                <Route index element={<MyListings />} />
                 <Route path="mylistings" element={<MyListings />} />
                 <Route path="edituser" element={<EditUser />} />
               </Route>
