@@ -18,7 +18,7 @@ export default function OptionsBar({ page = "home" }) {
 
   return (
     <nav
-      className={` ${page === "home" ? "fixed md:mt-20 " : "absolute  "} z-[999] w-[100%] transition-all ${toggleNavFoldOpening ? "mt-[6.05rem] " : `${isSmallScreen && "mt-[-5.5rem]"}`} flex  flex-col items-center gap-10 px-14 py-2 shadow-md   backdrop-blur-lg 
+      className={` ${page === "home" ? "fixed md:mt-20 " : "absolute left-0 top-0 "} z-[999] w-[100%] transition-all ${toggleNavFoldOpening ? "mt-[6.05rem] " : `${isSmallScreen && "mt-[-5.5rem]"}`} flex  flex-col items-center gap-10 px-14 py-2 shadow-md   backdrop-blur-lg 
     md:w-[100%] md:flex-row md:items-center md:justify-between md:gap-12 md:bg-slate-100  `}
     >
       <div className=" flex justify-center ">
@@ -39,8 +39,8 @@ export default function OptionsBar({ page = "home" }) {
       </div>
 
       <p>
-        <span className=" font-bold">{sortedProperties.length} </span>{" "}
-        <span> listings found</span>{" "}
+        <span className=" font-bold">{sortedProperties.length} </span>
+        <span> listings found</span>
       </p>
 
       <button
