@@ -1,13 +1,17 @@
 import React from "react";
 import { useDisplayOptionsBar } from "../contexts/DisplayOptionsContext";
 import OptionsBar from "./OptionsBar";
+import HomeBack from "./HomeBack";
 
 export default function Main({ children }) {
   const { displayOptionsBar } = useDisplayOptionsBar();
 
   return (
-    <main className=" relative flex-grow bg-slate-200 ">
+    <main className=" relative flex h-[100vh] w-[80%] flex-col  bg-slate-200 p-4 ">
       {displayOptionsBar && <OptionsBar page="user" />}
+      <div className={`${displayOptionsBar ? "mt-12" : ""}  `}>
+        <HomeBack />
+      </div>
       {children}
     </main>
   );
