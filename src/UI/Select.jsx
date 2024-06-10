@@ -13,6 +13,7 @@ export default function Select({
       id={field}
       disabled={disabled}
       {...register(field, { required: required })}
+      
     >
       {children}
     </select>
