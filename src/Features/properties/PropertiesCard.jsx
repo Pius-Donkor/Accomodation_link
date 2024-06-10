@@ -13,8 +13,9 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import SwiperArrowButtons from "../../UI/SwiperArrowButtons";
 import Button from "../../UI/Button";
+import PropertyCrud from "./PropertyCrud";
 
-export default function PropertiesCard({ property }) {
+export default function PropertiesCard({ property, allowCrud = true }) {
   const [liked, setLiked] = useState(false);
   const [tempLiked, setTempLiked] = useState(false);
 
@@ -91,10 +92,11 @@ export default function PropertiesCard({ property }) {
             {property.location}
           </span>
         </span>
-        <div className="self-center">
-          <Button type="transparent" link={`propertyDetails/${property.id}`}>
+        <div className="flex items-center gap-8 self-center ">
+          <Button type="transparent" link={`/propertyDetails/${property.id}`}>
             View Listing
           </Button>
+          {allowCrud && <PropertyCrud />}
         </div>
       </div>
     </div>
