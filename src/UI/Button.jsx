@@ -17,7 +17,7 @@ export default function Button({
     colored:
       ` border-transparent bg-green-600  text-slate-100 transition-all hover:bg-green-700` +
       baseStyle,
-    greenLight: ` flex justify-center gap-1 rounded-sm bg-[#9adf9a] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-xl shadow-sm transition-all duration-300 hover:bg-green-500 hover:text-slate-100  `,
+    greenLight: ` flex justify-center gap-1 rounded-md bg-[#9adf9a] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-xl shadow-md transition-all duration-300 hover:bg-green-500 hover:text-slate-100  `,
     nav: ` flex items-center rounded-2xl bg-[#edf3ff] px-2 py-1 shadow-lg transition-colors duration-300 hover:bg-[#bde2bd] `,
     reddish: ` flex items-center justify-center rounded-2xl bg-[#b33479] px-2 py-1 shadow-lg text-[white] transition-colors duration-300  hover:bg-[#9c5f81] `,
     transparentRed: ` flex items-center justify-center rounded-2xl bg-[transparent]  border-[#b33479] border-[1px] px-2 py-0 shadow-lg text-[#b33479] transition-colors duration-300 hover:bg-[#9c5f81]  hover:text-[white]`,
