@@ -5,7 +5,6 @@ import { moneyToNumber } from "../utils/helper";
 
 export default function useFilterSort() {
   const { properties, propertiesError, isLoading } = useGetProperties();
-
   const [searchParams] = useSearchParams();
   const sortParameter = searchParams.get("sortBy");
   const {
@@ -42,5 +41,5 @@ export default function useFilterSort() {
     sortedProperties = filteredProperties.slice();
   }
 
-  return { sortedProperties, isLoading, propertiesError };
+  return { sortedProperties, propertiesError, isLoading };
 }
