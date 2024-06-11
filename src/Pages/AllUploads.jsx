@@ -90,7 +90,7 @@ export default function AllUploads() {
   }, []);
   return (
     <div>
-      <input type="file" multiple onChange={handleFileChange} />
+      <input type="file" {...{}} multiple onChange={handleFileChange} />
       <button onClick={handleUploads}>Upload Photos</button>
     </div>
   );
