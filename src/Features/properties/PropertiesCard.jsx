@@ -96,7 +96,7 @@ export default function PropertiesCard({ property, allowCrud = true }) {
           <Button type="transparent" link={`/propertyDetails/${property.id}`}>
             View Listing
           </Button>
-          {allowCrud && <PropertyCrud />}
+          {allowCrud && <PropertyCrud property={property} />}
         </div>
       </div>
     </div>
