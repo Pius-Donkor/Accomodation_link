@@ -16,28 +16,29 @@ export default function MultipleInputs({
   type = "text",
   validate = () => {},
   icon = "",
+  fields,
+  append,
+  remove,
+  fieldArrayName = "",
+  defaultValue,
 }) {
-  const [inputs, setInputs] = useState([1]);
-  function handleAddRule() {
-    setInputs((prev) => [...prev, prev.length + 1]);
-  }
-
-  function deleteInput(inputToDelete) {
-    setInputs((prev) => prev.filter((input) => input !== inputToDelete));
-  }
+  console.log(fields);
   return (
     <div className="bg-[#00000017] py-2 ">
       <h1 className="text-2xl font-bold"> {heading}</h1>
-      <Button onClick={handleAddRule}> {addButtonName}</Button>
+      <Button onClick={() => append("")}> {addButtonName}</Button>
       <div className="flex flex-col gap-4">
-        {inputs.map((input, index) => (
+        {fields.map((arrayField, index) => (
           <FormRow
             error={error}
             icon={icon}
             field={field + "_" + (index + 1)}
-            key={input}
+            key={arrayField.id}
           >
             <Input
+              defaultValue={defaultValue?.at(index) || ""}
+              fieldArrayName={fieldArrayName}
+              index={index}
               type={type}
               validate={validate}
               disabled={disabled}
@@ -46,7 +47,7 @@ export default function MultipleInputs({
               required={required}
               field={field + "_" + (index + 1)}
             />
-            <span role="button" onClick={() => deleteInput(input)}>
+            <span role="button" onClick={() => remove(index)}>
               <FaTrashAlt />
             </span>
           </FormRow>
