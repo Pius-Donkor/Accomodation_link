@@ -8,15 +8,27 @@ export default function Input({
   disabled = false,
   validate = () => {},
   placeholder = "",
+  fieldArrayName = "",
+  index,
+  defaultValue,
 }) {
+  const otherOptions = {
+    accept: "image/*",
+    multiple: true,
+  };
   return (
     <input
-      className={` ${type !== "file" ? "text-md min-w-[15rem] rounded-3xl bg-[#2b28289a] px-2 py-1 text-[white] shadow-md outline-none" : " bg-blue-500"} `}
+      className={`${type !== "file" ? "text-md min-w-[15rem] rounded-3xl bg-[#2b28289a] px-2 py-1 text-[white] shadow-md outline-none" : " bg-blue-500"} `}
       id={field}
+      defaultValue={defaultValue || ""}
       disabled={disabled}
+      {...(type === "file" ? otherOptions : {})}
       type={type}
       placeholder={placeholder}
-      {...register(field, { required: required, validate: validate })}
+      {...register(fieldArrayName ? `${fieldArrayName}.${index}` : field, {
+        required: required,
+        validate: validate,
+      })}
     />
   );
 }
