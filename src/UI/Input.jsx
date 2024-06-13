@@ -11,6 +11,9 @@ export default function Input({
   fieldArrayName = "",
   index,
   defaultValue,
+  value = "",
+  valueName = "",
+  onChange = () => {},
 }) {
   const otherOptions = {
     accept: "image/*",
@@ -20,15 +23,20 @@ export default function Input({
     <input
       className={`${type !== "file" ? "text-md min-w-[15rem] rounded-3xl bg-[#2b28289a] px-2 py-1 text-[white] shadow-md outline-none" : " bg-blue-500"} `}
       id={field}
+      value={value || ""}
       defaultValue={defaultValue || ""}
       disabled={disabled}
+      onChange={onChange}
       {...(type === "file" ? otherOptions : {})}
       type={type}
       placeholder={placeholder}
-      {...register(fieldArrayName ? `${fieldArrayName}.${index}` : field, {
-        required: required,
-        validate: validate,
-      })}
+      {...register(
+        fieldArrayName ? `${fieldArrayName}.${index}` : valueName || field,
+        {
+          required: required,
+          validate: validate,
+        },
+      )}
     />
   );
 }
