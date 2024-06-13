@@ -8,8 +8,12 @@ import Button from "../../UI/Button";
 import { FaTrashAlt } from "react-icons/fa";
 import MultipleInputs from "../../UI/MultipleInputs";
 import { useForm, useFieldArray } from "react-hook-form";
+import useGetPositionAddress from "../../hooks/useGetPositionAddress";
 
 export default function CreateEditListingForm({ property, id }) {
+  const [inputPosition, setInputPosition] = useState();
+  const [inputLocation, setInputLocation] = useState();
+
   const {
     handleSubmit,
     getValues,
@@ -25,7 +29,13 @@ export default function CreateEditListingForm({ property, id }) {
       neighborhood: [""],
     },
   });
+  // here we get the position and address of the property provided the user bis at the exact location of the listing  and then set them to a state when a  button is clicked
+  const { address, position } = useGetPositionAddress();
 
+  function handleLocationIntoInput() {
+    setInputPosition(`${position.latitude},${position.longitude}`);
+    setInputLocation(address);
+  }
   const {
     append: appendFeature,
     remove: removeFeature,
@@ -59,39 +69,67 @@ export default function CreateEditListingForm({ property, id }) {
     <Form onSubmit={onSubmit} onError={onError} handleSubmit={handleSubmit}>
       <div className="flex flex-col gap-8">
         <div className="flex flex-col gap-12 lg:flex-row  ">
-          <section className="flex w-[100%] flex-col gap-4 lg:min-w-[30rem]">
-            <FormRow field="property_name">
+          <section className="flex w-[100%] flex-col gap-4 lg:min-w-[35rem]">
+            <FormRow
+              field="property_name"
+              error={errors?.property_name?.message}
+            >
               <Input
                 defaultValue={property?.name || ""}
                 register={register}
                 field="property_name"
               />
             </FormRow>
-            <FormRow field="property_price">
-              <span>GH₵</span>
+            <FormRow field="rental_price" error={errors?.rental_price?.message}>
+              <span>GH₵ / Year</span>
               <Input
                 defaultValue={property?.price || ""}
                 register={register}
                 placeholder="in Gh₵ / Ghana cedis  "
                 type="number"
-                field="property_price"
+                field="rental_price"
               />
             </FormRow>
-            <FormRow field="property_location">
+            <FormRow
+              field="property_location"
+              error={errors?.property_location?.message}
+            >
+              <div>
+                <Button onClick={handleLocationIntoInput} type="reddish">
+                  get location
+                </Button>
+              </div>
               <Input
                 defaultValue={property?.location || ""}
                 field="property_location"
+                register={register}
+                value={inputLocation}
+              />
+            </FormRow>
+            <FormRow
+              field="position_coordinate"
+              error={errors?.property_location?.message}
+            >
+              <Input
+                defaultValue={property?.location || ""}
+                field="position_coordinate"
+                register={register}
+                placeholder="ie. 5.689735, -0.239775"
+                value={inputPosition}
               />
             </FormRow>
 
-            <FormRow field="accommodation_type">
+            <FormRow
+              field="accommodation_type"
+              error={errors?.accommodation_type?.message}
+            >
               <SelectWithInput
                 register={register}
                 field="accommodation_type"
                 options={["hostel rent", "home rent"]}
               />
             </FormRow>
-            <FormRow field="bathrooms">
+            <FormRow field="bathrooms" error={errors?.bathrooms?.message}>
               <Input
                 register={register}
                 defaultValue={property?.bathrooms || ""}
@@ -99,7 +137,7 @@ export default function CreateEditListingForm({ property, id }) {
                 field="bathrooms"
               />
             </FormRow>
-            <FormRow field="bedrooms">
+            <FormRow field="bedrooms" error={errors?.bedrooms?.message}>
               <Input
                 register={register}
                 defaultValue={property?.bedrooms || ""}
@@ -107,7 +145,10 @@ export default function CreateEditListingForm({ property, id }) {
               />
             </FormRow>
 
-            <FormRow field="neighboring_campuses">
+            <FormRow
+              field="neighboring_campus"
+              error={errors?.neighboring_campus?.message}
+            >
               <SelectWithInput
                 field="neighboring_campus"
                 register={register}
@@ -118,7 +159,7 @@ export default function CreateEditListingForm({ property, id }) {
                 ]}
               />
             </FormRow>
-            <FormRow field="description">
+            <FormRow field="description" error={errors?.description?.message}>
               <TextArea
                 register={register}
                 defaultValue={property?.description || ""}
@@ -130,6 +171,7 @@ export default function CreateEditListingForm({ property, id }) {
             <div className="flex flex-col gap-12">
               <MultipleInputs
                 fields={rulesField}
+                error={errors?.rules?.message}
                 defaultValue={property?.rules || ""}
                 append={appendRule}
                 remove={removeRule}
@@ -140,6 +182,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
               />
               <MultipleInputs
+                error={errors?.features?.message}
                 fields={featuresField}
                 defaultValue={property?.features || ""}
                 append={appendFeature}
@@ -151,6 +194,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
               />
               <MultipleInputs
+                error={errors?.amenities?.message}
                 defaultValue={property?.amenities || ""}
                 fields={amenitiesField}
                 append={appendAmenity}
@@ -162,6 +206,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
               />
               <MultipleInputs
+                error={errors?.neighborhood?.message}
                 fields={neighborhoodField}
                 append={appendNeighborhood}
                 remove={removeNeighborhood}
@@ -176,7 +221,10 @@ export default function CreateEditListingForm({ property, id }) {
           </section>
         </div>
         <div className="mt-8 inline-flex md:min-w-[40rem] lg:mt-0 lg:w-fit ">
-          <FormRow field="upload_property_images">
+          <FormRow
+            field="upload_property_images"
+            error={errors?.upload_property_images?.message}
+          >
             <Input
               register={register}
               field={"upload_property_images"}
