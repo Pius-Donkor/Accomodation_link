@@ -6,6 +6,7 @@ export default function Button({
   onclick = () => {},
   disable = false,
   onClick,
+  onMouseEnter = () => {},
   link,
 }) {
   const navigate = useNavigate();
@@ -30,6 +31,7 @@ export default function Button({
         disabled={disable}
         onClick={() => navigate(link, { replace: true })}
         className={buttonStyles[type]}
+        onMouseEnter={onMouseEnter}
       >
         {children}
       </button>
@@ -41,6 +43,7 @@ export default function Button({
         disabled={disable}
         onClick={onClick ? onClick : onclick}
         className={buttonStyles[`${type}`]}
+        onMouseEnter={onMouseEnter}
       >
         {children}
       </button>
