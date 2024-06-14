@@ -10,8 +10,7 @@ export default function Input({
   placeholder = "",
   fieldArrayName = "",
   index,
-  defaultValue,
-  value = "",
+  defaultValue = "",
   valueName = "",
   onChange = () => {},
 }) {
@@ -19,11 +18,11 @@ export default function Input({
     accept: "image/*",
     multiple: true,
   };
+
   return (
     <input
       className={`${type !== "file" ? "text-md min-w-[15rem] rounded-3xl bg-[#2b28289a] px-2 py-1 text-[white] shadow-md outline-none" : " bg-blue-500"} `}
       id={field}
-      value={value || ""}
       defaultValue={defaultValue || ""}
       disabled={disabled}
       onChange={onChange}
