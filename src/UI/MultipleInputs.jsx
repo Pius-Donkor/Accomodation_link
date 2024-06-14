@@ -8,11 +8,11 @@ export default function MultipleInputs({
   heading,
   addButtonName,
   field,
-  error = "",
+  errors = "",
   disabled = false,
   placeholder = "",
   register = () => {},
-  required = "this field is reqiued",
+  required = "this field is required",
   type = "text",
   validate = () => {},
   icon = "",
@@ -22,15 +22,15 @@ export default function MultipleInputs({
   fieldArrayName = "",
   defaultValue,
 }) {
-  console.log(fields);
+  console.log(errors?.[fieldArrayName]?.at(0)?.message);
   return (
-    <div className="bg-[#00000017] py-2 ">
+    <div className="bg-[#00000017] px-2 py-2 ">
       <h1 className="text-2xl font-bold"> {heading}</h1>
       <Button onClick={() => append("")}> {addButtonName}</Button>
       <div className="flex flex-col gap-4">
         {fields.map((arrayField, index) => (
           <FormRow
-            error={error}
+            error={errors?.[fieldArrayName]?.at(0)?.message}
             icon={icon}
             field={field + "_" + (index + 1)}
             key={arrayField.id}
