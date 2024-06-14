@@ -13,8 +13,10 @@ import { FaUserTag } from "react-icons/fa6";
 import Button from "../../UI/Button";
 import { validatePhoneNumber, validateEmail } from "../../utils/helper";
 import Select from "../../UI/Select";
+import useSignUp from "./useSignUp";
 
 export default function SignUpForm({ id }) {
+  const { signUp, isSigning } = useSignUp();
   const {
     handleSubmit,
     getValues,
@@ -31,20 +33,39 @@ export default function SignUpForm({ id }) {
 
   function onSubmit(data) {
     console.log(data);
-    reset();
+    const {
+      email,
+      location,
+      name,
+      role,
+      password,
+      phone_contact,
+      whatsApp_contact,
+    } = data;
+    signUp({
+      email,
+      location,
+      userName: name,
+      role,
+      password,
+      contact: phone_contact,
+      whatsAppContact: whatsApp_contact,
+    });
   }
   function onError(errors) {
     console.log(errors);
   }
+
   return (
     <Form onSubmit={onSubmit} onError={onError} handleSubmit={handleSubmit}>
       <FormRow
         icon={{ icon: CiUser }}
-        field="userName"
-        error={errors?.userName?.message}
+        field="name"
+        error={errors?.name?.message}
       >
         <Input
-          field={"userName"}
+          disabled={isSigning}
+          field={"name"}
           placeholder="eg. Jon Carter"
           register={register}
           type="text"
@@ -61,6 +82,7 @@ export default function SignUpForm({ id }) {
           field={"email"}
           register={register}
           type="email"
+          disabled={isSigning}
         />
       </FormRow>
       <FormRow
@@ -68,7 +90,7 @@ export default function SignUpForm({ id }) {
         field="role"
         error={errors?.role?.message}
       >
-        <Select field={"role"} register={register}>
+        <Select field={"role"} register={register} disabled={isSigning}>
           <option
             className=" hover:bg-slate-50  hover:text-slate-800"
             value="regular_user"
@@ -84,7 +106,12 @@ export default function SignUpForm({ id }) {
         field="password"
         error={errors?.password?.message}
       >
-        <Input field={"password"} register={register} type="password" />
+        <Input
+          field={"password"}
+          register={register}
+          type="password"
+          disabled={isSigning}
+        />
       </FormRow>
       <FormRow
         icon={{ icon: RiLockPasswordFill }}
@@ -96,6 +123,7 @@ export default function SignUpForm({ id }) {
           validate={verifyPassword}
           register={register}
           type="password"
+          disabled={isSigning}
         />
       </FormRow>
       <FormRow
@@ -108,6 +136,7 @@ export default function SignUpForm({ id }) {
           placeholder="eg sunyani"
           register={register}
           type="text"
+          disabled={isSigning}
         />
       </FormRow>
       <FormRow
@@ -120,6 +149,7 @@ export default function SignUpForm({ id }) {
           validate={verifyPhoneNumber}
           register={register}
           type="text"
+          disabled={isSigning}
         />
       </FormRow>
       <FormRow
@@ -132,11 +162,14 @@ export default function SignUpForm({ id }) {
           validate={verifyPhoneNumber}
           register={register}
           type="text"
+          disabled={isSigning}
         />
       </FormRow>
       <FormRow childElement="button">
-        <div className="mt-4 flex w-full justify-end ">
-          <Button type="submit">{id ? "Edit user" : "Sign Up"} </Button>
+        <div className="mt-4 flex w-full  justify-end ">
+          <Button disabled={isSigning} type="submit">
+            {id ? "Edit user" : "Sign Up"}{" "}
+          </Button>
         </div>
       </FormRow>
     </Form>
