@@ -9,6 +9,7 @@ export default function useGetPositionAddress() {
     isLoadingAddress,
     addressError,
   } = useGetListingAddress(position);
+
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
