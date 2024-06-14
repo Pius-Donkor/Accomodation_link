@@ -7,8 +7,10 @@ import Button from "../../UI/Button";
 import { validateEmail } from "../../utils/helper";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
+import useLogin from "./useLogin";
 
 export default function LoginForm() {
+  const { login, loginError, isLoggingIn } = useLogin();
   const {
     handleSubmit,
     formState: { errors },
@@ -20,7 +22,7 @@ export default function LoginForm() {
 
   function onSubmit(data) {
     console.log(data);
-    reset();
+    login(data, { onSuccess: () => reset() });
   }
   function onError(errors) {
     console.log(errors);
@@ -33,6 +35,7 @@ export default function LoginForm() {
         error={errors?.email?.message}
       >
         <Input
+          disabled={isLoggingIn}
           placeholder="eg. Jon@gmail.com"
           validate={verifyEmail}
           field={"email"}
@@ -45,11 +48,18 @@ export default function LoginForm() {
         field="password"
         error={errors?.password?.message}
       >
-        <Input field={"password"} register={register} type="password" />
+        <Input
+          field={"password"}
+          disabled={isLoggingIn}
+          register={register}
+          type="password"
+        />
       </FormRow>
       <FormRow childElement="button">
         <div className="mt-4 flex w-full justify-center ">
-          <Button type="submit"> Login </Button>
+          <Button disable={isLoggingIn} type="submit">
+            Login
+          </Button>
         </div>
       </FormRow>
     </Form>
