@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Form from "../../UI/Form";
 import FormRow from "../../UI/FormRow";
 import Input from "../../UI/Input";
@@ -9,18 +9,18 @@ import { FaTrashAlt } from "react-icons/fa";
 import MultipleInputs from "../../UI/MultipleInputs";
 import { useForm, useFieldArray } from "react-hook-form";
 import useGetPositionAddress from "../../hooks/useGetPositionAddress";
+import "./triangle.css";
+import useOutsideClick from "../../hooks/useOutsideClick";
 
 export default function CreateEditListingForm({ property, id }) {
-  const [inputPosition, setInputPosition] = useState();
-  const [inputLocation, setInputLocation] = useState();
-
+  const [showLocationPrompt, setShowLocationPrompt] = useState(false);
+  const { ref } = useOutsideClick(handleClosePrompt);
   const {
     handleSubmit,
-    getValues,
     formState: { errors },
     register,
-    reset,
     control,
+    setValue,
   } = useForm({
     defaultValues: {
       features: [""],
@@ -33,8 +33,11 @@ export default function CreateEditListingForm({ property, id }) {
   const { address, position } = useGetPositionAddress();
 
   function handleLocationIntoInput() {
-    setInputPosition(`${position.latitude},${position.longitude}`);
-    setInputLocation(address);
+    setValue(
+      "position_coordinate",
+      `${position.latitude},${position.longitude}`,
+    );
+    setValue("property_location", address);
   }
   const {
     append: appendFeature,
@@ -64,6 +67,15 @@ export default function CreateEditListingForm({ property, id }) {
   function onError(errors) {
     console.log(errors);
   }
+  function handleClosePrompt() {
+    setShowLocationPrompt(false);
+  }
+  function handleHover() {
+    setShowLocationPrompt(true);
+    setTimeout(() => {
+      setShowLocationPrompt(false);
+    }, 5000);
+  }
 
   return (
     <Form onSubmit={onSubmit} onError={onError} handleSubmit={handleSubmit}>
@@ -90,32 +102,43 @@ export default function CreateEditListingForm({ property, id }) {
                 field="rental_price"
               />
             </FormRow>
-            <FormRow
-              field="property_location"
-              error={errors?.property_location?.message}
-            >
-              <div>
-                <Button onClick={handleLocationIntoInput} type="reddish">
-                  get location
-                </Button>
-              </div>
-              <Input
-                defaultValue={property?.location || ""}
+            <div className="relative  ">
+              <FormRow
                 field="property_location"
-                register={register}
-                value={inputLocation}
-              />
-            </FormRow>
+                error={errors?.property_location?.message}
+              >
+                <Button
+                  onMouseEnter={handleHover}
+                  onClick={handleLocationIntoInput}
+                  type="reddish"
+                >
+                  get location/position
+                </Button>
+                <p
+                  ref={ref}
+                  className={` absolute bottom-[-11.25rem] left-[9rem] z-20 transition-all duration-500  ${showLocationPrompt ? "" : "hidden"} w-[10rem] rounded-md bg-slate-50 p-2 shadow-2xl `}
+                >
+                  <span className=" triangle  absolute left-[50%] top-[-2.5rem]  "></span>
+                  Before you use this feature , please make sure that you are
+                  currently at the location of the listing / property
+                </p>
+
+                <Input
+                  defaultValue={property?.location}
+                  field="property_location"
+                  register={register}
+                />
+              </FormRow>
+            </div>
             <FormRow
               field="position_coordinate"
               error={errors?.property_location?.message}
             >
               <Input
-                defaultValue={property?.location || ""}
+                defaultValue={property?.location}
                 field="position_coordinate"
                 register={register}
                 placeholder="ie. 5.689735, -0.239775"
-                value={inputPosition}
               />
             </FormRow>
 
@@ -171,7 +194,7 @@ export default function CreateEditListingForm({ property, id }) {
             <div className="flex flex-col gap-12">
               <MultipleInputs
                 fields={rulesField}
-                error={errors?.rules?.message}
+                errors={errors}
                 defaultValue={property?.rules || ""}
                 append={appendRule}
                 remove={removeRule}
@@ -180,9 +203,10 @@ export default function CreateEditListingForm({ property, id }) {
                 field="rule"
                 fieldArrayName="rules"
                 register={register}
+                required={false}
               />
               <MultipleInputs
-                error={errors?.features?.message}
+                errors={errors}
                 fields={featuresField}
                 defaultValue={property?.features || ""}
                 append={appendFeature}
@@ -192,9 +216,10 @@ export default function CreateEditListingForm({ property, id }) {
                 field="feature"
                 fieldArrayName="features"
                 register={register}
+                required={false}
               />
               <MultipleInputs
-                error={errors?.amenities?.message}
+                errors={errors}
                 defaultValue={property?.amenities || ""}
                 fields={amenitiesField}
                 append={appendAmenity}
@@ -204,6 +229,7 @@ export default function CreateEditListingForm({ property, id }) {
                 field="Amenity"
                 fieldArrayName="amenities"
                 register={register}
+                required={false}
               />
               <MultipleInputs
                 error={errors?.neighborhood?.message}
@@ -214,6 +240,7 @@ export default function CreateEditListingForm({ property, id }) {
                 addButtonName={"Add Facility"}
                 field="neighborhood"
                 fieldArrayName="neighborhood"
+                required={false}
                 register={register}
                 defaultValue={property?.neighborhood || ""}
               />
