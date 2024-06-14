@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "./Button";
 import { Link } from "react-router-dom";
+import { auth } from "../Services/firebase";
+import useGetUser from "../Features/User/useGetUser";
 
 export default function SideNav() {
+  const { userData = {}, isLoading, error } = useGetUser();
+
   return (
     <aside className="h-[100dvh] w-[20%] bg-slate-500 ">
       {/* header part */}
@@ -13,8 +17,14 @@ export default function SideNav() {
           src="/webLogo.png"
           alt="logo"
         />
-        <p>email</p>
-        <p>username</p>
+        {!isLoading ? (
+          <>
+            {userData.email && <p>email : {userData.email} </p>}
+            {userData.userName && <p>username :{userData.userName} </p>}
+          </>
+        ) : (
+          <p>Loading...</p>
+        )}
       </div>
       <div className=" mt-4 flex flex-col items-center gap-12 ">
         <ul className="flex w-full flex-col items-center gap-4 px-1">
