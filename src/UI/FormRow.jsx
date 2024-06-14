@@ -2,11 +2,12 @@ import React from "react";
 
 export default function FormRow({
   children,
-  error,
+  error = "",
   field = "",
   icon,
   childElement = "",
 }) {
+  // console.log(error);
   return (
     <div className=" flex flex-col gap-2">
       <div className=" w flex flex-col items-center gap-2 overflow-y-auto md:flex-row md:justify-between ">
