@@ -1,0 +1,11 @@
+/* Add this to your styles.css or a global CSS file */
+.triangle {
+  border-left-width: 20px;
+  border-left-color: transparent;
+  border-right-width: 20px;
+  border-right-color: transparent;
+  border-bottom-width: 20px;
+  border-bottom-color: rgb(255, 255, 255);
+  border-top-width: 20px;
+  border-top-color: transparent;
+}
