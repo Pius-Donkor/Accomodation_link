@@ -13,6 +13,7 @@ import MyListings from "./Pages/MyListings";
 import EditUser from "./Pages/EditUser";
 import DisplayOptionsBarProvider from "./contexts/DisplayOptionsContext";
 import { Toaster } from "react-hot-toast";
+import VerifyRoute from "./UI/VerifyRoute";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -35,7 +36,14 @@ function App() {
                   element={<PropertyDetails />}
                 />
               </Route>
-              <Route path="/user" element={<User />}>
+              <Route
+                path="/user"
+                element={
+                  <VerifyRoute>
+                    <User />
+                  </VerifyRoute>
+                }
+              >
                 <Route index element={<MyListings />} />
                 <Route path="mylistings" element={<MyListings />} />
                 <Route path="edituser" element={<EditUser />} />
