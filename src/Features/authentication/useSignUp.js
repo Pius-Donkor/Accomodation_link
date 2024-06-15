@@ -13,11 +13,11 @@ export default function useSignUp() {
     mutationFn: (signUpData) => userSignUp(signUpData),
     mutationKey: ["user"],
     onSuccess: () => {
-      toast.success("you have been signed in successfully");
       queryClient.invalidateQueries();
     },
     onError: (error) => {
       toast.error(error.message);
+      console.log(error);
     },
   });
   return { signUp, isSigning, error };
