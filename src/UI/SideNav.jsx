@@ -1,11 +1,21 @@
 import React, { useEffect, useState } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../Services/firebase";
 import useGetUser from "../Features/User/useGetUser";
-
+import { MdEmail } from "react-icons/md";
+import { FaUser } from "react-icons/fa";
+import { logout } from "../Services/apiUser";
+import toast from "react-hot-toast";
 export default function SideNav() {
   const { userData = {}, isLoading, error } = useGetUser();
+  const navigate = useNavigate();
+
+  function handleLogout() {
+    logout();
+    toast.success("you have been logged out successfully");
+    navigate("/");
+  }
 
   return (
     <aside className="h-[100dvh] w-[20%] bg-slate-500 ">
@@ -19,8 +29,16 @@ export default function SideNav() {
         />
         {!isLoading ? (
           <>
-            {userData.email && <p>email : {userData.email} </p>}
-            {userData.userName && <p>username :{userData.userName} </p>}
+            {userData.email && (
+              <p className="flex items-center gap-2 text-[#2b2849] ">
+                <MdEmail /> {userData.email}{" "}
+              </p>
+            )}
+            {userData.userName && (
+              <p className="flex items-center gap-2 text-[#2b2849] ">
+                <FaUser /> {userData.userName}{" "}
+              </p>
+            )}
           </>
         ) : (
           <p>Loading...</p>
@@ -45,7 +63,7 @@ export default function SideNav() {
             </Link>
           </li>
         </ul>
-        <Button>Logout</Button>
+        <Button onClick={handleLogout}>Logout</Button>
       </div>
     </aside>
   );
