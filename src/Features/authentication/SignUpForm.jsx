@@ -14,8 +14,9 @@ import Button from "../../UI/Button";
 import { validatePhoneNumber, validateEmail } from "../../utils/helper";
 import Select from "../../UI/Select";
 import useSignUp from "./useSignUp";
+import toast from "react-hot-toast";
 
-export default function SignUpForm({ id }) {
+export default function SignUpForm({ userId, user }) {
   const { signUp, isSigning } = useSignUp();
   const {
     handleSubmit,
@@ -42,15 +43,28 @@ export default function SignUpForm({ id }) {
       phone_contact,
       whatsApp_contact,
     } = data;
-    signUp({
-      email,
-      location,
-      userName: name,
-      role,
-      password,
-      contact: phone_contact,
-      whatsAppContact: whatsApp_contact,
-    });
+    signUp(
+      {
+        userId,
+        email,
+        location,
+        userName: name,
+        role,
+        password,
+        contact: phone_contact,
+        whatsAppContact: whatsApp_contact,
+        documentId: user?.documentId,
+        oldPassword: user?.password,
+      },
+      {
+        onSuccess: () => {
+          if (userId)
+            return toast.success("your data has been edited successfully");
+          toast.success("you have been signed up successfully");
+          reset();
+        },
+      },
+    );
   }
   function onError(errors) {
     console.log(errors);
@@ -69,6 +83,7 @@ export default function SignUpForm({ id }) {
           placeholder="eg. Jon Carter"
           register={register}
           type="text"
+          defaultValue={user?.userName}
         />
       </FormRow>
       <FormRow
@@ -83,6 +98,7 @@ export default function SignUpForm({ id }) {
           register={register}
           type="email"
           disabled={isSigning}
+          defaultValue={user?.email}
         />
       </FormRow>
       <FormRow
@@ -90,7 +106,12 @@ export default function SignUpForm({ id }) {
         field="role"
         error={errors?.role?.message}
       >
-        <Select field={"role"} register={register} disabled={isSigning}>
+        <Select
+          field={"role"}
+          register={register}
+          defaultValue={user?.role}
+          disabled={isSigning}
+        >
           <option
             className=" hover:bg-slate-50  hover:text-slate-800"
             value="regular_user"
@@ -111,6 +132,7 @@ export default function SignUpForm({ id }) {
           register={register}
           type="password"
           disabled={isSigning}
+          defaultValue={user?.password}
         />
       </FormRow>
       <FormRow
@@ -124,6 +146,7 @@ export default function SignUpForm({ id }) {
           register={register}
           type="password"
           disabled={isSigning}
+          defaultValue={user?.password}
         />
       </FormRow>
       <FormRow
@@ -137,6 +160,7 @@ export default function SignUpForm({ id }) {
           register={register}
           type="text"
           disabled={isSigning}
+          defaultValue={user?.location}
         />
       </FormRow>
       <FormRow
@@ -150,6 +174,7 @@ export default function SignUpForm({ id }) {
           register={register}
           type="text"
           disabled={isSigning}
+          defaultValue={user?.contact}
         />
       </FormRow>
       <FormRow
@@ -163,12 +188,18 @@ export default function SignUpForm({ id }) {
           register={register}
           type="text"
           disabled={isSigning}
+          defaultValue={user?.whatsAppContact}
         />
       </FormRow>
       <FormRow childElement="button">
-        <div className="mt-4 flex w-full  justify-end ">
+        <div className="mt-4 flex w-full  justify-between ">
+          {isSigning && (
+            <p>
+              {userId ? "editing your detail..." : "signing up please wait..."}
+            </p>
+          )}
           <Button disabled={isSigning} type="submit">
-            {id ? "Edit user" : "Sign Up"}{" "}
+            {userId ? "Edit user" : "Sign Up"}{" "}
           </Button>
         </div>
       </FormRow>
