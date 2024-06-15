@@ -8,9 +8,11 @@ import { validateEmail } from "../../utils/helper";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
 import useLogin from "./useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
   const { login, loginError, isLoggingIn } = useLogin();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     formState: { errors },
@@ -22,7 +24,12 @@ export default function LoginForm() {
 
   function onSubmit(data) {
     console.log(data);
-    login(data, { onSuccess: () => reset() });
+    login(data, {
+      onSuccess: () => {
+        reset();
+        navigate("/");
+      },
+    });
   }
   function onError(errors) {
     console.log(errors);
