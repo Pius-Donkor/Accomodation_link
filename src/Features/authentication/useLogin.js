@@ -14,7 +14,6 @@ export default function useLogin() {
     mutationKey: ["user"],
     onSuccess: () => {
       queryClient.invalidateQueries();
-      toast.success("login successfully done");
     },
     onError: (error) => {
       console.log(error.message);
