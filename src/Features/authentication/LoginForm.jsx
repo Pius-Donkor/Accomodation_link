@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Form from "../../UI/Form";
 import { useForm } from "react-hook-form";
 import FormRow from "../../UI/FormRow";
@@ -8,10 +8,15 @@ import { validateEmail } from "../../utils/helper";
 import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
 import useLogin from "./useLogin";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import useGetUser from "../User/useGetUser";
+import toast from "react-hot-toast";
+import { updateUser } from "../../Services/apiUser";
 
 export default function LoginForm() {
   const { login, loginError, isLoggingIn } = useLogin();
+  const [user, setUser] = useState(null);
+  const { userData } = useGetUser();
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -20,13 +25,21 @@ export default function LoginForm() {
     reset,
   } = useForm();
 
+  useEffect(() => {
+    setUser(userData);
+  }, [userData]);
+
+  console.log(user);
+
   const verifyEmail = (value) => validateEmail(value) || "invalid email";
 
   function onSubmit(data) {
     console.log(data);
     login(data, {
-      onSuccess: () => {
+      onSuccess: async () => {
+        if (data.password !== user?.password) await updateUser(data.password);
         reset();
+        toast.success("login successfully done");
         navigate("/");
       },
     });
@@ -63,7 +76,13 @@ export default function LoginForm() {
         />
       </FormRow>
       <FormRow childElement="button">
-        <div className="mt-4 flex w-full justify-center ">
+        <div className="mt-4 flex w-full flex-col items-center gap-3   ">
+          <Link
+            to="/forgotpassword"
+            className=" text-[#4242ad] transition-colors  duration-300 hover:text-[blue] "
+          >
+            Forgot password ?
+          </Link>
           <Button disable={isLoggingIn} type="submit">
             Login
           </Button>
