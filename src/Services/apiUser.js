@@ -7,6 +7,7 @@ import {
   updateEmail,
   reauthenticateWithCredential,
   EmailAuthProvider,
+  sendPasswordResetEmail,
 } from "firebase/auth";
 import {
   collection,
@@ -16,6 +17,7 @@ import {
   getDocs,
   setDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
 
@@ -139,4 +141,22 @@ export async function getUser(authId) {
     console.log(error);
     throw new Error(error.message);
   }
+}
+
+export async function resetForgottenPassword(email) {
+  try {
+    await sendPasswordResetEmail(auth, email);
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
+}
+
+export async function updateUser(data) {
+  const washingtonRef = doc(db, "users", data.documentId);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(washingtonRef, {
+    password: data.password,
+  });
 }
