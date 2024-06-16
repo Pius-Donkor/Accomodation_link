@@ -14,6 +14,7 @@ import EditUser from "./Pages/EditUser";
 import DisplayOptionsBarProvider from "./contexts/DisplayOptionsContext";
 import { Toaster } from "react-hot-toast";
 import VerifyRoute from "./UI/VerifyRoute";
+import ForgotPassword from "./Pages/ForgotPassword";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -49,6 +50,7 @@ function App() {
                 <Route path="edituser" element={<EditUser />} />
               </Route>
               <Route path="/signup" element={<SignUp />} />
+              <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/login" element={<LogIn />} />
               <Route path="/uploads" element={<AllUploads />} />
               <Route path="*" element={<p>page not found</p>} />
