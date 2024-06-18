@@ -37,14 +37,21 @@ const coordinates = [
   { latitude: 5.6141, longitude: -0.2177 }, // Achimota Forest
 ];
 
-const MapComponent = ({ carouselScreenState, propertyId }) => {
+const MapComponent = ({
+  carouselScreenState,
+  propertyId,
+  coordinates = [],
+}) => {
   const [userLocation, setUserLocation] = useState(null);
   const [userHeading, setUserHeading] = useState(0);
   const [route, setRoute] = useState([]);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
   const apartmentLocation = useMemo(
-    () => [coordinates[propertyId].latitude, coordinates[propertyId].longitude],
+    () =>
+      propertyId
+        ? [coordinates[propertyId].latitude, coordinates[propertyId].longitude]
+        : coordinates,
     [propertyId],
   );
   useEffect(() => {
@@ -118,7 +125,7 @@ const MapComponent = ({ carouselScreenState, propertyId }) => {
         </Marker>
       )}
       {apartmentLocation && (
-        <Marker autoPan={false}  position={apartmentLocation}>
+        <Marker autoPan={false} position={apartmentLocation}>
           <Popup keepInView={true}>Apartment Location</Popup>
         </Marker>
       )}
