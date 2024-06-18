@@ -21,6 +21,7 @@ export default function Properties(PropertiesCard) {
       scrollToTop();
     }, [currentPage]);
 
+    // console.log(sortedProperties);
     if (isLoading) return <LoadingProperties />;
     if (propertiesError) {
       return <PageError errorMessage={propertiesError.message} />;
