@@ -13,7 +13,7 @@ import useGetUser from "../User/useGetUser";
 
 export default function ForgotPasswordForm() {
   const { isResetting, resettingError, resetPassword } = useForgotPassword();
-  const { userData } = useGetUser();
+ 
   const navigate = useNavigate();
   const {
     handleSubmit,
