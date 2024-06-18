@@ -11,22 +11,29 @@ import { useForm, useFieldArray } from "react-hook-form";
 import useGetPositionAddress from "../../hooks/useGetPositionAddress";
 import "./triangle.css";
 import useOutsideClick from "../../hooks/useOutsideClick";
+import useCreateEditProperties from "../properties/useCreateEditProperties";
+import toast from "react-hot-toast";
+import useGetUser from "../User/useGetUser";
 
 export default function CreateEditListingForm({ property, id }) {
+  const editSession = Boolean(id);
   const [showLocationPrompt, setShowLocationPrompt] = useState(false);
   const { ref } = useOutsideClick(handleClosePrompt);
+  const { createEdit, createEditError, isCreating } = useCreateEditProperties();
+  const { error, isLoading, userData } = useGetUser();
   const {
     handleSubmit,
     formState: { errors },
     register,
     control,
     setValue,
+    reset,
   } = useForm({
     defaultValues: {
-      features: [""],
-      amenities: [""],
-      rules: [""],
-      neighborhood: [""],
+      features: property?.features || [""],
+      amenities: property?.amenities || [""],
+      rules: property?.rules ? property?.rules || [`${property?.rules}`] : [""],
+      neighborhood: property?.neighborhood || [""],
     },
   });
   // here we get the position and address of the property provided the user bis at the exact location of the listing  and then set them to a state when a  button is clicked
@@ -59,10 +66,107 @@ export default function CreateEditListingForm({ property, id }) {
     remove: removeNeighborhood,
     fields: neighborhoodField,
   } = useFieldArray({ control, name: "neighborhood" });
-
+  // the submit function handle what happens next to the obtained values
   function onSubmit(data) {
-    console.log(data);
     console.table(data);
+    const {
+      accommodation_type,
+      amenities,
+      bathrooms,
+      bedrooms,
+      description,
+      features,
+      neighborhood,
+      neighboring_campus,
+      position_coordinate,
+      property_location,
+      property_name,
+      rental_price,
+      rules,
+      size,
+      upload_property_images,
+    } = data;
+
+    const newPosition = position_coordinate
+      .slice()
+      .trim()
+      .split(",")
+      .map((pos) => +pos);
+
+    if (editSession) {
+      createEdit(
+        {
+          id: id,
+          price: rental_price,
+          name: property_name,
+          location: property_location,
+          amenities,
+          bathrooms,
+          bedrooms,
+          description,
+          features,
+          neighborhood,
+          neighboring_campus,
+          image: property.image,
+          rules,
+          userId: userData.userId,
+          size,
+          accommodation_type,
+          gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+        },
+        {
+          onSuccess: () => {
+            toast.success("listing edited successfully");
+            reset();
+          },
+        },
+      );
+    } else {
+      console.log({
+        price: rental_price,
+        name: property_name,
+        location: property_location,
+        amenities,
+        bathrooms,
+        bedrooms,
+        description,
+        features,
+        neighborhood,
+        neighboring_campus,
+        image: upload_property_images,
+        rules,
+        userId: userData.userId,
+        size,
+        accommodation_type,
+        gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+      });
+      createEdit(
+        {
+          price: rental_price,
+          name: property_name,
+          location: property_location,
+          amenities,
+          bathrooms,
+          bedrooms,
+          description,
+          features,
+          neighborhood,
+          neighboring_campus,
+          image: upload_property_images,
+          rules,
+          userId: userData.userId,
+          size,
+          accommodation_type,
+          gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+        },
+        {
+          onSuccess: () => {
+            toast.success("listing created successfully");
+            reset();
+          },
+        },
+      );
+    }
   }
   function onError(errors) {
     console.log(errors);
@@ -90,16 +194,27 @@ export default function CreateEditListingForm({ property, id }) {
                 defaultValue={property?.name || ""}
                 register={register}
                 field="property_name"
+                disabled={isCreating}
+              />
+            </FormRow>
+            <FormRow field="size" error={errors?.property_name?.message}>
+              <Input
+                defaultValue={property?.size || ""}
+                register={register}
+                field="size"
+                placeholder="ie. 250sqft"
+                disabled={isCreating}
               />
             </FormRow>
             <FormRow field="rental_price" error={errors?.rental_price?.message}>
               <span>GH₵ / Year</span>
               <Input
-                defaultValue={property?.price || ""}
+                defaultValue={property?.price || property?.rental_price || ""}
                 register={register}
                 placeholder="in Gh₵ / Ghana cedis  "
                 type="number"
                 field="rental_price"
+                disabled={isCreating}
               />
             </FormRow>
             <div className="relative  ">
@@ -124,9 +239,12 @@ export default function CreateEditListingForm({ property, id }) {
                 </p>
 
                 <Input
-                  defaultValue={property?.location}
+                  defaultValue={
+                    property?.location || property?.property_location || ""
+                  }
                   field="property_location"
                   register={register}
+                  disabled={isCreating}
                 />
               </FormRow>
             </div>
@@ -135,10 +253,15 @@ export default function CreateEditListingForm({ property, id }) {
               error={errors?.property_location?.message}
             >
               <Input
-                defaultValue={property?.location}
+                defaultValue={
+                  property
+                    ? `${property?.gpsPosition.lat},${property?.gpsPosition.long}`
+                    : ""
+                }
                 field="position_coordinate"
                 register={register}
                 placeholder="ie. 5.689735, -0.239775"
+                disabled={isCreating}
               />
             </FormRow>
 
@@ -150,6 +273,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
                 field="accommodation_type"
                 options={["hostel rent", "home rent"]}
+                disabled={isCreating}
               />
             </FormRow>
             <FormRow field="bathrooms" error={errors?.bathrooms?.message}>
@@ -158,6 +282,7 @@ export default function CreateEditListingForm({ property, id }) {
                 defaultValue={property?.bathrooms || ""}
                 type="number"
                 field="bathrooms"
+                disabled={isCreating}
               />
             </FormRow>
             <FormRow field="bedrooms" error={errors?.bedrooms?.message}>
@@ -165,6 +290,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
                 defaultValue={property?.bedrooms || ""}
                 field="bedrooms"
+                disabled={isCreating}
               />
             </FormRow>
 
@@ -180,6 +306,7 @@ export default function CreateEditListingForm({ property, id }) {
                   "University of Energy and Natural Resources (UENR)",
                   "Catholic University College of Ghana",
                 ]}
+                disabled={isCreating}
               />
             </FormRow>
             <FormRow field="description" error={errors?.description?.message}>
@@ -187,6 +314,7 @@ export default function CreateEditListingForm({ property, id }) {
                 register={register}
                 defaultValue={property?.description || ""}
                 field="description"
+                disabled={isCreating}
               />
             </FormRow>
           </section>
@@ -204,6 +332,7 @@ export default function CreateEditListingForm({ property, id }) {
                 fieldArrayName="rules"
                 register={register}
                 required={false}
+                disabled={isCreating}
               />
               <MultipleInputs
                 errors={errors}
@@ -217,6 +346,7 @@ export default function CreateEditListingForm({ property, id }) {
                 fieldArrayName="features"
                 register={register}
                 required={false}
+                disabled={isCreating}
               />
               <MultipleInputs
                 errors={errors}
@@ -230,6 +360,7 @@ export default function CreateEditListingForm({ property, id }) {
                 fieldArrayName="amenities"
                 register={register}
                 required={false}
+                disabled={isCreating}
               />
               <MultipleInputs
                 error={errors?.neighborhood?.message}
@@ -243,6 +374,7 @@ export default function CreateEditListingForm({ property, id }) {
                 required={false}
                 register={register}
                 defaultValue={property?.neighborhood || ""}
+                disabled={isCreating}
               />
             </div>
           </section>
@@ -256,12 +388,14 @@ export default function CreateEditListingForm({ property, id }) {
               register={register}
               field={"upload_property_images"}
               type="file"
+              disabled={isCreating}
+              required={!editSession}
             />
           </FormRow>
         </div>
 
         <FormRow childElement="button">
-          <Button type="submit">
+          <Button type="submit" disable={isCreating}>
             {id ? "Edit Property" : "Create Property"}
           </Button>
         </FormRow>
