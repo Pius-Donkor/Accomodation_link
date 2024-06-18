@@ -80,6 +80,10 @@ export default function PropertyDetails() {
           <MapComponent
             carouselScreenState={carouselScreenState}
             propertyId={property.id}
+            coordinates={[
+              property?.gpsPosition?.lat,
+              property?.gpsPosition?.long,
+            ]}
           />
         </div>
       </section>
