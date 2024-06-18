@@ -5,6 +5,7 @@ export default function TextArea({
   required = "This field is required",
   field,
   disabled = false,
+  defaultValue,
 }) {
   return (
     <textarea
@@ -12,6 +13,7 @@ export default function TextArea({
       id={field}
       disabled={disabled}
       {...register(field, { required: required })}
+      defaultValue={defaultValue}
     />
   );
 }
