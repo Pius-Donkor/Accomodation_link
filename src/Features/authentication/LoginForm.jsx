@@ -15,8 +15,7 @@ import { updateUser } from "../../Services/apiUser";
 
 export default function LoginForm() {
   const { login, loginError, isLoggingIn } = useLogin();
-  const [user, setUser] = useState(null);
-  const { userData } = useGetUser();
+  
   const navigate = useNavigate();
   const {
     handleSubmit,
@@ -25,19 +24,12 @@ export default function LoginForm() {
     reset,
   } = useForm();
 
-  useEffect(() => {
-    setUser(userData);
-  }, [userData]);
-
-  console.log(user);
-
   const verifyEmail = (value) => validateEmail(value) || "invalid email";
 
   function onSubmit(data) {
     console.log(data);
     login(data, {
       onSuccess: async () => {
-        if (data.password !== user?.password) await updateUser(data.password);
         reset();
         toast.success("login successfully done");
         navigate("/");
