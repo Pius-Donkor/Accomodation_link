@@ -7,7 +7,8 @@ import Button from "../../UI/Button";
 import CrudButton from "../../UI/CrudButton";
 import Modal from "../../UI/Modal";
 import CreateEditListing from "../UserListings/CreateEditListing";
-export default function PropertyCrud({ property }) {
+import DeleteWindow from "../../UI/DeleteWindow";
+export default function PropertyCrud({ property, handleDelete, isDeleting }) {
   const [displayCrud, setDisplayCrud] = useState(false);
   const closeCrud = () => setDisplayCrud(false);
   function handleDisplayCrud() {
@@ -29,8 +30,17 @@ export default function PropertyCrud({ property }) {
             <Modal.Window openName={"edit"}>
               <CreateEditListing property={property} id={property?.id} />
             </Modal.Window>
-
-            <CrudButton Icon={MdDelete}>Delete</CrudButton>
+            <Modal.Open openName="delete">
+              <CrudButton Icon={MdDelete}>Delete</CrudButton>
+            </Modal.Open>
+            <Modal.Window openName="delete">
+              <DeleteWindow
+                id={property.id}
+                handleDelete={handleDelete}
+                isDeleting={isDeleting}
+                imageNames={property?.imageNames}
+              />
+            </Modal.Window>
           </Modal>
         </div>
       )}
