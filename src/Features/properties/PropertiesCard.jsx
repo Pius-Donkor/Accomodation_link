@@ -16,11 +16,21 @@ import Button from "../../UI/Button";
 import PropertyCrud from "./PropertyCrud";
 import useDeleteProperty from "./useDeleteProperty";
 import RatingButton from "../Ratings/Ratingbutton";
+import useGetRatings from "../Ratings/useGetRatings";
+import useSetRatings from "../Ratings/useSetRatings";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
   const [liked, setLiked] = useState(false);
   const [tempLiked, setTempLiked] = useState(false);
   const { deleteListing, isDeleting } = useDeleteProperty();
+  const { ratings = [], ratingsLoading } = useGetRatings(property?.id);
+  const { isRating, rateProperty } = useSetRatings();
+
+  let avgRating = Math.round(
+    ratings?.reduce((acc, rating) => acc + rating.rate, 0) / ratings.length,
+    1,
+  );
+
   return (
     <div className="flex h-[38rem] w-[22rem] flex-col items-center gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl md:w-[70%] lg:w-[22rem]">
       <div className="relative h-[50%] w-[100%] rounded-md bg-slate-500">
@@ -84,11 +94,16 @@ export default function PropertiesCard({ property, allowCrud = true }) {
               <IoMdHeartEmpty className="cursor-pointer text-xl text-[#b33479] transition-all md:text-3xl lg:text-xl" />
             )}
           </span> */}
-
-          <RatingButton />
+          {/* this component contains the buttons and the functionality for avgRating the property */}
+          <RatingButton
+            rateProperty={rateProperty}
+            isRating={isRating}
+            ratings={ratings}
+            propertyId={property.id}
+          />
 
           <p className="flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg md:text-2xl lg:text-base">
-            ⭐{property.rating}
+            {!ratingsLoading && avgRating ? avgRating : ""}⭐
           </p>
         </div>
         <span className="flex items-center justify-center gap-1 overflow-hidden rounded-3xl bg-[#e3f5e3] p-2">
