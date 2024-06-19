@@ -109,7 +109,7 @@ export default function CreateEditListingForm({ property, id }) {
           neighboring_campus,
           image: property.image,
           rules,
-          userId: userData.userId,
+          userId: property?.userId,
           size,
           accommodation_type,
           gpsPosition: { lat: newPosition[0], long: newPosition[1] },
