@@ -14,7 +14,7 @@ import "leaflet-fullscreen";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import { MdOutlineDirectionsRun } from "react-icons/md";
 import { GiDuration } from "react-icons/gi";
-const coordinates = [
+const tempCoordinates = [
   { latitude: 5.555, longitude: -0.1971 }, // Independence Square (Black Star Square)
   { latitude: 5.558, longitude: -0.2065 }, // Kwame Nkrumah Memorial Park
   { latitude: 5.556, longitude: -0.2056 }, // National Museum of Ghana
@@ -47,10 +47,14 @@ const MapComponent = ({
   const [route, setRoute] = useState([]);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
+  console.log(propertyId);
   const apartmentLocation = useMemo(
     () =>
       propertyId
-        ? [coordinates[propertyId].latitude, coordinates[propertyId].longitude]
+        ? [
+            tempCoordinates[propertyId].latitude,
+            tempCoordinates[propertyId].longitude,
+          ]
         : coordinates,
     [propertyId],
   );
