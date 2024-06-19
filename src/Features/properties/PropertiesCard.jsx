@@ -14,11 +14,13 @@ import "swiper/css/pagination";
 import SwiperArrowButtons from "../../UI/SwiperArrowButtons";
 import Button from "../../UI/Button";
 import PropertyCrud from "./PropertyCrud";
+import useDeleteProperty from "./useDeleteProperty";
+import RatingButton from "../Ratings/Ratingbutton";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
   const [liked, setLiked] = useState(false);
   const [tempLiked, setTempLiked] = useState(false);
-
+  const { deleteListing, isDeleting } = useDeleteProperty();
   return (
     <div className="flex h-[38rem] w-[22rem] flex-col items-center gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl md:w-[70%] lg:w-[22rem]">
       <div className="relative h-[50%] w-[100%] rounded-md bg-slate-500">
@@ -66,8 +68,8 @@ export default function PropertiesCard({ property, allowCrud = true }) {
             Size: {property.size}
           </span>
         </div>
-        <div className="flex justify-center gap-12">
-          <button className="rounded-3xl bg-[#f5e3e9] px-2 py-[0.1rem] text-lg text-[#b33479] shadow-md md:px-3 md:text-2xl lg:px-[0.6rem] lg:text-lg">
+        <div className="flex items-center justify-center gap-12 ">
+          {/* <button className="rounded-3xl bg-[#f5e3e9] px-2 py-[0.1rem] text-lg text-[#b33479] shadow-md md:px-3 md:text-2xl lg:px-[0.6rem] lg:text-lg">
             <FaCommentDots />
           </button>
           <span
@@ -81,7 +83,10 @@ export default function PropertiesCard({ property, allowCrud = true }) {
             ) : (
               <IoMdHeartEmpty className="cursor-pointer text-xl text-[#b33479] transition-all md:text-3xl lg:text-xl" />
             )}
-          </span>
+          </span> */}
+
+          <RatingButton />
+
           <p className="flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg md:text-2xl lg:text-base">
             ⭐{property.rating}
           </p>
@@ -96,7 +101,13 @@ export default function PropertiesCard({ property, allowCrud = true }) {
           <Button type="transparent" link={`/propertyDetails/${property.id}`}>
             View Listing
           </Button>
-          {allowCrud && <PropertyCrud property={property} />}
+          {allowCrud && (
+            <PropertyCrud
+              handleDelete={deleteListing}
+              isDeleting={isDeleting}
+              property={property}
+            />
+          )}
         </div>
       </div>
     </div>
