@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import useGetUser from "../User/useGetUser";
+import toast from "react-hot-toast";
 
 const ratingProps = [
   {
@@ -28,21 +30,37 @@ const ratingProps = [
   },
 ];
 
-const RatingButton = () => {
+const RatingButton = ({ rateProperty, isRating, propertyId, ratings }) => {
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-
+  const { userData } = useGetUser();
+  const oldRattingId = ratings
+    ?.filter((rating) => rating?.userId === userData?.userId)
+    ?.at(0)?.ratingId;
   const handleButtonClick = () => {
     setIsPopupVisible(!isPopupVisible);
   };
 
   function handleRating(rateValue) {
     console.log(rateValue);
-    handleButtonClick();
+    rateProperty(
+      {
+        ratingId: oldRattingId || null,
+        rate: rateValue,
+        propertyId: propertyId,
+        userId: userData.userId,
+      },
+      {
+        onSuccess: () => {
+          handleButtonClick();
+        },
+      },
+    );
   }
 
   return (
-    <div className="relative inline-block">
+    <div className={`relative inline-block ${isRating ? "opacity-35" : ""}`}>
       <button
+        disabled={isRating}
         onClick={handleButtonClick}
         className="rounded-3xl bg-[#b33479] px-3 py-1 text-white hover:bg-[#ee3b9d] focus:outline-none"
       >
@@ -57,6 +75,7 @@ const RatingButton = () => {
             {ratingProps.map((prop, i) => (
               <li key={prop.name}>
                 <button
+                  disabled={isRating}
                   onClick={() => handleRating(5 - i)}
                   className={`w-full rounded ${prop.bg_color} px-4 py-2 text-left text-white transition-colors duration-300 ${prop.hoverBg_color}`}
                 >
