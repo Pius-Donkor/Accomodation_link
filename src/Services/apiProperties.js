@@ -8,7 +8,12 @@ import {
   serverTimestamp,
   deleteDoc,
 } from "firebase/firestore";
-import { ref, getDownloadURL, uploadBytes } from "firebase/storage";
+import {
+  ref,
+  getDownloadURL,
+  uploadBytes,
+  deleteObject,
+} from "firebase/storage";
 import { db, storage } from "./firebase";
 
 let tempImgs = [];
@@ -96,6 +101,19 @@ export async function createEditProperties(propertyData) {
   }
 }
 
-export async function deleteProperty({ id, image }) {
-  await deleteDoc(doc(db, "properties", id));
+export async function deleteProperty({ id, imageNames }) {
+  try {
+    if (imageNames) {
+      for (let i = 0; i < imageNames.length; i++) {
+        // Create a reference to the file to delete
+        const desertRef = ref(storage, `house_images/${imageNames[i]}`);
+        // Delete the file
+        await deleteObject(desertRef);
+      }
+    }
+    await deleteDoc(doc(db, "properties", id));
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
 }
