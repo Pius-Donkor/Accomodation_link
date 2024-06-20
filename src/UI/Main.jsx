@@ -8,7 +8,7 @@ export default function Main({ children }) {
 
   return (
     <main className=" relative flex h-[100vh] w-[80%] flex-col  bg-slate-200 p-4 ">
-      {displayOptionsBar && <OptionsBar page="user" />}
+      {displayOptionsBar && <OptionsBar page="user" isUser={true} />}
       <div className={`${displayOptionsBar ? "mt-12" : ""}  `}>
         <HomeBack />
       </div>
