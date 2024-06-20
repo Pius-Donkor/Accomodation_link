@@ -17,7 +17,7 @@ export default function useGetUser() {
     enabled: authUserId !== "loading" && authUserId !== null,
   });
 
-  console.log(authUserId);
-  console.log(userData, isLoading);
+  // console.log(authUserId);
+  // console.log(userData, isLoading);
   return { userData, isLoading, error };
 }
