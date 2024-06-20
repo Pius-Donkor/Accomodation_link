@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useGetUser from "../User/useGetUser";
-import toast from "react-hot-toast";
+import useDeleteRating from "./useDeleteRating";
 
 const ratingProps = [
   {
@@ -31,8 +31,13 @@ const ratingProps = [
 ];
 
 const RatingButton = ({ rateProperty, isRating, propertyId, ratings }) => {
+  const { deletePropertyRating, isDeleting } = useDeleteRating();
   const [isPopupVisible, setIsPopupVisible] = useState(false);
   const { userData } = useGetUser();
+  let isRatedByUser = ratings.some(
+    (rating) => rating?.userId === userData?.userId,
+  );
+  //  getting ratingId of the property base on the current user for deleting or updating
   const oldRattingId = ratings
     ?.filter((rating) => rating?.userId === userData?.userId)
     ?.at(0)?.ratingId;
@@ -58,14 +63,27 @@ const RatingButton = ({ rateProperty, isRating, propertyId, ratings }) => {
   }
 
   return (
-    <div className={`relative inline-block ${isRating ? "opacity-35" : ""}`}>
+    <div
+      className={`relative inline-flex gap-4 ${isRating ? "opacity-35" : ""}`}
+    >
+      {/* button for rating or updating rating */}
       <button
         disabled={isRating}
         onClick={handleButtonClick}
-        className="rounded-3xl bg-[#b33479] px-3 py-1 text-white hover:bg-[#ee3b9d] focus:outline-none"
+        className={`rounded-3xl transition-colors duration-200  ${isRatedByUser ? "bg-green-700 hover:bg-green-500" : "bg-[#b33479] hover:bg-[#ee3b9d]"} px-3 py-1 text-white  focus:outline-none`}
       >
-        Rate Property
+        {isRatedByUser ? "Property Rated" : "Rate Property"}
       </button>
+      {/* //  button for deleting rating */}
+      {isRatedByUser && (
+        <button
+          disabled={isDeleting}
+          onClick={() => deletePropertyRating(oldRattingId)}
+          className={`rounded-3xl bg-red-700 px-3   py-1 text-white transition-colors duration-200 hover:bg-red-600  focus:outline-none`}
+        >
+          unrate
+        </button>
+      )}
       {isPopupVisible && (
         <div className="absolute right-[-12rem] top-[-10rem] z-20 mt-2 w-[12rem] rounded border border-gray-300 bg-white p-4 shadow-lg">
           <h3 className="mb-2 text-center text-lg font-semibold ">
