@@ -26,7 +26,7 @@ export default function MyListings() {
       </div>
       <div className=" flex w-full px-4">
         <div className=" mx-8 h-[80dvh] w-full  overflow-y-auto rounded-lg bg-slate-700 pt-8  ">
-          <Properties allowCrud={true} noPadding={true} />
+          <Properties allowCrud={true} noPadding={true} isUser={true} />
         </div>
       </div>
     </section>
