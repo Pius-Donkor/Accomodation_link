@@ -18,6 +18,7 @@ import useDeleteProperty from "./useDeleteProperty";
 import RatingButton from "../Ratings/Ratingbutton";
 import useGetRatings from "../Ratings/useGetRatings";
 import useSetRatings from "../Ratings/useSetRatings";
+import useGetUser from "../User/useGetUser";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
   const [liked, setLiked] = useState(false);
@@ -25,7 +26,6 @@ export default function PropertiesCard({ property, allowCrud = true }) {
   const { deleteListing, isDeleting } = useDeleteProperty();
   const { ratings = [], ratingsLoading } = useGetRatings(property?.id);
   const { isRating, rateProperty } = useSetRatings();
-
   let avgRating = Math.round(
     ratings?.reduce((acc, rating) => acc + rating.rate, 0) / ratings.length,
     1,
