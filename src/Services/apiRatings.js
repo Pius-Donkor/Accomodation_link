@@ -7,6 +7,7 @@ import {
   where,
   getDoc,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 import { db } from "./firebase";
 
@@ -37,23 +38,27 @@ export async function setRating(data) {
 export async function getRatings(propertyId) {
   let ratings = [];
   try {
-    console.log(propertyId);
+    // console.log(propertyId);
     const q = query(
       collection(db, "ratings"),
       where("propertyId", "==", propertyId),
     );
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot);
-    if (querySnapshot.empty) throw new Error("the is no such data");
+    // console.log(querySnapshot);
+    // if (querySnapshot.empty) throw new Error("the is no such data");
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      console.log(doc);
+      // console.log(doc);
       ratings.push({ ...doc.data(), ratingId: doc.id });
     });
-    console.log(ratings);
+    // console.log(ratings);
     return ratings;
   } catch (error) {
     console.log(error);
     throw new Error(error.message);
   }
+}
+
+export async function deleteRating(id) {
+  await deleteDoc(doc(db, "ratings", id));
 }
