@@ -8,17 +8,17 @@ import SortBy from "./SortBy";
 import Modal from "./Modal";
 import FilterWindow from "./FilterWindow";
 import useFilterSort from "../hooks/useFilterSort";
-export default function OptionsBar({ page = "home" }) {
+export default function OptionsBar({ page = "home", isUser = false }) {
   const [navFoldOpen, setNavFoldOpen] = useState(false);
-  const { sortedProperties } = useFilterSort();
+  const { sortedProperties } = useFilterSort(isUser);
   // checking for small mobile screens
   const isSmallScreen = useRef(window.innerWidth).current < 768;
 
   const toggleNavFoldOpening = navFoldOpen && isSmallScreen;
-
+  const isHomepage = page === "home";
   return (
     <nav
-      className={` ${page === "home" ? "fixed md:mt-20 " : "absolute left-0 top-0 "} z-[999] w-[100%] transition-all ${toggleNavFoldOpening ? "mt-[6.05rem] " : `${isSmallScreen && "mt-[-5.5rem]"}`} flex  flex-col items-center gap-10 px-14 py-2 shadow-md   backdrop-blur-lg 
+      className={` ${page === "home" ? "fixed md:mt-20 " : "absolute left-0 top-[-7.4rem]  lg:top-0  "} z-[999] w-[100%] transition-all ${toggleNavFoldOpening ? (isHomepage ? "mt-[6.05rem] " : "mt-[8.05rem]") : `${isSmallScreen && "mt-[-5.5rem]"}`} flex  flex-col items-center gap-10 px-14 py-2 shadow-md   backdrop-blur-lg 
     md:w-[100%] md:flex-row md:items-center md:justify-between md:gap-12 md:bg-slate-100  `}
     >
       <div className=" flex justify-center ">
