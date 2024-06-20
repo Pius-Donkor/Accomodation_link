@@ -4,9 +4,15 @@ import PageError from "../../UI/PageError";
 import LoadingProperties from "./LoadingProperties";
 import useFilterSort from "../../hooks/useFilterSort";
 import PropertiesCard from "./PropertiesCard";
+import useGetProperties from "./useGetProperties";
 
-export default function Properties({ allowCrud, noPadding = false }) {
-  const { sortedProperties, isLoading, propertiesError } = useFilterSort();
+export default function Properties({
+  allowCrud,
+  noPadding = false,
+  isUser = false,
+}) {
+  const { sortedProperties, isLoading, propertiesError } =
+    useFilterSort(isUser);
   const [currentPage, setCurrentPage] = useState(0);
   const propertiesPerPage = 9;
 
@@ -56,31 +62,42 @@ export default function Properties({ allowCrud, noPadding = false }) {
       <div
         className={`${noPadding ? "" : "mt-[10rem]"} flex w-[100%] flex-row flex-wrap items-center justify-center gap-12`}
       >
-        {currentProperties.map((property) => (
-          <PropertiesCard
-            key={property.id}
-            property={property}
-            allowCrud={allowCrud}
-          />
-        ))}
+        {!sortedProperties.length && (
+          <h2 className="text-3xl text-[#dddddd] ">
+            You have not posted any listing 🏠 yet
+          </h2>
+        )}
+        {sortedProperties.length
+          ? currentProperties.map((property) => (
+              <PropertiesCard
+                key={property.id}
+                property={property}
+                allowCrud={allowCrud}
+              />
+            ))
+          : ""}
       </div>
       {/* next/prev buttons */}
-      <div className="flex gap-12">
-        <Button
-          onclick={handleBack}
-          type={"greenLight"}
-          disable={currentPage === 0}
-        >
-          Back
-        </Button>
-        <Button
-          onclick={handleNext}
-          type={"greenLight"}
-          disable={currentPage === totalPages - 1}
-        >
-          Next
-        </Button>
-      </div>
+      {sortedProperties.length ? (
+        <div className="flex gap-12">
+          <Button
+            onclick={handleBack}
+            type={"greenLight"}
+            disable={currentPage === 0}
+          >
+            Back
+          </Button>
+          <Button
+            onclick={handleNext}
+            type={"greenLight"}
+            disable={currentPage === totalPages - 1}
+          >
+            Next
+          </Button>
+        </div>
+      ) : (
+        ""
+      )}
     </div>
   );
 }
