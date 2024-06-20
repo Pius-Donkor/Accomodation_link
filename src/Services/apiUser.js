@@ -125,7 +125,7 @@ export async function getUser(authId) {
     const q = query(collection(db, "users"), where("userId", "==", authId));
     let user = [];
     const querySnapshot = await getDocs(q);
-    console.log(querySnapshot, q);
+    // console.log(querySnapshot, q);
     if (querySnapshot.empty)
       throw new Error(
         "sorry , user details cannot be obtained please check your internet connection ",
@@ -135,7 +135,7 @@ export async function getUser(authId) {
       user.push({ ...doc.data(), documentId: doc.id });
       // console.log(doc.id, " => ", doc.data());
     });
-    console.log(user);
+    // console.log(user);
     return user;
   } catch (error) {
     console.log(error);
