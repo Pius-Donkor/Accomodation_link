@@ -1,5 +1,4 @@
-// MapComponent.js
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -14,6 +13,7 @@ import "leaflet-fullscreen";
 import "leaflet-fullscreen/dist/leaflet.fullscreen.css";
 import { MdOutlineDirectionsRun } from "react-icons/md";
 import { GiDuration } from "react-icons/gi";
+
 const tempCoordinates = [
   { latitude: 5.555, longitude: -0.1971 }, // Independence Square (Black Star Square)
   { latitude: 5.558, longitude: -0.2065 }, // Kwame Nkrumah Memorial Park
@@ -47,7 +47,8 @@ const MapComponent = ({
   const [route, setRoute] = useState([]);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
-  console.log(propertyId);
+  const markerRef = useRef(null);
+
   const apartmentLocation = useMemo(
     () =>
       propertyId
@@ -56,13 +57,13 @@ const MapComponent = ({
             tempCoordinates[propertyId].longitude,
           ]
         : coordinates,
-    [propertyId],
+    [propertyId, coordinates],
   );
+
   useEffect(() => {
     const handlePosition = (position) => {
       const { latitude, longitude, heading } = position.coords;
       setUserLocation([latitude, longitude]);
-
       setUserHeading(heading || 0);
     };
 
@@ -74,12 +75,30 @@ const MapComponent = ({
       },
     );
 
-    return () => navigator.geolocation.clearWatch(watchId);
+    const handleOrientation = (event) => {
+      setUserHeading(event.alpha);
+    };
+
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      DeviceOrientationEvent.requestPermission()
+        .then((response) => {
+          if (response === "granted") {
+            window.addEventListener("deviceorientation", handleOrientation);
+          }
+        })
+        .catch(console.error);
+    } else {
+      window.addEventListener("deviceorientation", handleOrientation);
+    }
+
+    return () => {
+      navigator.geolocation.clearWatch(watchId);
+      window.removeEventListener("deviceorientation", handleOrientation);
+    };
   }, []);
 
   useEffect(() => {
     if (userLocation && apartmentLocation) {
-      // console.log("fetching");
       fetchRoute(userLocation, apartmentLocation);
     }
   }, [userLocation, apartmentLocation]);
@@ -92,12 +111,17 @@ const MapComponent = ({
     const routeCoordinates = data.routes[0].geometry.coordinates.map(
       (coord) => [coord[1], coord[0]],
     );
-    // console.log(data);
     setDistance(data.routes[0].distance);
     setDuration(data.routes[0].duration);
     setRoute(routeCoordinates);
   };
-  // console.log(carouselScreenState);
+
+  useEffect(() => {
+    if (markerRef.current) {
+      markerRef.current.setRotationAngle(userHeading);
+    }
+  }, [userHeading]);
+
   return (
     <MapContainer
       center={apartmentLocation}
@@ -122,8 +146,7 @@ const MapComponent = ({
             iconAnchor: [19, 19],
             popupAnchor: [0, -20],
           })}
-          rotationAngle={userHeading}
-          rotationOrigin="center"
+          ref={markerRef}
         >
           <Popup autoPan={false}>Your Location</Popup>
         </Marker>
@@ -134,8 +157,8 @@ const MapComponent = ({
         </Marker>
       )}
       {route.length > 0 && <Polyline positions={route} color="blue" />}
-      <div className=" absolute right-2 top-2 z-[500]   rounded-sm bg-[#ffffffdc] p-1 shadow-sm ">
-        <p className="flex items-center gap-1 text-sm ">
+      <div className="absolute right-2 top-2 z-[500] rounded-sm bg-[#ffffffdc] p-1 shadow-sm">
+        <p className="flex items-center gap-1 text-sm">
           <MdOutlineDirectionsRun /> Distance: {(distance / 1000).toFixed(2)} km
         </p>
         <p className="flex items-center gap-1 text-sm">
