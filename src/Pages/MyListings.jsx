@@ -24,8 +24,8 @@ export default function MyListings() {
           </Modal.Window>
         </Modal>
       </div>
-      <div className=" flex w-full px-4">
-        <div className=" mx-8 h-[80dvh] w-full  overflow-y-auto rounded-lg bg-slate-700 pt-8  ">
+      <div className=" flex w-full lg:px-4">
+        <div className=" h-[80dvh] w-full overflow-y-auto  rounded-lg pt-8 lg:mx-8 lg:bg-slate-700  ">
           <Properties allowCrud={true} noPadding={true} isUser={true} />
         </div>
       </div>
