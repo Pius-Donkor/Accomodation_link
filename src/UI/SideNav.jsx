@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
 import { auth } from "../Services/firebase";
@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 export default function SideNav() {
   const { userData = {}, isLoading, error } = useGetUser();
   const navigate = useNavigate();
-
+  const [sideBarOpen, setSideBarOpen] = useState(false);
+  const isSmallScreen = useRef(window.innerWidth).current < 1024;
   function handleLogout() {
     logout();
     toast.success("you have been logged out successfully");
@@ -18,8 +19,18 @@ export default function SideNav() {
   }
 
   return (
-    <aside className="h-[100dvh] w-[20%] bg-slate-500 ">
+    <aside
+      className={`fixed ${sideBarOpen ? "left-[0]" : "left-[-70%]"} z-50 h-[100dvh] w-[70%] bg-slate-500 transition-all  duration-300 lg:relative lg:left-0 lg:z-0 lg:w-[20%] `}
+    >
       {/* header part */}
+      {isSmallScreen && (
+        <button
+          onClick={() => setSideBarOpen((prev) => !prev)}
+          className="absolute right-[-4rem] top-[50%] z-[-2] h-20 w-[4rem] rounded-lg bg-[#2e2929ef] "
+        >
+          <img src="/public/userMenuIcon.png" className="h-full" alt="" />
+        </button>
+      )}
       <div className="w-full"></div>
       <div className="flex w-full flex-col items-center bg-slate-400 px-2 text-slate-800">
         <img
