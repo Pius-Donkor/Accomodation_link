@@ -18,8 +18,10 @@ import {
   setDoc,
   doc,
   updateDoc,
+  documentId,
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
+import { getProperty } from "./apiProperties";
 
 export async function userSignUp(signUpData) {
   const {
@@ -137,6 +139,36 @@ export async function getUser(authId) {
     });
     // console.log(user);
     return user;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
+}
+
+export async function getPropertyOwner(ownerId) {
+  try {
+    const q = query(collection(db, "users"), where("userId", "==", ownerId));
+    let user = [];
+    const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot, q);
+    if (querySnapshot.empty)
+      throw new Error(
+        "sorry , user details cannot be obtained please check your internet connection ",
+      );
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      user.push({ ...doc.data(), documentId: doc.id });
+      // console.log(doc.id, " => ", doc.data());
+    });
+    // console.log(user);
+    const [{ userName, contact, location, chatIDs, documentId }] = user;
+    return {
+      userName,
+      contact,
+      location,
+      chatIDs: chatIDs?.length ? chatIDs : [],
+      documentId,
+    };
   } catch (error) {
     console.log(error);
     throw new Error(error.message);
