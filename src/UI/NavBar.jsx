@@ -41,6 +41,13 @@ export default function NavBar() {
       <div
         className={`absolute flex flex-col gap-4 md:flex-row lg:items-center ${isSmallScreen && isSCMenuOpen ? "right-[0rem]" : "right-[-20rem]"}   z-[999] h-[70dvh] bg-slate-400 p-2 transition-[300ms] md:relative md:right-0 md:z-0  md:h-[inherit] md:bg-transparent`}
       >
+        <span
+          onClick={() => navigate("chats")}
+          role="button"
+          className="mt-20  w-fit rounded-full bg-green-50 px-1 py-1 hover:bg-green-200 md:mt-0 "
+        >
+          <img className="w-8" src="/chatIcon2.png" alt="icon" />
+        </span>
         {/* USER PAGE BUTTON */}
         <span
           onClick={() => navigate("user")}
