@@ -15,12 +15,51 @@ import Accordion from "../UI/Accordion";
 import AccordionChild from "../UI/AccordionChild";
 import MapComponent from "../Features/mapping/MapComponent";
 import { useState } from "react";
+import useCreateChat from "../Features/chats/useCreateChat";
+import useGetUser from "../Features/User/useGetUser";
+import useGetOwner from "../Features/User/useGetOwner";
+import toast from "react-hot-toast";
 
 export default function PropertyDetails() {
   const { id } = useParams();
   const { property, propertyLoading, propertyError } = useGetProperty(id);
   const moveBack = useMoveBack();
+  const { errorOwner, isLoadingOwner, propertyOwner } = useGetOwner(
+    property?.userId,
+  );
+  const { userData, isLoading, error } = useGetUser();
+  const { createChat, createChatError, isCreating } = useCreateChat();
   const [carouselScreenState, setCarouselScreenState] = useState(false);
+  const isSameUser = userData?.userId === property?.userId;
+
+  function handleCreateChat() {
+    createChat(
+      {
+        participants: {
+          [`${userData?.userId}`]: true,
+          [`${property?.userId}`]: true,
+        },
+        lastMessage: "new chat",
+        timestamp: Date.now(),
+        propertyOwnerId: property?.userId,
+        usersDetails: [
+          {
+            documentId: userData?.documentId,
+            chatIDs: userData?.chatIDs || [],
+          },
+          {
+            documentId: propertyOwner?.documentId,
+            chatIDs: propertyOwner.chatIDs.length ? propertyOwner.chatIDs : [],
+          },
+        ],
+      },
+      {
+        onSuccess: () => {
+          toast.success("chat Created successfully");
+        },
+      },
+    );
+  }
 
   if (propertyLoading)
     return <p className=" mt-[10rem] text-7xl ">loading...</p>;
@@ -38,11 +77,17 @@ export default function PropertyDetails() {
             <BiSolidLeftArrow className=" text-slate-700" /> back
           </Button>
         </div>
-        <div className=" flex flex-col gap-8 md:flex-row">
-          <Button type="reddish">
+        <div
+          className={` flex flex-col gap-8 md:flex-row ${isSameUser && "opacity-20"} `}
+        >
+          <Button type="reddish" disable={isSameUser}>
             <LuGitPullRequestDraft className=" text-slate-50" /> Request to rent
           </Button>
-          <Button type="transparentRed">
+          <Button
+            type="transparentRed"
+            onClick={handleCreateChat}
+            disable={isCreating || isSameUser}
+          >
             <IoChatbubblesOutline className=" text-slate-700" /> Chat with owner
           </Button>
         </div>
