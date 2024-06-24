@@ -1,4 +1,4 @@
-import { push, ref, child, update, set } from "firebase/database";
+import { push, ref, child, update, set, onValue, get } from "firebase/database";
 import { database, db } from "./firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
@@ -51,4 +51,39 @@ export async function sendUpdateMessage(postData) {
   }
 
   return update(ref(database), updates);
+}
+
+// export async function getChats(chatIDs) {
+//   let chats = [];
+//   try {
+//     for (let i = 0; i < chatIDs?.length; i++) {
+//       const starCountRef = ref(database, "chats/" + chatIDs[i]);
+//       console.log(starCountRef);
+//       onValue(starCountRef, (snapshot) => {
+//         const data = snapshot.val();
+//         console.log(data);
+//         chats.push(data);
+//       });
+//     }
+//     console.log(chats);
+//     return chats;
+//   } catch (error) {
+//     console.log(error);
+//     throw new Error(error.message);
+//   }
+// }
+export async function getChats(chatIDs) {
+  try {
+    const chatPromises = chatIDs.map((chatID) => {
+      const chatRef = ref(database, "chats/" + chatID);
+      return get(chatRef).then((snapshot) => snapshot.val());
+    });
+
+    const chats = await Promise.all(chatPromises);
+    console.log(chats);
+    return chats;
+  } catch (error) {
+    console.error(error);
+    throw new Error(error.message);
+  }
 }
