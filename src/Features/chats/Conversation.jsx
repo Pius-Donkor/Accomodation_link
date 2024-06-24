@@ -2,25 +2,30 @@ import React from "react";
 import useGetOwner from "../User/useGetOwner";
 
 export default function Conversation({
-  propertyOwnerId,
+  // propertyOwnerId,
   lastMessage,
   currentUserChatIDs,
   setActiveChatId,
-  setOwnerName,
+  setChatParticipantName,
+  participants,
+  currentUserId,
 }) {
+  // getting the id of the other participant in communication with the user
+  const [chatParticipant] = Object.keys(participants).filter(
+    (id) => id !== currentUserId,
+  );
+  // actually we are not getting the owner here , we are just getting the other participants details
   const { errorOwner, isLoadingOwner, propertyOwner } =
-    useGetOwner(propertyOwnerId);
+    useGetOwner(chatParticipant);
 
-  // // Log statements for debugging
-  // console.log(propertyOwner);
-  // console.log("hello");
-
-  // Check if propertyOwner and chatIDs exist before filtering
+  // getting the id of the chat which is currently active
   const activeChatId = propertyOwner?.chatIDs?.filter((chatId) =>
     currentUserChatIDs.includes(chatId),
   )[0];
+
+  console.log(activeChatId);
   function handleClickConversation() {
-    setOwnerName(propertyOwner?.userName);
+    setChatParticipantName(propertyOwner?.userName);
     setActiveChatId(activeChatId);
   }
   console.log(activeChatId);
