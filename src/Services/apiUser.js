@@ -146,6 +146,7 @@ export async function getUser(authId) {
 }
 
 export async function getPropertyOwner(ownerId) {
+  console.log(ownerId);
   try {
     const q = query(collection(db, "users"), where("userId", "==", ownerId));
     let user = [];
@@ -161,6 +162,7 @@ export async function getPropertyOwner(ownerId) {
       // console.log(doc.id, " => ", doc.data());
     });
     // console.log(user);
+    console.log(user);
     const [{ userName, contact, location, chatIDs, documentId }] = user;
     return {
       userName,
@@ -186,8 +188,6 @@ export async function resetForgottenPassword(email) {
 
 export async function updateUser(data) {
   const washingtonRef = doc(db, "users", data.documentId);
-
-  // Set the "capital" field of the city 'DC'
   await updateDoc(washingtonRef, {
     password: data.password,
   });
