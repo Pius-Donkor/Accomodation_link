@@ -1,19 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatSideBar from "./ChatSideBar";
 import ChatArea from "./ChatArea";
 import ChatInfoPanel from "./ChatInfoPanel";
 import useGetUser from "../User/useGetUser";
 import useGetChats from "./useGetChats";
 import Conversation from "./Conversation";
+import Message from "./Message";
+import { getChat } from "../../Services/apiChats";
 
 // ChatUI component
 export default function ChatBox() {
   const { userData, isLoading: userLoading, error: userError } = useGetUser();
   const { chats, chatsLoading, chatsError } = useGetChats(userData?.chatIDs);
   const [activeChatId, setActiveChatId] = useState("");
-  const [ownerName, setOwnerName] = useState("");
+  const [chatParticipantName, setChatParticipantName] = useState("");
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
+  useEffect(() => {
+    getChat(activeChatId);
+  }, [activeChatId]);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -23,20 +28,28 @@ export default function ChatBox() {
         {errorState && <p>loading chats ...</p>}
         {!loading &&
           !errorState &&
-          chats.map((chat) => (
+          chats.map((chat, i) => (
             <Conversation
-              setOwnerName={setOwnerName}
-              key={chat.propertyOwnerId}
-              propertyOwnerId={chat.propertyOwnerId}
+              setChatParticipantName={setChatParticipantName}
+              key={i}
+              // propertyOwnerId={chat.propertyOwnerId}
               lastMessage={chat.lastMessage}
               currentUserChatIDs={userData?.chatIDs}
+              currentUserId={userData?.userId}
               setActiveChatId={setActiveChatId}
+              participants={chat.participants}
             />
           ))}
       </ChatSideBar>
 
       {/* Main chat area */}
-      <ChatArea activeChatId={activeChatId} ownerName={ownerName} />
+      <ChatArea
+        activeChatId={activeChatId}
+        chatParticipantName={chatParticipantName}
+        senderId={userData?.userId}
+      >
+        <Message />
+      </ChatArea>
 
       {/* Information panel */}
       <ChatInfoPanel />
