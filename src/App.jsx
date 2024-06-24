@@ -15,7 +15,7 @@ import DisplayOptionsBarProvider from "./contexts/DisplayOptionsContext";
 import { Toaster } from "react-hot-toast";
 import VerifyRoute from "./UI/VerifyRoute";
 import ForgotPassword from "./Pages/ForgotPassword";
-import Chat from "./Features/chats/Chat";
+import Chat from "./Pages/Chat";
 
 const queryClient = new QueryClient({
   defaultOptions: {
