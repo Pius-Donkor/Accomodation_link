@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetProperty from "../Features/properties/useGetProperty";
 import PageError from "../UI/PageError";
 import PropertyCarousel from "../UI/PropertyCarousel";
@@ -31,7 +31,7 @@ export default function PropertyDetails() {
   const { createChat, createChatError, isCreating } = useCreateChat();
   const [carouselScreenState, setCarouselScreenState] = useState(false);
   const isSameUser = userData?.userId === property?.userId;
-
+  const navigate = useNavigate();
   function handleCreateChat() {
     createChat(
       {
@@ -55,6 +55,7 @@ export default function PropertyDetails() {
       },
       {
         onSuccess: () => {
+          navigate("/chats");
           toast.success("chat Created successfully");
         },
       },
