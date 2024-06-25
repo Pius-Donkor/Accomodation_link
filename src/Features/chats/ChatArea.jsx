@@ -11,18 +11,11 @@ export default function ChatArea({
   const [message, setMessage] = useState();
   const { isSending, messageError, sendUpdateMessage } = useSendUpdateMessage();
   function handleSendUpdateMessage() {
-    sendUpdateMessage(
-      {
-        senderId: senderId,
-        chatId: activeChatId,
-        content: message,
-      },
-      {
-        onSuccess: () => {
-          toast.success("message sent successfully");
-        },
-      },
-    );
+    sendUpdateMessage({
+      senderId: senderId,
+      chatId: activeChatId,
+      content: message,
+    });
   }
   return (
     <div className="flex w-1/2 flex-col justify-between bg-white">
@@ -46,7 +39,9 @@ export default function ChatArea({
           placeholder="Type a message..."
           className="w-full rounded-md border border-green-300 p-2 outline-none   "
         />
-        <Button onClick={handleSendUpdateMessage} disable={isSending}>send</Button>
+        <Button onClick={handleSendUpdateMessage} disable={isSending}>
+          send
+        </Button>
       </div>
     </div>
   );
