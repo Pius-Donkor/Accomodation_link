@@ -88,7 +88,7 @@ export async function getChats(chatIDs) {
     throw new Error(error.message);
   }
 }
-export async function getChat(chatId) {
+export async function getMessages(chatId) {
   const dbRef = ref(database);
   try {
     const snapshot = await get(child(dbRef, `chats/${chatId}/messages`));
