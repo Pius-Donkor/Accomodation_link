@@ -23,12 +23,10 @@ export default function Conversation({
     currentUserChatIDs.includes(chatId),
   )[0];
 
-  console.log(activeChatId);
   function handleClickConversation() {
     setChatParticipantName(propertyOwner?.userName);
     setActiveChatId(activeChatId);
   }
-  console.log(activeChatId);
 
   if (isLoadingOwner) return <p>loading...</p>;
   if (errorOwner) return <p>error...</p>;
