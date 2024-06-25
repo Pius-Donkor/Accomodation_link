@@ -6,18 +6,34 @@ import useGetUser from "../User/useGetUser";
 import useGetChats from "./useGetChats";
 import Conversation from "./Conversation";
 import Message from "./Message";
-import { getChat } from "../../Services/apiChats";
+import useGetMessages from "./useGetMessages";
+import { database } from "../../Services/firebase";
+import { onValue, ref } from "firebase/database";
 
 // ChatUI component
 export default function ChatBox() {
+  const [messages, setMessages] = useState([]);
   const { userData, isLoading: userLoading, error: userError } = useGetUser();
   const { chats, chatsLoading, chatsError } = useGetChats(userData?.chatIDs);
   const [activeChatId, setActiveChatId] = useState("");
   const [chatParticipantName, setChatParticipantName] = useState("");
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
+  const isMessagesEmpty = messages.length === 0;
+  // const { messages, messagesError, messagesLoading } =
+  // useGetMessages(activeChatId);
   useEffect(() => {
-    getChat(activeChatId);
+    if (activeChatId) {
+      const chatRef = ref(database, `chats/${activeChatId}/messages`);
+      onValue(chatRef, (snapshot) => {
+        const data = snapshot.val();
+        const messageList = [];
+        for (let id in data) {
+          messageList.push({ id, ...data[id] });
+        }
+        setMessages(messageList);
+      });
+    }
   }, [activeChatId]);
 
   return (
@@ -48,7 +64,15 @@ export default function ChatBox() {
         chatParticipantName={chatParticipantName}
         senderId={userData?.userId}
       >
-        <Message />
+        {isMessagesEmpty && <p>select a chat to start a conversation </p>}
+        {!isMessagesEmpty &&
+          messages.map((messageObj) => (
+            <Message
+              key={messageObj.id}
+              messageData={messageObj}
+              currentUserId={userData?.userId}
+            />
+          ))}
       </ChatArea>
 
       {/* Information panel */}
