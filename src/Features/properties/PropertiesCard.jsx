@@ -18,11 +18,11 @@ import useDeleteProperty from "./useDeleteProperty";
 import RatingButton from "../Ratings/Ratingbutton";
 import useGetRatings from "../Ratings/useGetRatings";
 import useSetRatings from "../Ratings/useSetRatings";
-import useGetUser from "../User/useGetUser";
+// import useGetUser from "../User/useGetUser";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
-  const [liked, setLiked] = useState(false);
-  const [tempLiked, setTempLiked] = useState(false);
+  // const [liked, setLiked] = useState(false);
+  // const [tempLiked, setTempLiked] = useState(false);
   const { deleteListing, isDeleting } = useDeleteProperty();
   const { ratings = [], ratingsLoading } = useGetRatings(property?.id);
   const { isRating, rateProperty } = useSetRatings();
