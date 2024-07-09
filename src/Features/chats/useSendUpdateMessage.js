@@ -14,7 +14,6 @@ export default function useSendUpdateMessage() {
 
     onSuccess: (_, variables) => {
       console.log(variables);
-      toast.success(variables.chatId);
       queryClient.invalidateQueries(["messages", variables.chatId]);
     },
     onError: (error) => {
