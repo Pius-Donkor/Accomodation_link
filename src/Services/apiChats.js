@@ -2,6 +2,7 @@ import { push, ref, child, update, set, onValue, get } from "firebase/database";
 import { database, db } from "./firebase";
 import { doc, updateDoc } from "firebase/firestore";
 
+// chats
 export async function createChat(chatData) {
   const { usersDetails } = chatData;
 
@@ -32,26 +33,6 @@ export async function createChat(chatData) {
     console.error(error);
     throw new Error(error.message);
   }
-}
-
-export async function sendUpdateMessage(postData) {
-  const { senderId, content, messageId, chatId } = postData;
-  const updates = {};
-  if (messageId) {
-    updates["/chats/" + chatId + "/messages/" + messageId + "/content"] =
-      content;
-  } else {
-    const messagesRef = ref(database, "chats/" + chatId + "/messages");
-    const newMessageRef = push(messagesRef);
-    set(newMessageRef, {
-      senderId,
-      content,
-      timestamp: Date.now(),
-    });
-    updates["/chats/" + chatId + "/lastMessage"] = content;
-  }
-
-  return update(ref(database), updates);
 }
 
 // export async function getChats(chatIDs) {
@@ -88,6 +69,28 @@ export async function getChats(chatIDs) {
     throw new Error(error.message);
   }
 }
+
+// messages
+export async function sendUpdateMessage(postData) {
+  const { senderId, content, messageId, chatId } = postData;
+  const updates = {};
+  if (messageId) {
+    updates["/chats/" + chatId + "/messages/" + messageId + "/content"] =
+      content;
+  } else {
+    const messagesRef = ref(database, "chats/" + chatId + "/messages");
+    const newMessageRef = push(messagesRef);
+    set(newMessageRef, {
+      senderId,
+      content,
+      timestamp: Date.now(),
+    });
+    updates["/chats/" + chatId + "/lastMessage"] = content;
+  }
+
+  return update(ref(database), updates);
+}
+
 export async function getMessages(chatId) {
   const dbRef = ref(database);
   try {
@@ -100,4 +103,12 @@ export async function getMessages(chatId) {
   } catch (error) {
     console.log(error.message);
   }
+}
+
+export async function deleteMessage(deletionData) {
+  const { chatId, messageId } = deletionData;
+  const updates = {};
+
+  updates["/chats/" + chatId + "/messages/" + messageId] = null;
+  return update(ref(database), updates);
 }
