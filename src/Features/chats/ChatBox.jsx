@@ -6,17 +6,20 @@ import useGetUser from "../User/useGetUser";
 import useGetChats from "./useGetChats";
 import Conversation from "./Conversation";
 import Message from "./Message";
-import useGetMessages from "./useGetMessages";
 import { database } from "../../Services/firebase";
 import { onValue, ref } from "firebase/database";
 
 // ChatUI component
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
+  //  for the the input box
+  const [message, setMessage] = useState();
+  const [messageEditId, setMessageEditId] = useState("");
   const { userData, isLoading: userLoading, error: userError } = useGetUser();
   const { chats, chatsLoading, chatsError } = useGetChats(userData?.chatIDs);
   const [activeChatId, setActiveChatId] = useState("");
   const [chatParticipantName, setChatParticipantName] = useState("");
+  // loading states
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
   const isMessagesEmpty = messages.length === 0;
@@ -60,17 +63,24 @@ export default function ChatBox() {
 
       {/* Main chat area */}
       <ChatArea
+        message={message}
+        setMessage={setMessage}
         activeChatId={activeChatId}
         chatParticipantName={chatParticipantName}
         senderId={userData?.userId}
+        setMessageEditId={setMessageEditId}
+        messageEditId={messageEditId}
       >
         {isMessagesEmpty && <p>select a chat to start a conversation </p>}
         {!isMessagesEmpty &&
           messages.map((messageObj) => (
             <Message
+              setMessage={setMessage}
               key={messageObj.id}
               messageData={messageObj}
               currentUserId={userData?.userId}
+              setMessageEditId={setMessageEditId}
+              chatId={activeChatId}
             />
           ))}
       </ChatArea>
