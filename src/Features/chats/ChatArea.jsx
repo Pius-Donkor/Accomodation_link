@@ -1,21 +1,40 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "../../UI/Button";
 import useSendUpdateMessage from "./useSendUpdateMessage";
-import toast from "react-hot-toast";
 export default function ChatArea({
   chatParticipantName,
   activeChatId,
   children,
   senderId,
+  setMessage,
+  message,
+  setMessageEditId,
+  messageEditId,
 }) {
-  const [message, setMessage] = useState();
   const { isSending, messageError, sendUpdateMessage } = useSendUpdateMessage();
+  const isEditMode = Boolean(messageEditId);
+  const [oldMessage, setOldMessage] = useState("");
+
+  useEffect(() => {
+    setOldMessage(message);
+  }, [messageEditId]);
+  console.log(oldMessage, isEditMode, message);
+
   function handleSendUpdateMessage() {
-    sendUpdateMessage({
-      senderId: senderId,
-      chatId: activeChatId,
-      content: message,
-    });
+    sendUpdateMessage(
+      {
+        messageId: messageEditId,
+        senderId: senderId,
+        chatId: activeChatId,
+        content: message,
+      },
+      {
+        onSuccess: () => {
+          setMessageEditId("");
+          setMessage("");
+        },
+      },
+    );
   }
   return (
     <div className="flex w-1/2 flex-col justify-between bg-white">
@@ -33,12 +52,19 @@ export default function ChatArea({
 
       {/* Message input */}
       <div className="flex items-center border-t p-5 ">
-        <input
-          onChange={(e) => setMessage(e.target.value)}
-          type="text"
-          placeholder="Type a message..."
-          className="w-full rounded-md border border-green-300 p-2 outline-none   "
-        />
+        <div className=" flex w-full flex-col gap-1 p-[10px] ">
+          {isEditMode && (
+            <p className="bg-slate-300 p-2"> Editing : {oldMessage}</p>
+          )}
+          <input
+            onChange={(e) => setMessage(e.target.value)}
+            type="text"
+            placeholder="Type a message..."
+            className="w-full rounded-md border border-green-300 p-2 outline-none   "
+            value={message}
+          />
+        </div>
+
         <Button onClick={handleSendUpdateMessage} disable={isSending}>
           send
         </Button>
