@@ -9,6 +9,7 @@ export default function Conversation({
   setChatParticipantName,
   participants,
   currentUserId,
+  isActiveConversationId,
 }) {
   // getting the id of the other participant in communication with the user
   const [chatParticipant] = Object.keys(participants).filter(
@@ -23,6 +24,8 @@ export default function Conversation({
     currentUserChatIDs.includes(chatId),
   )[0];
 
+  const isActiveConversation = isActiveConversationId === activeChatId;
+
   function handleClickConversation() {
     setChatParticipantName(propertyOwner?.userName);
     setActiveChatId(activeChatId);
@@ -34,7 +37,7 @@ export default function Conversation({
   return (
     <li
       onClick={handleClickConversation}
-      className="flex cursor-pointer items-center space-x-3 border-b-2 border-b-slate-300 bg-slate-200  p-3 hover:bg-gray-200"
+      className={`flex cursor-pointer items-center space-x-3 border-b-2 border-b-slate-300  ${isActiveConversation ? "bg-green-200" : "bg-slate-200"} p-3 hover:bg-green-200`}
     >
       {propertyOwner?.image ? (
         <img
