@@ -3,13 +3,11 @@ import { useSearchParams } from "react-router-dom";
 import { useFilterContext } from "./FilterState";
 import { moneyToNumber } from "../utils/helper";
 import useGetUser from "../Features/User/useGetUser";
-import { useEffect, useState } from "react";
 
 export default function useFilterSort(isUser) {
   const { properties, propertiesError, isLoading } = useGetProperties();
   // const [fromUser, setFromUser] = useState(null);
   const { userData } = useGetUser();
-  console.log(isUser);
   const [searchParams] = useSearchParams();
   const sortParameter = searchParams.get("sortBy");
   const {
