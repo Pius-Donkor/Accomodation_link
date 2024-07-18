@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import ChatSideBar from "./ChatSideBar";
 import ChatArea from "./ChatArea";
-import ChatInfoPanel from "./ChatInfoPanel";
 import useGetUser from "../User/useGetUser";
 import useGetChats from "./useGetChats";
 import Conversation from "./Conversation";
 import Message from "./Message";
 import { database } from "../../Services/firebase";
 import { onValue, ref } from "firebase/database";
+import HomeBack from "../../UI/HomeBack";
+import { useSearchParams } from "react-router-dom";
 
 // ChatUI component
 export default function ChatBox() {
@@ -19,6 +20,9 @@ export default function ChatBox() {
   const { chats, chatsLoading, chatsError } = useGetChats(userData?.chatIDs);
   const [activeChatId, setActiveChatId] = useState("");
   const [chatParticipantName, setChatParticipantName] = useState("");
+  const [searchConversation, setSearchCOnversations] = useState("");
+  const [searchParams] = useSearchParams();
+  const displayedCOnversations = chats;
   // loading states
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
@@ -39,18 +43,28 @@ export default function ChatBox() {
     }
   }, [activeChatId]);
 
+  // this part used for setting the active chat id in case the user tries to create another chat even though there is already a chat .
+  useEffect(() => {
+    const chatId = searchParams.get("ownerChatId") || "";
+    setActiveChatId(chatId);
+  }, [searchParams]);
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen w-full justify-center  bg-gray-100 bg-[url('/chat-bg.jpeg')] bg-cover bg-no-repeat  ">
+      {/* home and back buttons */}
+      <HomeBack topCorner={true} isRow={true} />
+
       {/* Sidebar */}
       <ChatSideBar>
         {loading && <p>loading chats ...</p>}
         {errorState && <p>loading chats ...</p>}
         {!loading &&
           !errorState &&
+          chats?.length &&
           chats.map((chat, i) => (
             <Conversation
               setChatParticipantName={setChatParticipantName}
               key={i}
+              isActiveConversationId={activeChatId}
               // propertyOwnerId={chat.propertyOwnerId}
               lastMessage={chat.lastMessage}
               currentUserChatIDs={userData?.chatIDs}
@@ -86,7 +100,7 @@ export default function ChatBox() {
       </ChatArea>
 
       {/* Information panel */}
-      <ChatInfoPanel />
+      {/* <ChatInfoPanel /> */}
     </div>
   );
 }
