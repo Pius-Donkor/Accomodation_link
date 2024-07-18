@@ -19,47 +19,59 @@ import useCreateChat from "../Features/chats/useCreateChat";
 import useGetUser from "../Features/User/useGetUser";
 import useGetOwner from "../Features/User/useGetOwner";
 import toast from "react-hot-toast";
+import HomeBack from "../UI/HomeBack";
 
 export default function PropertyDetails() {
   const { id } = useParams();
   const { property, propertyLoading, propertyError } = useGetProperty(id);
-  const moveBack = useMoveBack();
-  const { errorOwner, isLoadingOwner, propertyOwner } = useGetOwner(
-    property?.userId,
-  );
-  const { userData, isLoading, error } = useGetUser();
-  const { createChat, createChatError, isCreating } = useCreateChat();
+  const { propertyOwner } = useGetOwner(property?.userId);
+  const { userData } = useGetUser();
+  const { createChat, isCreating } = useCreateChat();
   const [carouselScreenState, setCarouselScreenState] = useState(false);
   const isSameUser = userData?.userId === property?.userId;
+
+  const user_owner_chatID = userData?.chatIDs?.filter((id) =>
+    propertyOwner?.chatIDs?.includes(id),
+  )?.[0];
+  const alreadyHasChat = Boolean(user_owner_chatID);
+
   const navigate = useNavigate();
   function handleCreateChat() {
-    createChat(
-      {
-        participants: {
-          [`${userData?.userId}`]: true,
-          [`${property?.userId}`]: true,
-        },
-        lastMessage: "new chat",
-        timestamp: Date.now(),
-        propertyOwnerId: property?.userId,
-        usersDetails: [
-          {
-            documentId: userData?.documentId,
-            chatIDs: userData?.chatIDs || [],
+    if (!alreadyHasChat) {
+      createChat(
+        {
+          participants: {
+            [`${userData?.userId}`]: true,
+            [`${property?.userId}`]: true,
           },
-          {
-            documentId: propertyOwner?.documentId,
-            chatIDs: propertyOwner.chatIDs.length ? propertyOwner.chatIDs : [],
-          },
-        ],
-      },
-      {
-        onSuccess: () => {
-          navigate("/chats");
-          toast.success("chat Created successfully");
+          ownerName: propertyOwner?.userName,
+          lastMessage: "new chat",
+          timestamp: Date.now(),
+          propertyOwnerId: property?.userId,
+          usersDetails: [
+            {
+              documentId: userData?.documentId,
+              chatIDs: userData?.chatIDs || [],
+            },
+            {
+              documentId: propertyOwner?.documentId,
+              chatIDs: propertyOwner.chatIDs.length
+                ? propertyOwner.chatIDs
+                : [],
+            },
+          ],
         },
-      },
-    );
+        {
+          onSuccess: () => {
+            navigate("/chats");
+            toast.success("chat Created successfully");
+          },
+        },
+      );
+    } else {
+      toast("you already have a chat with this owner");
+      navigate(`/chats/?ownerChatId=${user_owner_chatID}`);
+    }
   }
 
   if (propertyLoading)
@@ -70,14 +82,9 @@ export default function PropertyDetails() {
     <main className="mx-12 mb-[5rem] mt-[8rem] flex  flex-col justify-center gap-16 md:mt-[6rem]  ">
       {/* navigation buttons */}
       <header className="flex w-full flex-col gap-12  md:flex-row md:justify-between">
-        <div className=" flex gap-8">
-          <Button link={"/"} type="nav">
-            <FaHome className=" mr-2 text-slate-700 " /> home
-          </Button>
-          <Button type="nav" onClick={moveBack}>
-            <BiSolidLeftArrow className=" text-slate-700" /> back
-          </Button>
-        </div>
+        <HomeBack />
+
+        {/* buttons for creating property */}
         <div
           className={` flex flex-col gap-8 md:flex-row ${isSameUser && "opacity-20"} `}
         >
