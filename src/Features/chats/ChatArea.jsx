@@ -15,6 +15,7 @@ export default function ChatArea({
   const isEditMode = Boolean(messageEditId);
   const [oldMessage, setOldMessage] = useState("");
 
+  // for the  editing of message functionality
   useEffect(() => {
     setOldMessage(message);
   }, [messageEditId]);
@@ -37,10 +38,13 @@ export default function ChatArea({
     );
   }
   return (
-    <div className="flex w-1/2 flex-col justify-between bg-white">
+    <div className="flex w-1/2 flex-col justify-between bg-[#ffffff88] backdrop-blur-md  ">
       {/* Chat header */}
       <div className="flex items-center justify-between border-b bg-slate-50 p-5  shadow-md">
-        <h2>{chatParticipantName || "loading..."}</h2>
+        <h2>
+          {(chatParticipantName && `chatting with : ${chatParticipantName} `) ||
+            "select a chat participant"}
+        </h2>
         {/* Status indicator here if needed */}
       </div>
 
@@ -59,7 +63,7 @@ export default function ChatArea({
           <input
             onChange={(e) => setMessage(e.target.value)}
             type="text"
-            placeholder="Type a message..."
+            placeholder="Type your message..."
             className="w-full rounded-md border border-green-300 p-2 outline-none   "
             value={message}
           />
