@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ChatSideBar({ children }) {
+export default function ChatSideBar({ children, setSearchConversations }) {
   return (
     <div className="w-1/4 border-r-2 border-r-slate-300 bg-slate-100 p-5">
       <div className="flex items-center space-x-2 border-b pb-5">
@@ -8,6 +8,7 @@ export default function ChatSideBar({ children }) {
           type="text"
           placeholder="Search"
           className="w-full border bg-slate-200  p-2 outline-none"
+          onChange={(e) => setSearchConversations(e.target.value)}
         />
       </div>
       {/* List of conversations */}
