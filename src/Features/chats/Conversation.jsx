@@ -1,5 +1,6 @@
 import React from "react";
 import useGetOwner from "../User/useGetOwner";
+import useSendUpdateMessage from "./useSendUpdateMessage";
 
 export default function Conversation({
   // propertyOwnerId,
@@ -10,7 +11,12 @@ export default function Conversation({
   participants,
   currentUserId,
   isActiveConversationId,
+  participantName,
+  seen,
+  lastSenderId,
 }) {
+  const { sendUpdateMessage } = useSendUpdateMessage();
+
   // getting the id of the other participant in communication with the user
   const [chatParticipant] = Object.keys(participants).filter(
     (id) => id !== currentUserId,
@@ -29,6 +35,13 @@ export default function Conversation({
   function handleClickConversation() {
     setChatParticipantName(propertyOwner?.userName);
     setActiveChatId(activeChatId);
+
+    if (lastSenderId !== currentUserId) {
+      sendUpdateMessage({
+        chatId: activeChatId,
+        hasRecipientSeen: true,
+      });
+    }
   }
 
   if (isLoadingOwner) return <p>loading...</p>;
@@ -37,8 +50,16 @@ export default function Conversation({
   return (
     <li
       onClick={handleClickConversation}
-      className={`flex cursor-pointer items-center space-x-3 border-b-2 border-b-slate-300  ${isActiveConversation ? "bg-green-200" : "bg-slate-200"} p-3 hover:bg-green-200`}
+      className={`relative flex cursor-pointer items-center space-x-3 border-b-2  border-b-slate-300 ${isActiveConversation ? "bg-green-200" : "bg-slate-200"} p-3 hover:bg-green-200`}
     >
+      {/* checking to see if the recipient has seen the updated chat user has a  */}
+      {!seen && lastSenderId !== currentUserId ? (
+        ""
+      ) : (
+        <span className=" absolute right-2 top-2 rounded-full bg-red-400 p-3  "></span>
+      )}
+
+      {/* we check to find if the the the user has an avatar or we give him a generic one  */}
       {propertyOwner?.image ? (
         <img
           src={propertyOwner.image}
@@ -47,13 +68,11 @@ export default function Conversation({
         />
       ) : (
         <p className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-400">
-          {propertyOwner?.userName
-            ? propertyOwner.userName
-                .toUpperCase()
-                .split(" ")
-                .map((name) => name.slice(0, 1))
-                .join("")
-            : ""}
+          {participantName
+            .toUpperCase()
+            .split(" ")
+            .map((name) => name.slice(0, 1))
+            .join("")}
         </p>
       )}
       <div>
