@@ -72,22 +72,35 @@ export async function getChats(chatIDs) {
 
 // messages
 export async function sendUpdateMessage(postData) {
-  const { senderId, content, messageId, chatId } = postData;
+  const {
+    senderId,
+    content,
+    seen,
+    messageId,
+    chatId,
+    hasRecipientSeen = false,
+  } = postData;
   const updates = {};
-  if (messageId) {
-    updates["/chats/" + chatId + "/messages/" + messageId + "/content"] =
-      content;
+  // if the the message was just viewed by the recipient, all we need to do is to set seen to true
+  if (hasRecipientSeen) {
+    updates["/chats/" + chatId + "/seen"] = hasRecipientSeen;
   } else {
-    const messagesRef = ref(database, "chats/" + chatId + "/messages");
-    const newMessageRef = push(messagesRef);
-    set(newMessageRef, {
-      senderId,
-      content,
-      timestamp: Date.now(),
-    });
-    updates["/chats/" + chatId + "/lastMessage"] = content;
+    if (messageId) {
+      updates["/chats/" + chatId + "/messages/" + messageId + "/content"] =
+        content;
+    } else {
+      const messagesRef = ref(database, "chats/" + chatId + "/messages");
+      const newMessageRef = push(messagesRef);
+      set(newMessageRef, {
+        senderId,
+        content,
+        timestamp: Date.now(),
+      });
+      updates["/chats/" + chatId + "/lastMessage"] = content;
+      updates["/chats/" + chatId + "/lastSenderId"] = senderId;
+      updates["/chats/" + chatId + "/seen"] = seen;
+    }
   }
-
   return update(ref(database), updates);
 }
 
@@ -108,7 +121,7 @@ export async function getMessages(chatId) {
 export async function deleteMessage(deletionData) {
   const { chatId, messageId } = deletionData;
   const updates = {};
-
+  // updates["/chats/" + chatId + "/lastMessage"] = content;
   updates["/chats/" + chatId + "/messages/" + messageId] = null;
   return update(ref(database), updates);
 }
