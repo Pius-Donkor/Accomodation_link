@@ -20,7 +20,7 @@ export default function ChatArea({
     setOldMessage(message);
   }, [messageEditId]);
   console.log(oldMessage, isEditMode, message);
-
+  console.log(activeChatId);
   function handleSendUpdateMessage() {
     sendUpdateMessage(
       {
@@ -28,6 +28,7 @@ export default function ChatArea({
         senderId: senderId,
         chatId: activeChatId,
         content: message,
+        seen: false,
       },
       {
         onSuccess: () => {
@@ -55,7 +56,8 @@ export default function ChatArea({
       </ul>
 
       {/* Message input */}
-      <div className="flex items-center border-t p-5 ">
+      
+     {activeChatId && <div className="flex items-center border-t p-5 ">
         <div className=" flex w-full flex-col gap-1 p-[10px] ">
           {isEditMode && (
             <p className="bg-slate-300 p-2"> Editing : {oldMessage}</p>
@@ -72,7 +74,7 @@ export default function ChatArea({
         <Button onClick={handleSendUpdateMessage} disable={isSending}>
           send
         </Button>
-      </div>
+      </div>}
     </div>
   );
 }
