@@ -3,11 +3,8 @@ import useGetProperty from "../Features/properties/useGetProperty";
 import PageError from "../UI/PageError";
 import PropertyCarousel from "../UI/PropertyCarousel";
 import Button from "../UI/Button";
-import { BiSolidLeftArrow } from "react-icons/bi";
 import { IoChatbubblesOutline } from "react-icons/io5";
 import { LuGitPullRequestDraft } from "react-icons/lu";
-import { FaHome } from "react-icons/fa";
-import { useMoveBack } from "../hooks/useMoveBack";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import SingleDetail from "../UI/SingleDetail";
@@ -29,7 +26,6 @@ export default function PropertyDetails() {
   const { createChat, isCreating } = useCreateChat();
   const [carouselScreenState, setCarouselScreenState] = useState(false);
   const isSameUser = userData?.userId === property?.userId;
-
   const user_owner_chatID = userData?.chatIDs?.filter((id) =>
     propertyOwner?.chatIDs?.includes(id),
   )?.[0];
@@ -63,7 +59,7 @@ export default function PropertyDetails() {
         },
         {
           onSuccess: () => {
-            navigate("/chats");
+            navigate(`/chats`);
             toast.success("chat Created successfully");
           },
         },
