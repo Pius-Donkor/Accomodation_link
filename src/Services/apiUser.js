@@ -146,7 +146,7 @@ export async function getUser(authId) {
 }
 
 export async function getPropertyOwner(ownerId) {
-  console.log(ownerId);
+  // console.log(ownerId);
   try {
     const q = query(collection(db, "users"), where("userId", "==", ownerId));
     let user = [];
@@ -162,7 +162,7 @@ export async function getPropertyOwner(ownerId) {
       // console.log(doc.id, " => ", doc.data());
     });
     // console.log(user);
-    console.log(user);
+    // console.log(user);
     const [{ userName, contact, location, chatIDs, documentId }] = user;
     return {
       userName,
