@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChatSideBar from "./ChatSideBar";
 import ChatArea from "./ChatArea";
 import useGetUser from "../User/useGetUser";
@@ -13,22 +13,25 @@ import { useSearchParams } from "react-router-dom";
 // ChatUI component
 export default function ChatBox() {
   const [messages, setMessages] = useState([]);
-  //  for the the input box
-  const [message, setMessage] = useState();
+  //  for the input box
+  const [message, setMessage] = useState("");
   const [messageEditId, setMessageEditId] = useState("");
   const { userData, isLoading: userLoading, error: userError } = useGetUser();
+  const [searchConversation, setSearchConversations] = useState("");
   const { chats, chatsLoading, chatsError } = useGetChats(userData?.chatIDs);
   const [activeChatId, setActiveChatId] = useState("");
   const [chatParticipantName, setChatParticipantName] = useState("");
-  const [searchConversation, setSearchCOnversations] = useState("");
   const [searchParams] = useSearchParams();
-  const displayedCOnversations = chats;
-  // loading states
+  let displayedConversations = chats?.length
+    ? chats.filter((chat) =>
+        chat.ownerName.toLowerCase().includes(searchConversation.toLowerCase()),
+      )
+    : [];
+  // Loading states
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
   const isMessagesEmpty = messages.length === 0;
-  // const { messages, messagesError, messagesLoading } =
-  // useGetMessages(activeChatId);
+
   useEffect(() => {
     if (activeChatId) {
       const chatRef = ref(database, `chats/${activeChatId}/messages`);
@@ -43,36 +46,40 @@ export default function ChatBox() {
     }
   }, [activeChatId]);
 
-  // this part used for setting the active chat id in case the user tries to create another chat even though there is already a chat .
+  // Setting the active chat ID from URL parameters
   useEffect(() => {
     const chatId = searchParams.get("ownerChatId") || "";
     setActiveChatId(chatId);
   }, [searchParams]);
+
   return (
-    <div className="flex h-screen w-full justify-center  bg-gray-100 bg-[url('/chat-bg.jpeg')] bg-cover bg-no-repeat  ">
-      {/* home and back buttons */}
+    <div className="flex h-screen w-full justify-center bg-gray-100 bg-[url('/chat-bg.jpeg')] bg-cover bg-no-repeat">
+      {/* Home and back buttons */}
       <HomeBack topCorner={true} isRow={true} />
 
       {/* Sidebar */}
-      <ChatSideBar>
-        {loading && <p>loading chats ...</p>}
-        {errorState && <p>loading chats ...</p>}
-        {!loading &&
-          !errorState &&
-          chats?.length &&
-          chats.map((chat, i) => (
+      <ChatSideBar setSearchConversations={setSearchConversations}>
+        {loading && <p>Loading chats...</p>}
+        {errorState && <p>Error loading chats: {errorState.message}</p>}
+        {!loading && !errorState && chats?.length && !chatsLoading ? (
+          displayedConversations.map((chat, i) => (
             <Conversation
               setChatParticipantName={setChatParticipantName}
               key={i}
               isActiveConversationId={activeChatId}
-              // propertyOwnerId={chat.propertyOwnerId}
               lastMessage={chat.lastMessage}
               currentUserChatIDs={userData?.chatIDs}
               currentUserId={userData?.userId}
               setActiveChatId={setActiveChatId}
               participants={chat.participants}
+              lastSenderId={chat.lastSenderId}
+              participantName={chat.ownerName}
+              seen={chat.seen}
             />
-          ))}
+          ))
+        ) : (
+          <p>You have no chats available yet </p>
+        )}
       </ChatSideBar>
 
       {/* Main chat area */}
@@ -85,7 +92,7 @@ export default function ChatBox() {
         setMessageEditId={setMessageEditId}
         messageEditId={messageEditId}
       >
-        {isMessagesEmpty && <p>select a chat to start a conversation </p>}
+        {isMessagesEmpty && <p>Select a chat to start a conversation</p>}
         {!isMessagesEmpty &&
           messages.map((messageObj) => (
             <Message
@@ -98,9 +105,6 @@ export default function ChatBox() {
             />
           ))}
       </ChatArea>
-
-      {/* Information panel */}
-      {/* <ChatInfoPanel /> */}
     </div>
   );
 }
