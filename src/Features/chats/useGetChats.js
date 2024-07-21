@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getChats } from "../../Services/apiChats"; // adjust the import based on your file structure
+import { getChats } from "../../Services/apiChats";
 
 export default function useGetChats(chatIDs) {
   // console.log(chatIDs);
