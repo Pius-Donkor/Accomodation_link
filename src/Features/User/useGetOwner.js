@@ -1,9 +1,8 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPropertyOwner } from "../../Services/apiUser";
 
 export default function useGetOwner(id) {
-  // console.log(id);
+  console.log(id);
   const {
     data: propertyOwner = {},
     isLoadingOwner,
