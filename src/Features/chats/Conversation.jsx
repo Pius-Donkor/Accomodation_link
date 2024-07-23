@@ -13,6 +13,7 @@ export default function Conversation({
   isActiveConversationId,
   seen,
   lastSenderId,
+  setChatSidebarInView,
 }) {
   const { sendUpdateMessage } = useSendUpdateMessage();
 
@@ -37,7 +38,7 @@ export default function Conversation({
   function handleClickConversation() {
     setChatParticipantName(propertyOwner?.userName);
     setActiveChatId(activeChatId);
-
+    setChatSidebarInView(false);
     if (lastSenderId !== currentUserId) {
       sendUpdateMessage({
         chatId: activeChatId,
