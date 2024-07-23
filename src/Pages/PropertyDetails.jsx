@@ -40,7 +40,10 @@ export default function PropertyDetails() {
             [`${userData?.userId}`]: true,
             [`${property?.userId}`]: true,
           },
-          ownerName: propertyOwner?.userName,
+          participantsDetails: [
+            { name: propertyOwner?.userName, id: property?.userId },
+            { name: userData?.userName, id: userData?.userId },
+          ],
           lastMessage: "new chat",
           timestamp: Date.now(),
           propertyOwnerId: property?.userId,
