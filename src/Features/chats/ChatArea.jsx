@@ -43,7 +43,14 @@ export default function ChatArea({
       {/* Chat header */}
       <div className="flex items-center justify-between border-b bg-slate-50 p-5  shadow-md">
         <h2>
-          {(chatParticipantName && `chatting with : ${chatParticipantName} `) ||
+          {(chatParticipantName && (
+            <div className="flex items-center gap-3 rounded-3xl bg-[#cbf1de] pr-3 font-semibold text-[#43534f]  ">
+              <span className="rounded-3xl  bg-[#accebd] px-3 py-2">
+                chatting with :{" "}
+              </span>{" "}
+              {chatParticipantName}
+            </div>
+          )) ||
             "select a chat participant"}
         </h2>
         {/* Status indicator here if needed */}
@@ -56,25 +63,27 @@ export default function ChatArea({
       </ul>
 
       {/* Message input */}
-      
-     {activeChatId && <div className="flex items-center border-t p-5 ">
-        <div className=" flex w-full flex-col gap-1 p-[10px] ">
-          {isEditMode && (
-            <p className="bg-slate-300 p-2"> Editing : {oldMessage}</p>
-          )}
-          <input
-            onChange={(e) => setMessage(e.target.value)}
-            type="text"
-            placeholder="Type your message..."
-            className="w-full rounded-md border border-green-300 p-2 outline-none   "
-            value={message}
-          />
-        </div>
 
-        <Button onClick={handleSendUpdateMessage} disable={isSending}>
-          send
-        </Button>
-      </div>}
+      {activeChatId && (
+        <div className="flex items-center border-t p-5 ">
+          <div className=" flex w-full flex-col gap-1 p-[10px] ">
+            {isEditMode && (
+              <p className="bg-slate-300 p-2"> Editing : {oldMessage}</p>
+            )}
+            <input
+              onChange={(e) => setMessage(e.target.value)}
+              type="text"
+              placeholder="Type your message..."
+              className="w-full rounded-md border border-green-300 p-2 outline-none   "
+              value={message}
+            />
+          </div>
+
+          <Button onClick={handleSendUpdateMessage} disable={isSending}>
+            send
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
