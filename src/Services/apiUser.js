@@ -18,10 +18,8 @@ import {
   setDoc,
   doc,
   updateDoc,
-  documentId,
 } from "firebase/firestore";
 import { auth, db } from "./firebase";
-import { getProperty } from "./apiProperties";
 
 export async function userSignUp(signUpData) {
   const {
@@ -146,7 +144,7 @@ export async function getUser(authId) {
 }
 
 export async function getPropertyOwner(ownerId) {
-  // console.log(ownerId);
+  console.log(ownerId);
   try {
     const q = query(collection(db, "users"), where("userId", "==", ownerId));
     let user = [];
