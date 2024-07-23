@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import ChatSideBar from "./ChatSideBar";
 import ChatArea from "./ChatArea";
 import useGetUser from "../User/useGetUser";
@@ -22,11 +22,19 @@ export default function ChatBox() {
   const [activeChatId, setActiveChatId] = useState("");
   const [chatParticipantName, setChatParticipantName] = useState("");
   const [searchParams] = useSearchParams();
+
   let displayedConversations = chats?.length
     ? chats.filter((chat) =>
-        chat.ownerName.toLowerCase().includes(searchConversation.toLowerCase()),
+        chat.participantsDetails.some(
+          (participant) =>
+            participant.name
+              .toLowerCase()
+              .includes(searchConversation.toLowerCase()) &&
+            participant.id !== userData?.userId,
+        ),
       )
     : [];
+
   // Loading states
   const loading = userLoading || chatsLoading;
   const errorState = userError || chatsError;
@@ -60,7 +68,11 @@ export default function ChatBox() {
       {/* Sidebar */}
       <ChatSideBar setSearchConversations={setSearchConversations}>
         {loading && <p>Loading chats...</p>}
-        {errorState && <p>Error loading chats: {errorState.message}</p>}
+        {errorState && (
+          <p className="bg-red-100 p-2 text-red-900">
+            Error loading chats: {errorState.message}
+          </p>
+        )}
         {!loading && !errorState && chats?.length && !chatsLoading ? (
           displayedConversations.map((chat, i) => (
             <Conversation
@@ -73,12 +85,13 @@ export default function ChatBox() {
               setActiveChatId={setActiveChatId}
               participants={chat.participants}
               lastSenderId={chat.lastSenderId}
-              participantName={chat.ownerName}
               seen={chat.seen}
             />
           ))
         ) : (
-          <p>You have no chats available yet </p>
+          <p>
+            {errorState || loading ? "" : "You have no chats available yet"}{" "}
+          </p>
         )}
       </ChatSideBar>
 
