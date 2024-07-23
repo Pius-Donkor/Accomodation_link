@@ -11,7 +11,6 @@ export default function Conversation({
   participants,
   currentUserId,
   isActiveConversationId,
-  participantName,
   seen,
   lastSenderId,
 }) {
@@ -22,8 +21,11 @@ export default function Conversation({
     (id) => id !== currentUserId,
   );
   // actually we are not getting the owner here , we are just getting the other participants details
+
   const { errorOwner, isLoadingOwner, propertyOwner } =
     useGetOwner(chatParticipant);
+
+  console.log(propertyOwner, chatParticipant);
 
   // getting the id of the chat which is currently active
   const activeChatId = propertyOwner?.chatIDs?.filter((chatId) =>
@@ -53,7 +55,7 @@ export default function Conversation({
       className={`relative flex cursor-pointer items-center space-x-3 border-b-2  border-b-slate-300 ${isActiveConversation ? "bg-green-200" : "bg-slate-200"} p-3 hover:bg-green-200`}
     >
       {/* checking to see if the recipient has seen the updated chat user has a  */}
-      {!seen && lastSenderId !== currentUserId ? (
+      {seen || lastSenderId === currentUserId ? (
         ""
       ) : (
         <span className=" absolute right-2 top-2 rounded-full bg-red-400 p-3  "></span>
@@ -68,11 +70,13 @@ export default function Conversation({
         />
       ) : (
         <p className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-400">
-          {participantName
-            .toUpperCase()
-            .split(" ")
-            .map((name) => name.slice(0, 1))
-            .join("")}
+          {propertyOwner?.userName
+            ? propertyOwner?.userName
+                .toUpperCase()
+                .split(" ")
+                .map((name) => name.slice(0, 1))
+                .join("")
+            : ""}
         </p>
       )}
       <div>
