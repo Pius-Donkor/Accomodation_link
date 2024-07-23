@@ -39,7 +39,7 @@ export default function ChatArea({
     );
   }
   return (
-    <div className="flex w-1/2 flex-col justify-between bg-[#ffffff88] backdrop-blur-md  ">
+    <div className="absolute  flex h-full w-[100vw] flex-col  justify-between   bg-[#ffffff88] backdrop-blur-md lg:relative lg:w-1/2 ">
       {/* Chat header */}
       <div className="flex items-center justify-between border-b bg-slate-50 p-5  shadow-md">
         <h2>
