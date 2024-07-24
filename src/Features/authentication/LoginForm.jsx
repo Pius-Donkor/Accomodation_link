@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import Form from "../../UI/Form";
 import { useForm } from "react-hook-form";
 import FormRow from "../../UI/FormRow";
@@ -9,13 +8,11 @@ import { RiLockPasswordFill } from "react-icons/ri";
 import { MdEmail } from "react-icons/md";
 import useLogin from "./useLogin";
 import { Link, useNavigate } from "react-router-dom";
-import useGetUser from "../User/useGetUser";
 import toast from "react-hot-toast";
-import { updateUser } from "../../Services/apiUser";
 
 export default function LoginForm() {
   const { login, loginError, isLoggingIn } = useLogin();
-  
+
   const navigate = useNavigate();
   const {
     handleSubmit,
