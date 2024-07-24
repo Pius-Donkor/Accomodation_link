@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import VerifyRoute from "./UI/VerifyRoute";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Chat from "./Pages/Chat";
+import SignIn from "./Pages/SignIn";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -53,7 +54,7 @@ function App() {
               <Route path="/chats" element={<Chat />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
-              <Route path="/login" element={<></>} />
+              <Route path="/login" element={<SignIn />} />
               <Route path="/uploads" element={<AllUploads />} />
               <Route path="*" element={<p>page not found</p>} />
             </Routes>
