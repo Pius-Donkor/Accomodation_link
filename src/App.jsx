@@ -7,7 +7,6 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FilterStateProvider } from "./hooks/FilterState";
 import PropertyDetails from "./Pages/PropertyDetails";
 import SignUp from "./Pages/SignUp";
-import LogIn from "./Pages/LogIn";
 import User from "./Pages/User";
 import MyListings from "./Pages/MyListings";
 import EditUser from "./Pages/EditUser";
@@ -16,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import VerifyRoute from "./UI/VerifyRoute";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Chat from "./Pages/Chat";
+import LogIn from "./Pages/LogIn.jsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
