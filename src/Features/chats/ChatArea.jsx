@@ -10,6 +10,8 @@ export default function ChatArea({
   message,
   setMessageEditId,
   messageEditId,
+  setChatSidebarInView,
+  chatSidebarInView,
 }) {
   const { isSending, messageError, sendUpdateMessage } = useSendUpdateMessage();
   const isEditMode = Boolean(messageEditId);
@@ -54,6 +56,14 @@ export default function ChatArea({
             "select a chat participant"}
         </h2>
         {/* Status indicator here if needed */}
+        <div className="lg:hidden">
+          <Button
+            type="reddish"
+            onClick={() => setChatSidebarInView((prev) => !prev)}
+          >
+            view chats
+          </Button>
+        </div>
       </div>
 
       {/* Messages container */}
