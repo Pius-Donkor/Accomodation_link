@@ -152,7 +152,7 @@ const MapComponent = ({
         </Marker>
       )}
       {apartmentLocation && (
-        <Marker autoPan={false} position={apartmentLocation}>
+        <Marker position={apartmentLocation}>
           <Popup keepInView={true}>Apartment Location</Popup>
         </Marker>
       )}
