@@ -152,7 +152,15 @@ const MapComponent = ({
         </Marker>
       )}
       {apartmentLocation && (
-        <Marker position={apartmentLocation}>
+        <Marker
+          position={apartmentLocation}
+          icon={L.icon({
+            iconUrl: "/houseLocationIcon.png", // Replace with your arrow icon URL
+            iconSize: [35, 50],
+            iconAnchor: [19, 20],
+            popupAnchor: [0, -20],
+          })}
+        >
           <Popup keepInView={true}>Apartment Location</Popup>
         </Marker>
       )}
