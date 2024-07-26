@@ -23,11 +23,17 @@ export default function useGetPositionAddress() {
         (error) => {
           setPositionError(error.message);
         },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0,
+        }
       );
     } else {
       setPositionError("Geolocation is not supported by this browser.");
     }
   }, []);
+  
   const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
   console.log(position, address);
 
