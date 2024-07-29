@@ -27,14 +27,17 @@ export default function useGetPositionAddress() {
           enableHighAccuracy: true,
           timeout: 10000,
           maximumAge: 0,
-        }
+        },
       );
     } else {
       setPositionError("Geolocation is not supported by this browser.");
     }
   }, []);
-  
-  const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
+
+  const address =
+    addressObj?.city === addressObj?.locality
+      ? `${addressObj?.locality}, ${addressObj?.postcode}, ${addressObj?.countryName}`
+      : `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
   console.log(position, address);
 
   return { positionError, addressError, isLoadingAddress, address, position };
