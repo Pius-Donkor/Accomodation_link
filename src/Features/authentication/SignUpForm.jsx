@@ -178,7 +178,7 @@ export default function SignUpForm({ userId, user }) {
         />
       </FormRow>
       <FormRow
-        icon={{ icon: FaWhatsapp }}
+        icon={{ icon: FaWhatsapp }}         
         field="whatsApp_contact"
         error={errors?.phone_contact?.message}
       >
