@@ -16,6 +16,11 @@ import VerifyRoute from "./UI/VerifyRoute";
 import ForgotPassword from "./Pages/ForgotPassword";
 import Chat from "./Pages/Chat";
 import SignIn from "./Pages/SignIn";
+import AdminDashboard from "./Pages/AdminDashboard";
+import Dashboard from "./Features/Dashboard/Dashboard";
+import Users from "./Features/Dashboard/Users";
+import Properties from "./Features/Dashboard/Properties";
+import Analytics from "./Features/Dashboard/analytics";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,11 +55,17 @@ function App() {
                 <Route path="mylistings" element={<MyListings />} />
                 <Route path="edituser" element={<EditUser />} />
               </Route>
-
               <Route path="/chats" element={<Chat />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/login" element={<SignIn />} />
+              <Route path="/admindashboard" element={<AdminDashboard />}>
+                <Route index element={<Dashboard />} />
+                <Route path="overview" element={<Dashboard />} />
+                <Route path="users" element={<Users />} />
+                <Route path="allproperties" element={<Properties />} />
+                <Route path="analytics" element={<Analytics />} />
+              </Route>
               <Route path="/uploads" element={<AllUploads />} />
               <Route path="*" element={<p>page not found</p>} />
             </Routes>
