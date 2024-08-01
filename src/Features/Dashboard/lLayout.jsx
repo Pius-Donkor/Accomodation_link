@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Layout = ({ children }) => {
   return (
-    <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-64 bg-white shadow-md">
+    <div className=" flex  min-h-screen bg-gray-100  ">
+      <aside className="fixed left-0 top-0 h-[100dvh] w-64 bg-white shadow-md">
         <nav className="flex flex-col p-4">
           <Link to="overview" className="py-2">
             Overview
@@ -21,7 +21,7 @@ const Layout = ({ children }) => {
           </Link>
         </nav>
       </aside>
-      <main className="flex-1 p-6">{children}</main>
+      <main className=" ml-64 w-[80vw] bg-slate-300  p-6  ">{children}</main>
     </div>
   );
 };
