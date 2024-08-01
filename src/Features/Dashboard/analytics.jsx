@@ -9,6 +9,9 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
 } from "recharts";
 
 const data = [
@@ -21,21 +24,61 @@ const data = [
   { name: "Jul", users: 349, listings: 430 },
 ];
 
+const pieData = [
+  { name: "Active Listings", value: 400 },
+  { name: "Pending Listings", value: 300 },
+  { name: "rented Listings", value: 100 },
+];
+
+const COLORS = ["#0088FE", "#00C49F", "#FFBB28"];
+
 const Analytics = () => {
   return (
     <div>
       <h1 className="mb-4 text-2xl font-semibold">Analytics</h1>
-      <ResponsiveContainer width="100%" height={400}>
-        <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="users" stroke="#8884d8" />
-          <Line type="monotone" dataKey="listings" stroke="#82ca9d" />
-        </LineChart>
-      </ResponsiveContainer>
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <h2 className="mb-4 text-lg font-medium">User and Listing Trends</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={data}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="users" stroke="#8884d8" />
+              <Line type="monotone" dataKey="listings" stroke="#82ca9d" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <div className="rounded-lg bg-white p-4 shadow-sm">
+          <h2 className="mb-4 text-lg font-medium">Listings Breakdown</h2>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={pieData}
+                cx="50%"
+                cy="50%"
+                labelLine={false}
+                label={({ name, percent }) =>
+                  `${name} ${(percent * 100).toFixed(0)}%`
+                }
+                outerRadius={100}
+                fill="#8884d8"
+                dataKey="value"
+              >
+                {pieData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+            </PieChart>
+          </ResponsiveContainer>
+        </div>
+      </div>
     </div>
   );
 };
