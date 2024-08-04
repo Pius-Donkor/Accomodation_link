@@ -2,7 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FaUsers } from "react-icons/fa6";
-import { AiFillProduct } from "react-icons/ai";
+import { BsFillHouseLockFill } from "react-icons/bs";
 import { BsFillHousesFill } from "react-icons/bs";
 import DashboardItem from "../../UI/DashboardItem";
 import RecentActivities from "./RecentActivities";
@@ -10,7 +10,7 @@ import Analytics from "./analytics";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col gap-12 text-slate-800 ">
+    <div className="flex flex-col  gap-12 text-slate-800 ">
       <div className="mt-6">
         <h2 className="mb-2 text-lg font-medium">Quick Links</h2>
         <div className="flex space-x-4">
@@ -30,7 +30,7 @@ const Dashboard = () => {
         </div>
       </div>
       <h1 className="mb-4 text-2xl font-semibold ">Dashboard Overview</h1>
-      <div className="flex flex-wrap justify-start gap-6  ">
+      <div className="flex flex-wrap justify-start gap-4  ">
         {/* Number of users */}
         <DashboardItem Icon={FaUsers} heading={"Total Users"} value={"176"} />
         <DashboardItem
@@ -39,6 +39,13 @@ const Dashboard = () => {
           value={"56"}
           iconBackgroundColor="bg-green-200"
           iconColor="text-green-800"
+        />
+        <DashboardItem
+          Icon={BsFillHouseLockFill}
+          heading={"Rented Listings"}
+          value={"26"}
+          iconBackgroundColor="bg-orange-200"
+          iconColor="text-orange-800"
         />
         <RecentActivities />
       </div>
