@@ -23,6 +23,8 @@ export default function Button({
     reddish: ` flex items-center justify-center rounded-2xl bg-[#b33479] px-2 py-1 shadow-lg text-[white] transition-colors duration-300  hover:bg-[#9c5f81] `,
     transparentRed: ` flex items-center justify-center rounded-2xl bg-[transparent]  border-[#b33479] border-[1px] px-2 py-0 shadow-lg text-[#b33479] transition-colors duration-300 hover:bg-[#9c5f81]  hover:text-[white]`,
     submit: ` flex justify-center gap-1 rounded-3xl bg-[#b33479] px-2 py-1 ${disable ? "bg-slate-300" : ""} text-slate-100 text-lg shadow-sm transition-all duration-[300ms] hover:bg-[#9c5f81] hover:text-slate-100  `,
+    blue: ` flex items-center justify-center rounded-2xl bg-[#344bb3] px-2 py-1 shadow-lg text-[white] transition-colors duration-300  hover:bg-[#5f6f9c] `,
+    green: ` flex items-center justify-center rounded-2xl bg-[#34b369] px-2 py-1 shadow-lg text-[white] transition-colors duration-300  hover:bg-[#5f9c78] `,
   };
   if (link) {
     return (
