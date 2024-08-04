@@ -3,7 +3,7 @@ import { FiClock } from "react-icons/fi";
 
 function RecentActivities() {
   return (
-    <div className="flex  h-[15rem] w-[20rem] flex-col gap-3 rounded-lg bg-white p-4 shadow-sm ">
+    <div className="flex  h-[15rem] flex-1 flex-col gap-3 rounded-lg bg-white p-4 shadow-sm ">
       <div className=" mt-6 flex items-center gap-3 ">
         <span
           className={`flex h-16 w-16 items-center justify-center rounded-full  bg-cyan-200 `}
