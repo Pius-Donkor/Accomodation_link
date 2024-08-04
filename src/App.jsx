@@ -64,7 +64,6 @@ function App() {
                 <Route path="overview" element={<Dashboard />} />
                 <Route path="users" element={<Users />} />
                 <Route path="allproperties" element={<Properties />} />
-                <Route path="analytics" element={<Analytics />} />
               </Route>
               <Route path="/uploads" element={<AllUploads />} />
               <Route path="*" element={<p>page not found</p>} />
