@@ -16,12 +16,9 @@ const Layout = ({ children }) => {
           <Link to="allproperties" className="py-2">
             Properties
           </Link>
-          <Link to="analytics" className="py-2">
-            Analytics
-          </Link>
         </nav>
       </aside>
-      <main className=" ml-64 w-[80vw] bg-slate-300  p-6  ">{children}</main>
+      <main className=" ml-64 w-[80vw]  p-6  ">{children}</main>
     </div>
   );
 };
