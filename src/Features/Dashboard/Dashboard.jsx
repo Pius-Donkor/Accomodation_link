@@ -10,8 +10,9 @@ import Analytics from "./analytics";
 
 const Dashboard = () => {
   return (
-    <div className="flex flex-col  gap-12 text-slate-800 ">
-      <div className="mt-6">
+    <div className="flex flex-col  gap-4 text-slate-800 ">
+      <h1 className="mb-4 text-2xl font-semibold ">Dashboard Overview</h1>
+      <div className="mt-4">
         <h2 className="mb-2 text-lg font-medium">Quick Links</h2>
         <div className="flex space-x-4">
           <Link
@@ -29,7 +30,6 @@ const Dashboard = () => {
           </Link>
         </div>
       </div>
-      <h1 className="mb-4 text-2xl font-semibold ">Dashboard Overview</h1>
       <div className="flex flex-wrap justify-start gap-4  ">
         {/* Number of users */}
         <DashboardItem Icon={FaUsers} heading={"Total Users"} value={"176"} />
