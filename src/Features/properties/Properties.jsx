@@ -4,7 +4,6 @@ import PageError from "../../UI/PageError";
 import LoadingProperties from "./LoadingProperties";
 import useFilterSort from "../../hooks/useFilterSort";
 import PropertiesCard from "./PropertiesCard";
-import useGetProperties from "./useGetProperties";
 
 export default function Properties({
   allowCrud,
