@@ -35,6 +35,18 @@ export async function setRating(data) {
   }
 }
 
+export async function getAllRatings() {
+  let ratings = [];
+
+  const querySnapshot = await getDocs(collection(db, "ratings"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    ratings.push({ ...doc.data(), ratingId: doc.id });
+    // console.log(doc.id, " => ", doc.data());
+  });
+  return ratings;
+}
+
 export async function getRatings(propertyId) {
   let ratings = [];
   try {
