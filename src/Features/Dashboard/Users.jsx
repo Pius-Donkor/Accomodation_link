@@ -1,6 +1,11 @@
 // src/pages/Users.js
 import React, { useState } from "react";
-import Button from "../../UI/Button";
+import Table from "../../UI/Table";
+import TableHeader from "../../UI/TableHeader";
+import TableRow from "../../UI/TableRow";
+import TableHeadData from "../../UI/TableHeadData";
+import TableBody from "../../UI/TableBody";
+import TableData from "../../UI/TableData";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -14,58 +19,32 @@ const Users = () => {
           placeholder="Search users..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          className="w-full rounded-lg border p-2"
+          className="w-full rounded-lg border p-2 shadow-md outline-slate-200"
         />
       </div>
-      <table className="min-w-full divide-y divide-gray-200 rounded-lg bg-white shadow-sm">
-        <thead className="bg-gray-50">
-          <tr>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-            >
-              Name
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-            >
-              Email
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-            >
-              Role
-            </th>
-            <th
-              scope="col"
-              className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-            >
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHeadData>Name</TableHeadData>
+            <TableHeadData>Email</TableHeadData>
+            <TableHeadData>Role</TableHeadData>
+            <TableHeadData>Actions</TableHeadData>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
           {/* Add dynamic user data here */}
-          <tr>
-            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-              John Doe
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-              john@example.com
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-              Tenant
-            </td>
-            <td className="whitespace-nowrap px-6 py-4 text-sm font-medium">
+          <TableRow>
+            <TableData hasBoldText={true}>John Doe</TableData>
+            <TableData>john@example.com</TableData>
+            <TableData>Tenant</TableData>
+            <TableData>
               <button className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700">
                 Delete
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </TableData>
+          </TableRow>
+        </TableBody>
+      </Table>
     </div>
   );
 };
