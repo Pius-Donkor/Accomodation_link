@@ -7,8 +7,14 @@ import { BsFillHousesFill } from "react-icons/bs";
 import DashboardItem from "../../UI/DashboardItem";
 import RecentActivities from "./RecentActivities";
 import Analytics from "./analytics";
+import useGetAllUsers from "../User/useGetAllUsers";
+import useFilterSort from "../../hooks/useFilterSort";
 
 const Dashboard = () => {
+  const { allUsers } = useGetAllUsers();
+  const { sortedProperties } = useFilterSort();
+  const totalUsersNum = allUsers?.length;
+  const propertiesLength = sortedProperties?.length;
   return (
     <div className="flex flex-col  gap-4 text-slate-800 ">
       <h1 className="mb-4 text-2xl font-semibold ">Dashboard Overview</h1>
@@ -32,11 +38,15 @@ const Dashboard = () => {
       </div>
       <div className="flex flex-wrap justify-start gap-4  ">
         {/* Number of users */}
-        <DashboardItem Icon={FaUsers} heading={"Total Users"} value={"176"} />
+        <DashboardItem
+          Icon={FaUsers}
+          heading={"Total Users"}
+          value={totalUsersNum}
+        />
         <DashboardItem
           Icon={BsFillHousesFill}
           heading={"Active Listings"}
-          value={"56"}
+          value={propertiesLength}
           iconBackgroundColor="bg-green-200"
           iconColor="text-green-800"
         />
