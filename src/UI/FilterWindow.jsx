@@ -19,6 +19,7 @@ export default function FilterWindow({ onCloseModal }) {
   };
 
   const handleRadioChange = (e) => {
+    console.log(e.target.value);
     dispatch({
       type: "SET_RENT_TYPE",
       payload: e.target.value,
@@ -88,8 +89,8 @@ export default function FilterWindow({ onCloseModal }) {
             name="rent-type"
             id="home-rent"
             className="h-5 w-5"
-            value="home"
-            checked={state.rentType === "home"}
+            value="home rent"
+            checked={state.rentType === "home rent"}
             onChange={handleRadioChange}
           />
         </div>
@@ -101,9 +102,9 @@ export default function FilterWindow({ onCloseModal }) {
             type="radio"
             name="rent-type"
             id="hostel-rent"
-            value="hostel"
+            value="hostel rent"
             className="h-5 w-5"
-            checked={state.rentType === "hostel"}
+            checked={state.rentType === "hostel rent"}
             onChange={handleRadioChange}
           />
         </div>
@@ -117,7 +118,7 @@ export default function FilterWindow({ onCloseModal }) {
             id="any"
             value="any"
             className="h-5 w-5"
-            hecked={state.rentType === "any"}
+            checked={state.rentType === "any"}
             onChange={handleRadioChange}
           />
         </div>
