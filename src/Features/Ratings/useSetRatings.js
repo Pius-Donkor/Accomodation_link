@@ -13,6 +13,7 @@ export default function useSetRatings() {
     mutationKey: ["ratings"],
     onSuccess: (_, { propertyId }) => {
       queryClient.invalidateQueries(["ratings", propertyId]); // Invalidate the specific property's ratings query
+      queryClient.invalidateQueries(["allRatings"]);
       toast.success("Property rated successfully");
     },
     onError: (error) => {
