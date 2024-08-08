@@ -65,7 +65,7 @@ export default function useFilterSort(isUser) {
       if (rentType === "hostel rent")
         rentTypeIn = property.rentType === rentType;
 
-      return priceInRange && ratingInRange && rentTypeIn;
+      return priceInRange && ratingInRange;
     });
   } else {
     filteredProperties = propertiesType.slice();
