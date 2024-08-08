@@ -4,12 +4,12 @@ const FilterState = createContext();
 // Initial state
 const initialState = {
   priceRange: {
-    min: "",
-    max: "",
+    min: 0,
+    max: 0,
   },
   rating: {
-    min: "",
-    max: "",
+    min: 0,
+    max: 0,
   },
   rentType: "",
 };
