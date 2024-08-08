@@ -1,4 +1,3 @@
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getRatings } from "../../Services/apiRatings";
 export default function useGetRatings(id) {
