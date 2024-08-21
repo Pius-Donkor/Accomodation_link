@@ -7,8 +7,14 @@ import TableRow from "../../UI/TableRow";
 import TableHeadData from "../../UI/TableHeadData";
 import TableData from "../../UI/TableData";
 import TableBody from "../../UI/TableBody";
+import useFilterSort from "../../hooks/useFilterSort";
+import PropertiesCard from "./PropertiesCard";
 
 const Properties = () => {
+  const { sortedProperties, isLoading, propertiesError } = useFilterSort(
+    false,
+    true,
+  );
   return (
     <div>
       <h1 className="mb-4 text-2xl font-semibold">Properties</h1>
@@ -25,51 +31,15 @@ const Properties = () => {
         </TableHeader>
         <TableBody>
           {/* Add dynamic property data here */}
-          <TableRow>
-            <TableData withFlex={true}>
-              <img className="mb-2 w-12" src="/18b-min.jpeg" alt="dummy" />
-              Beautiful Apartment
-            </TableData>
-            <TableData>Accra</TableData>
-            <TableData>$1200</TableData>
-            <TableData>Pending</TableData>
-            <TableData>Rented</TableData>
-            <TableData withFlex={true} hasButtons={true}>
-              <Button type="blue">Approve</Button>
-              <Button type="reddish">Reject</Button>
-              <Button type="green">Reset Rent</Button>
-            </TableData>
-          </TableRow>
-          <TableRow>
-            <TableData withFlex={true}>
-              <img className="mb-2 w-12" src="/18b-min.jpeg" alt="dummy" />
-              Beautiful Apartment
-            </TableData>
-            <TableData>Accra</TableData>
-            <TableData>$1200</TableData>
-            <TableData>Pending</TableData>
-            <TableData>Rented</TableData>
-            <TableData withFlex={true} hasButtons={true}>
-              <Button type="blue">Approve</Button>
-              <Button type="reddish">Reject</Button>
-              <Button type="green">Reset Rent</Button>
-            </TableData>
-          </TableRow>
-          <TableRow>
-            <TableData withFlex={true}>
-              <img className="mb-2 w-12" src="/18b-min.jpeg" alt="dummy" />
-              Beautiful Apartment
-            </TableData>
-            <TableData>Accra</TableData>
-            <TableData>$1200</TableData>
-            <TableData>Pending</TableData>
-            <TableData>Rented</TableData>
-            <TableData withFlex={true} hasButtons={true}>
-              <Button type="blue">Approve</Button>
-              <Button type="reddish">Reject</Button>
-              <Button type="green">Reset Rent</Button>
-            </TableData>
-          </TableRow>
+          {isLoading && <h1>Loading Listings </h1>}
+          {!isLoading && propertiesError && (
+            <p>sorry could not load Properties</p>
+          )}
+          {sortedProperties.length
+            ? sortedProperties.map((property) => (
+                <PropertiesCard key={property.id} property={property} />
+              ))
+            : (!isLoading && "no property has been uploaded yet 😔") || ""}
         </TableBody>
       </Table>
     </div>
