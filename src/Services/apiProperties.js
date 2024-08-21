@@ -81,12 +81,12 @@ export async function createEditProperties(propertyData) {
       throw new Error(error.message);
     }
   } else {
-    console.log(tempImgs, serverTimestamp());
-    console.log({
-      ...propertyData,
-      images: tempImgs,
-      createdAt: serverTimestamp(),
-    });
+    // console.log(tempImgs, serverTimestamp());
+    // console.log({
+    //   ...propertyData,
+    //   images: tempImgs,
+    //   createdAt: serverTimestamp(),
+    // });
     try {
       const docRef = await addDoc(collection(db, "properties"), {
         ...propertyData,
