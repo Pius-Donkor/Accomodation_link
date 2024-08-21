@@ -9,6 +9,7 @@ export default function Properties({
   allowCrud,
   noPadding = false,
   isUser = false,
+  isHomepage = false,
 }) {
   const { sortedProperties, isLoading, propertiesError } =
     useFilterSort(isUser);
@@ -40,7 +41,6 @@ export default function Properties({
     currentPage * propertiesPerPage,
     currentPage * propertiesPerPage + propertiesPerPage,
   );
-
   // Handlers for next and back buttons
   const handleNext = () => {
     if (currentPage < totalPages - 1) {
@@ -63,7 +63,9 @@ export default function Properties({
       >
         {!sortedProperties.length && (
           <h2 className="text-3xl text-[#dddddd] ">
-            You have not posted any listing 🏠 yet
+            {isHomepage
+              ? "No listing is available 😔"
+              : "You have not posted any listing 🏠 yet"}
           </h2>
         )}
         {sortedProperties.length
