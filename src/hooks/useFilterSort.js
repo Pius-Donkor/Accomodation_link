@@ -6,7 +6,7 @@ import useGetUser from "../Features/User/useGetUser";
 import useGetAllRatings from "../Features/Ratings/useGetAllRatings";
 import { useEffect, useState } from "react";
 
-export default function useFilterSort(isUser) {
+export default function useFilterSort(isUser, forAdminSection = false) {
   const { properties, propertiesError, isLoading } = useGetProperties();
   const { allRatings } = useGetAllRatings();
   // const [fromUser, setFromUser] = useState(null);
@@ -17,6 +17,8 @@ export default function useFilterSort(isUser) {
     state: { priceRange, rating, rentType },
   } = useFilterContext();
   const [newProperties, setNewProperties] = useState([]);
+
+  // adding ratings to their corresponding product data
   useEffect(() => {
     if (!properties.length && !allRatings.length) return;
 
@@ -37,7 +39,12 @@ export default function useFilterSort(isUser) {
     ? newProperties
         .slice()
         .filter((property) => property?.userId === userData?.userId) || []
-    : newProperties;
+    : forAdminSection
+      ? newProperties
+      : newProperties
+          .slice()
+          .filter((property) => property.status === "accepted");
+
   let filteredProperties;
   let sortedProperties;
   // add ratings to the properties
