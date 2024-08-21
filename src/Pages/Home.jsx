@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <OptionsBar />
-      <Properties allowCrud={false} />
+      <Properties isHomepage={true} allowCrud={false} />
     </div>
   );
 }
