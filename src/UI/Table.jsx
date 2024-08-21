@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Table({ children }) {
   return (
-    <table className="min-w-full divide-y divide-gray-200 rounded-lg bg-white shadow-sm">
+    <table className=" divide-y divide-gray-200 overflow-x-auto rounded-lg bg-white shadow-sm ">
       {children}
     </table>
   );
