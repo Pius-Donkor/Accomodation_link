@@ -7,6 +7,7 @@ import {
   setDoc,
   serverTimestamp,
   deleteDoc,
+  updateDoc,
 } from "firebase/firestore";
 import {
   ref,
@@ -116,4 +117,11 @@ export async function deleteProperty({ id, imageNames }) {
     console.log(error);
     throw new Error(error.message);
   }
+}
+
+// ADMINS SECTION
+export async function updateProperty(data) {
+  const { id, ...rest } = data;
+  const washingtonRef = doc(db, "properties", id);
+  await updateDoc(washingtonRef, rest);
 }
