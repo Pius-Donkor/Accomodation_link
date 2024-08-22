@@ -33,7 +33,7 @@ export default function useFilterSort(isUser, forAdminSection = false) {
       return { ...property, averageRating };
     });
     setNewProperties(ratedProperties);
-  }, [allRatings]);
+  }, [allRatings, properties]);
 
   let propertiesType = isUser
     ? newProperties
