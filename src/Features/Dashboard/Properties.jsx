@@ -1,11 +1,9 @@
 // src/pages/Properties.js
 import React from "react";
-import Button from "../../UI/Button";
 import Table from "../../UI/Table";
 import TableHeader from "../../UI/TableHeader";
 import TableRow from "../../UI/TableRow";
 import TableHeadData from "../../UI/TableHeadData";
-import TableData from "../../UI/TableData";
 import TableBody from "../../UI/TableBody";
 import useFilterSort from "../../hooks/useFilterSort";
 import PropertiesCard from "./PropertiesCard";
