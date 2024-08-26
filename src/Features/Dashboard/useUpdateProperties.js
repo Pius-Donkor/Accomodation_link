@@ -16,7 +16,7 @@ export default function useUpdateProperties() {
     },
     onError: (error) => {
       toast.error(
-        "Sorry could not  perform task on this listing, check your internet connection",
+        "Sorry could not perform task on this listing, check your internet connection",
       );
     },
   });
