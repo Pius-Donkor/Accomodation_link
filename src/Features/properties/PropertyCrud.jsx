@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { MdModeEditOutline } from "react-icons/md";
 import { PiDotsThreeOutlineVerticalBold } from "react-icons/pi";
-import useOutsideClick from "../../hooks/useOutsideClick";
+// import useOutsideClick from "../../hooks/useOutsideClick";
 import Button from "../../UI/Button";
 import CrudButton from "../../UI/CrudButton";
 import Modal from "../../UI/Modal";
@@ -10,7 +10,7 @@ import CreateEditListing from "../UserListings/CreateEditListing";
 import DeleteWindow from "../../UI/DeleteWindow";
 export default function PropertyCrud({ property, handleDelete, isDeleting }) {
   const [displayCrud, setDisplayCrud] = useState(false);
-  const closeCrud = () => setDisplayCrud(false);
+  // const closeCrud = () => setDisplayCrud(false);
   function handleDisplayCrud() {
     setDisplayCrud((prev) => !prev);
   }
