@@ -4,7 +4,9 @@ import TableData from "../../UI/TableData";
 import Button from "../../UI/Button";
 import useUpdateProperties from "./useUpdateProperties";
 import toast from "react-hot-toast";
-
+import ModalLittle from "../../UI/ModalLittle";
+import { FaHouseLock } from "react-icons/fa6";
+import { BsFillHouseCheckFill } from "react-icons/bs";
 export default function PropertiesCard({ property }) {
   const { isUpdateError, isUpdating, updateProperty } = useUpdateProperties();
   const { name, price, status, rentStatus, location, image, id } = property;
@@ -77,7 +79,47 @@ export default function PropertiesCard({ property }) {
             </Button>
           ))
         )}
-        <Button
+
+        <ModalLittle>
+          <ModalLittle.OpenModalLittle openName={`rentStatus${id}`}>
+            <Button type="green">Set Rental status</Button>
+          </ModalLittle.OpenModalLittle>
+          <ModalLittle.ModalLittleWindow
+            position="absolute bottom-[-3.3rem] right-2  "
+            openName={`rentStatus${id}`}
+          >
+            <div className="flex flex-col gap-1">
+              <Button
+                onclick={() =>
+                  handleUpdateProperty(
+                    {
+                      rentStatus: "rented",
+                    },
+                    "Rented",
+                  )
+                }
+                type="nav"
+              >
+                <FaHouseLock className="mr-1 text-lg" /> Rented
+              </Button>
+              <Button
+                onclick={() =>
+                  handleUpdateProperty(
+                    {
+                      rentStatus: "available",
+                    },
+                    "Available",
+                  )
+                }
+                type="nav"
+              >
+                <BsFillHouseCheckFill className="mr-1 text-lg" /> Available
+              </Button>
+            </div>
+          </ModalLittle.ModalLittleWindow>
+        </ModalLittle>
+
+        {/* <Button
           onclick={() =>
             handleUpdateProperty(
               {
@@ -89,7 +131,7 @@ export default function PropertiesCard({ property }) {
           type="green"
         >
           Set Rental status
-        </Button>
+        </Button> */}
       </TableData>
     </TableRow>
   );
