@@ -204,3 +204,10 @@ export async function updateUser(data) {
     password: data.password,
   });
 }
+
+// ADMIN FUNCTIONS
+export async function updateUserStatus(data) {
+  const { id, status } = data;
+  const washingtonRef = doc(db, "users", id);
+  await updateDoc(washingtonRef, { status });
+}
