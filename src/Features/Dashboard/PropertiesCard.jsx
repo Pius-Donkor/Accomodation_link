@@ -7,7 +7,9 @@ import toast from "react-hot-toast";
 import ModalLittle from "../../UI/ModalLittle";
 import { FaHouseLock } from "react-icons/fa6";
 import { BsFillHouseCheckFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 export default function PropertiesCard({ property }) {
+  const navigate = useNavigate();
   const { isUpdateError, isUpdating, updateProperty } = useUpdateProperties();
   const { name, price, status, rentStatus, location, image, id } = property;
 
@@ -28,7 +30,12 @@ export default function PropertiesCard({ property }) {
   return (
     <TableRow>
       <TableData withFlex={true}>
-        <img className="mb-2 w-12" src={image.at(0)} alt="dummy" />
+        <img
+          className="mb-2 w-12"
+          onClick={() => navigate(`/propertyDetails/${id}`)}
+          src={image.at(0)}
+          alt="dummy"
+        />
         <p className="whitespace-normal">{name}</p>
       </TableData>
       <TableData>
