@@ -48,7 +48,7 @@ const Layout = ({ children }) => {
         </nav>
       </aside>
       {/* navbar */}
-      <nav className="fixed right-0 top-0 flex w-[calc(100%-16rem)] items-center justify-between bg-slate-200 px-4 py-2 shadow-lg ">
+      <nav className="fixed right-0 top-0 z-50 flex w-[calc(100%-16rem)] items-center justify-between bg-slate-200 px-4 py-2 shadow-lg ">
         <HomeBack />
 
         <div className="flex items-center gap-2">
