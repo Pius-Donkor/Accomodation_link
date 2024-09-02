@@ -125,20 +125,6 @@ export default function PropertiesCard({ property }) {
             </div>
           </ModalLittle.ModalLittleWindow>
         </ModalLittle>
-
-        {/* <Button
-          onclick={() =>
-            handleUpdateProperty(
-              {
-                rentStatus: rentStatus === "available" ? "rented" : "available",
-              },
-              `set to ${rentStatus === "available" ? "rented" : "available"}`,
-            )
-          }
-          type="green"
-        >
-          Set Rental status
-        </Button> */}
       </TableData>
     </TableRow>
   );
