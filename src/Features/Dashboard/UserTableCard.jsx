@@ -1,4 +1,3 @@
-import React from "react";
 import TableRow from "../../UI/TableRow";
 import TableData from "../../UI/TableData";
 import Button from "../../UI/Button";
