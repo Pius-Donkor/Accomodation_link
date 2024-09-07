@@ -45,86 +45,88 @@ export default function PropertiesCard({ property }) {
       <TableData>{status}</TableData>
       <TableData>{rentStatus}</TableData>
       <TableData withFlex={true} hasButtons={true}>
-        {status === "pending" ? (
-          <>
-            <Button
-              onclick={() =>
-                handleUpdateProperty({ status: "rejected" }, "rejected")
-              }
-              type="reddish"
-            >
-              Reject
-            </Button>
-            <Button
-              onclick={() =>
-                handleUpdateProperty({ status: "accepted" }, "approved")
-              }
-              type="blue"
-            >
-              Approve
-            </Button>
-          </>
-        ) : (
-          (status === "rejected" && (
-            <Button
-              onclick={() =>
-                handleUpdateProperty({ status: "accepted" }, "approved")
-              }
-              type="blue"
-            >
-              Approve
-            </Button>
-          )) ||
-          (status === "accepted" && (
-            <Button
-              onclick={() =>
-                handleUpdateProperty({ status: "rejected" }, "rejected")
-              }
-              type="reddish"
-            >
-              Reject
-            </Button>
-          ))
-        )}
+        <div className="relative flex gap-1">
+          {status === "pending" ? (
+            <>
+              <Button
+                onclick={() =>
+                  handleUpdateProperty({ status: "rejected" }, "rejected")
+                }
+                type="reddish"
+              >
+                Reject
+              </Button>
+              <Button
+                onclick={() =>
+                  handleUpdateProperty({ status: "accepted" }, "approved")
+                }
+                type="blue"
+              >
+                Approve
+              </Button>
+            </>
+          ) : (
+            (status === "rejected" && (
+              <Button
+                onclick={() =>
+                  handleUpdateProperty({ status: "accepted" }, "approved")
+                }
+                type="blue"
+              >
+                Approve
+              </Button>
+            )) ||
+            (status === "accepted" && (
+              <Button
+                onclick={() =>
+                  handleUpdateProperty({ status: "rejected" }, "rejected")
+                }
+                type="reddish"
+              >
+                Reject
+              </Button>
+            ))
+          )}
 
-        <ModalLittle>
-          <ModalLittle.OpenModalLittle openName={`rentStatus${id}`}>
-            <Button type="green">Set Rental status</Button>
-          </ModalLittle.OpenModalLittle>
-          <ModalLittle.ModalLittleWindow
-            position="absolute bottom-[-3.3rem] right-2  "
-            openName={`rentStatus${id}`}
-          >
-            <div className="flex flex-col gap-1">
-              <Button
-                onclick={() =>
-                  handleUpdateProperty(
-                    {
-                      rentStatus: "rented",
-                    },
-                    "Rented",
-                  )
-                }
-                type="nav"
-              >
-                <FaHouseLock className="mr-1 text-lg" /> Rented
-              </Button>
-              <Button
-                onclick={() =>
-                  handleUpdateProperty(
-                    {
-                      rentStatus: "available",
-                    },
-                    "Available",
-                  )
-                }
-                type="nav"
-              >
-                <BsFillHouseCheckFill className="mr-1 text-lg" /> Available
-              </Button>
-            </div>
-          </ModalLittle.ModalLittleWindow>
-        </ModalLittle>
+          <ModalLittle>
+            <ModalLittle.OpenModalLittle openName={`rentStatus${id}`}>
+              <Button type="green">Set Rental status</Button>
+            </ModalLittle.OpenModalLittle>
+            <ModalLittle.ModalLittleWindow
+              position="absolute bottom-[-3.3rem] right-2  "
+              openName={`rentStatus${id}`}
+            >
+              <div className="flex flex-col gap-1">
+                <Button
+                  onclick={() =>
+                    handleUpdateProperty(
+                      {
+                        rentStatus: "rented",
+                      },
+                      "Rented",
+                    )
+                  }
+                  type="nav"
+                >
+                  <FaHouseLock className="mr-1 text-lg" /> Rented
+                </Button>
+                <Button
+                  onclick={() =>
+                    handleUpdateProperty(
+                      {
+                        rentStatus: "available",
+                      },
+                      "Available",
+                    )
+                  }
+                  type="nav"
+                >
+                  <BsFillHouseCheckFill className="mr-1 text-lg" /> Available
+                </Button>
+              </div>
+            </ModalLittle.ModalLittleWindow>
+          </ModalLittle>
+        </div>
       </TableData>
     </TableRow>
   );
