@@ -1,5 +1,5 @@
 // src/pages/Properties.js
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Table from "../../UI/Table";
 import TableHeader from "../../UI/TableHeader";
 import TableRow from "../../UI/TableRow";
@@ -35,7 +35,7 @@ const Properties = () => {
         (property) => property.rentStatus === rentStatus,
       );
     setDashboardProperties(dashboardProperties_filtered);
-  }, [approvalStatus, rentStatus, locationFilter, sortedProperties]);
+  }, [approvalStatus, rentStatus, locationFilter, sortedProperties.length]);
 
   function handleApprovalStatus(status) {
     setApprovalStatus(status);
