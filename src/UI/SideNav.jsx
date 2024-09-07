@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
-import { auth } from "../Services/firebase";
 import useGetUser from "../Features/User/useGetUser";
 import { MdEmail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -28,7 +27,7 @@ export default function SideNav() {
           onClick={() => setSideBarOpen((prev) => !prev)}
           className="absolute right-[-4rem] top-[50%] z-[-2] h-20 w-[4rem] rounded-lg bg-[#2e2929ef] "
         >
-          <img src="/public/userMenuIcon.png" className="h-full" alt="" />
+          <img src="/userMenuIcon.png" className="h-full" alt="" />
         </button>
       )}
       <div className="w-full"></div>
