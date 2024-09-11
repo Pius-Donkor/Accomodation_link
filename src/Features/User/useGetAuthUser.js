@@ -11,6 +11,7 @@ export default function useGetAuthUser() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         setAuthUserId(user.uid);
+        console.log(user.uid);
         setIsUser(user !== null || user !== undefined);
         setIsUserVerified(user.emailVerified);
         setIsLoading("finish");
