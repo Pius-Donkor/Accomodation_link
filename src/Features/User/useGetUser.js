@@ -13,7 +13,7 @@ export default function useGetUser() {
     error,
   } = useQuery({
     queryFn: () => getUser(authUserId),
-    queryKey: ["users"],
+    queryKey: ["user"],
     enabled: authUserId !== "loading" && authUserId !== null,
   });
 
