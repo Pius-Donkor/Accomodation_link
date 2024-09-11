@@ -19,8 +19,13 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import { auth, db } from "./firebase";
-import { data } from "autoprefixer";
+import { auth, db, storage } from "./firebase";
+import {
+  deleteObject,
+  getDownloadURL,
+  ref,
+  uploadBytes,
+} from "firebase/storage";
 
 export async function userSignUp(signUpData) {
   const {
@@ -189,6 +194,7 @@ export async function getPropertyOwner(ownerId) {
   }
 }
 
+// reset user password
 export async function resetForgottenPassword(email) {
   try {
     await sendPasswordResetEmail(auth, email);
@@ -205,6 +211,46 @@ export async function updateUser(data) {
   });
 }
 
+//  update the user profile
+export async function updateUserProfile({
+  id,
+  profileImage,
+  previousImageName,
+}) {
+  const storageRef = ref(storage, `profile_images/${profileImage.name}`);
+  const snapshot = await uploadBytes(storageRef, profileImage);
+  try {
+    if (previousImageName) {
+      // Create a reference to the file to delete
+      const desertRef = ref(storage, `profile_images/${previousImageName}`);
+      // Delete the file
+      deleteObject(desertRef)
+        .then(() => {
+          console.log("file deleted successfully");
+        })
+        .catch((error) => {
+          console.log(error.message);
+          throw new Error(
+            "could not upload profile image, check your internet connection ",
+          );
+        });
+    }
+    // Get download URL after successful upload
+    const downloadURL = await getDownloadURL(snapshot.ref);
+    if (typeof downloadURL !== "string") {
+      throw new Error(" upload Error");
+    }
+    const washingtonRef = doc(db, "users", id);
+
+    // Set the "capital" field of the city 'DC'
+    await updateDoc(washingtonRef, {
+      profileImage: downloadURL,
+      profileImageName: profileImage.name,
+    });
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
 // ADMIN FUNCTIONS
 export async function updateUserStatus(data) {
   const { id, status } = data;
