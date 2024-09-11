@@ -20,22 +20,33 @@ const Properties = () => {
   const [dashboardProperties, setDashboardProperties] = useState([]);
 
   useEffect(() => {
+    // Filter and sort properties
     let dashboardProperties_filtered = sortedProperties
       ?.sort((a, b) => a?.date - b?.date)
       .filter((property) =>
         property.location.toLowerCase().includes(locationFilter.toLowerCase()),
       );
 
-    if (approvalStatus)
+    if (approvalStatus) {
       dashboardProperties_filtered = dashboardProperties_filtered.filter(
         (property) => property.status === approvalStatus,
       );
-    if (rentStatus)
+    }
+
+    if (rentStatus) {
       dashboardProperties_filtered = dashboardProperties_filtered.filter(
         (property) => property.rentStatus === rentStatus,
       );
-    setDashboardProperties(dashboardProperties_filtered);
-  }, [approvalStatus, rentStatus, locationFilter, sortedProperties.length]);
+    }
+
+    // Update state only if the filtered properties have changed
+    if (
+      JSON.stringify(dashboardProperties) !==
+      JSON.stringify(dashboardProperties_filtered)
+    ) {
+      setDashboardProperties(dashboardProperties_filtered);
+    }
+  }, [approvalStatus, rentStatus, locationFilter, sortedProperties]);
 
   function handleApprovalStatus(status) {
     setApprovalStatus(status);
