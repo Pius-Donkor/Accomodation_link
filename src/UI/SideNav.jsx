@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Button from "./Button";
 import { Link, useNavigate } from "react-router-dom";
 import useGetUser from "../Features/User/useGetUser";
@@ -6,6 +6,9 @@ import { MdEmail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
 import { logout } from "../Services/apiUser";
 import toast from "react-hot-toast";
+import ModalLittle from "./ModalLittle";
+import EditProfileBtn from "./EditProfileBtn";
+import ProfileImageForm from "../Features/User/ProfileImageForm";
 export default function SideNav() {
   const { userData = {}, isLoading, error } = useGetUser();
   const navigate = useNavigate();
@@ -31,12 +34,31 @@ export default function SideNav() {
         </button>
       )}
       <div className="w-full"></div>
-      <div className="flex w-full flex-col items-center bg-slate-400 px-2 text-slate-800">
-        <img
-          className="ml-[-0.5rem] mt-[-2rem]  w-[90%] "
-          src="/webLogo.png"
-          alt="logo"
-        />
+      <div className="relative flex w-full flex-col items-center bg-slate-400 px-2 text-slate-800">
+        <ModalLittle>
+          <ModalLittle.OpenModalLittle openName="editProfile">
+            <EditProfileBtn />
+          </ModalLittle.OpenModalLittle>
+          <ModalLittle.ModalLittleWindow
+            openName="editProfile"
+            position="absolute top-2 left-2 z-10 "
+          >
+            <ProfileImageForm userData={userData} />
+          </ModalLittle.ModalLittleWindow>
+        </ModalLittle>
+        {userData?.profileImage ? (
+          <img
+            className="  mt-4 w-[50%] rounded-full border-8 border-slate-600 shadow-2xl "
+            src={userData.profileImage}
+            alt="profile_photo"
+          />
+        ) : (
+          <img
+            className="ml-[-0.5rem] mt-[-2rem]  w-[90%] "
+            src="/webLogo.png"
+            alt="logo"
+          />
+        )}
         {!isLoading ? (
           <>
             {userData.email && (
@@ -75,7 +97,9 @@ export default function SideNav() {
         </ul>
         <div className="flex flex-col gap-2">
           <Button onClick={handleLogout}>Logout</Button>
-          <Button link={"/admindashboard"}>Administration</Button>
+          {userData?.role === "admin" && (
+            <Button link={"/admindashboard"}>Administration</Button>
+          )}
         </div>
       </div>
     </aside>
