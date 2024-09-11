@@ -4,6 +4,7 @@ import PageError from "../../UI/PageError";
 import LoadingProperties from "./LoadingProperties";
 import useFilterSort from "../../hooks/useFilterSort";
 import PropertiesCard from "./PropertiesCard";
+// import useGetUser from "../User/useGetUser";
 
 export default function Properties({
   allowCrud,
@@ -13,6 +14,8 @@ export default function Properties({
 }) {
   const { sortedProperties, isLoading, propertiesError } =
     useFilterSort(isUser);
+  // const { userData } = useGetUser();
+  // console.log(userData);
   const [currentPage, setCurrentPage] = useState(0);
   const propertiesPerPage = 9;
 
