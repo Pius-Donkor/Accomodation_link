@@ -73,7 +73,10 @@ export default function SideNav() {
             </Link>
           </li>
         </ul>
-        <Button onClick={handleLogout}>Logout</Button>
+        <div className="flex flex-col gap-2">
+          <Button onClick={handleLogout}>Logout</Button>
+          <Button link={"/admindashboard"}>Administration</Button>
+        </div>
       </div>
     </aside>
   );
