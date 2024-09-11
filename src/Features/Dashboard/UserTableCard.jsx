@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 export default function UserTableCard({ user }) {
   const { isUpdateError, isUpdating, updateUserStatus } = useUpdateUserStatus();
+  console.log(user.userId);
   function handleUserAction(status) {
     updateUserStatus(
       {
