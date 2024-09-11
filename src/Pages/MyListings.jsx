@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDisplayOptionsBar } from "../contexts/DisplayOptionsContext";
 import Properties from "../Features/properties/Properties";
-import PropertiesCard from "../Features/properties/PropertiesCard";
+// import PropertiesCard from "../Features/properties/PropertiesCard";
 import Button from "../UI/Button";
 import { MdAddHome } from "react-icons/md";
 import Modal from "../UI/Modal";
