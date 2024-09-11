@@ -4,7 +4,7 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import Button from "../../UI/Button";
 import HomeBack from "../../UI/HomeBack";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, userData }) => {
   const [activePage, setActivePage] = useState("overview");
   const location = useLocation();
   useEffect(() => {
@@ -57,7 +57,7 @@ const Layout = ({ children }) => {
             alt="dummy_image"
             className="w-8 rounded-full bg-black "
           />
-          <p>Admins name</p>
+          <p>{userData?.userName}</p>
           <Button>logout</Button>
         </div>
       </nav>
