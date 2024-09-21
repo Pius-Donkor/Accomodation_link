@@ -39,7 +39,11 @@ export default function UserTableCard({ user }) {
         <div className="relative">
           <ModalLittle>
             <ModalLittle.OpenModalLittle openName={`status${user.userId}`}>
-              <Button disable={isUpdating} type="green">
+              <Button
+                isProcessing={isUpdating}
+                disable={isUpdating}
+                type="green"
+              >
                 Actions
               </Button>
             </ModalLittle.OpenModalLittle>
@@ -52,6 +56,7 @@ export default function UserTableCard({ user }) {
                   set the user status to :
                 </p>
                 <Button
+                  isProcessing={isUpdating}
                   disable={isUpdating}
                   onclick={() => handleUserAction("deleted")}
                   type="nav"
@@ -59,6 +64,7 @@ export default function UserTableCard({ user }) {
                   <RiUserUnfollowFill className="mr-1 text-lg" /> Deleted
                 </Button>
                 <Button
+                  isProcessing={isUpdating}
                   disable={isUpdating}
                   onclick={() => handleUserAction("suspended")}
                   type="nav"
@@ -66,6 +72,7 @@ export default function UserTableCard({ user }) {
                   <FaUserLock className="mr-1 text-lg" /> Suspended
                 </Button>
                 <Button
+                  isProcessing={isUpdating}
                   disable={isUpdating}
                   onclick={() => handleUserAction("inactive")}
                   type="nav"
@@ -73,6 +80,7 @@ export default function UserTableCard({ user }) {
                   <FaUserLargeSlash className="mr-1 text-lg" /> Inactive
                 </Button>
                 <Button
+                  isProcessing={isUpdating}
                   disable={isUpdating}
                   onclick={() => handleUserAction("active")}
                   type="nav"
