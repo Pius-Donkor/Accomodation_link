@@ -68,7 +68,7 @@ export default function CreateEditListingForm({ property, id }) {
   } = useFieldArray({ control, name: "neighborhood" });
   // the submit function handle what happens next to the obtained values
   function onSubmit(data) {
-    console.table(data);
+    // console.table(data);
     const {
       accommodation_type,
       amenities,
@@ -85,6 +85,7 @@ export default function CreateEditListingForm({ property, id }) {
       rules,
       size,
       upload_property_images,
+      rentStatus,
     } = data;
 
     const newPosition = position_coordinate
@@ -113,6 +114,8 @@ export default function CreateEditListingForm({ property, id }) {
           size,
           accommodation_type,
           gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+          status: "pending",
+          rentStatus,
         },
         {
           onSuccess: () => {
@@ -122,24 +125,24 @@ export default function CreateEditListingForm({ property, id }) {
         },
       );
     } else {
-      console.log({
-        price: rental_price,
-        name: property_name,
-        location: property_location,
-        amenities,
-        bathrooms,
-        bedrooms,
-        description,
-        features,
-        neighborhood,
-        neighboring_campus,
-        image: upload_property_images,
-        rules,
-        userId: userData.userId,
-        size,
-        accommodation_type,
-        gpsPosition: { lat: newPosition[0], long: newPosition[1] },
-      });
+      // console.log({
+      //   price: rental_price,
+      //   name: property_name,
+      //   location: property_location,
+      //   amenities,
+      //   bathrooms,
+      //   bedrooms,
+      //   description,
+      //   features,
+      //   neighborhood,
+      //   neighboring_campus,
+      //   image: upload_property_images,
+      //   rules,
+      //   userId: userData.userId,
+      //   size,
+      //   accommodation_type,
+      //   gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+      // });
       createEdit(
         {
           price: rental_price,
@@ -158,6 +161,8 @@ export default function CreateEditListingForm({ property, id }) {
           size,
           accommodation_type,
           gpsPosition: { lat: newPosition[0], long: newPosition[1] },
+          status: "pending",
+          rentStatus: "available",
         },
         {
           onSuccess: () => {
@@ -395,7 +400,7 @@ export default function CreateEditListingForm({ property, id }) {
         </div>
 
         <FormRow childElement="button">
-          <Button type="submit" disable={isCreating}>
+          <Button type="submit" isProcessing={isCreating} disable={isCreating}>
             {id ? "Edit Property" : "Create Property"}
           </Button>
         </FormRow>
