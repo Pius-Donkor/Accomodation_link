@@ -15,7 +15,7 @@ export default function AdminDashboard() {
       toast.error("Only an Administrator can have access to this page ");
       navigate("/");
     }
-  }, []);
+  }, [userData?.role, userData?.userName, navigate]);
 
   if (isLoading) return <p>loading...</p>;
 
@@ -26,5 +26,5 @@ export default function AdminDashboard() {
       </Layout>
     );
 
-  return <div>hellooooo</div>;
+  return <div>loading...</div>;
 }
