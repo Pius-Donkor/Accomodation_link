@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useUpdateUserProfile from "./useUpdateUserProfile";
 import toast from "react-hot-toast";
+import BtnLoadingSpinner from "../../UI/BtnLoadingSpinner";
 
 export default function ProfileImageForm({ userData, onClose }) {
   const [previewImage, setPreviewImage] = useState(null);
@@ -84,9 +85,10 @@ export default function ProfileImageForm({ userData, onClose }) {
           <button
             disabled={isUpdating}
             type="submit"
-            className={`mt-4 w-full rounded-lg ${isUpdating ? "bg-slate-300 hover:bg-slate-300" : " bg-pink-500  hover:bg-pink-600"} px-4 py-2 text-white shadow-md transition duration-150`}
+            className={`mt-4 w-full rounded-lg ${isUpdating ? "bg-slate-300 hover:bg-slate-300" : " bg-pink-500  hover:bg-pink-600"} flex justify-center gap-1 px-4 py-2 text-white shadow-md transition duration-150`}
           >
             Update Image
+            {isUpdating && <BtnLoadingSpinner />}
           </button>
         </form>
       </div>
