@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import BtnLoadingSpinner from "./BtnLoadingSpinner";
 export default function Button({
   children,
   type = "greenLight",
@@ -8,6 +9,7 @@ export default function Button({
   onClick,
   onMouseEnter = () => {},
   link,
+  isProcessing,
 }) {
   const navigate = useNavigate();
   const baseStyle = " border-2 px-3 py-1 text-xl transition-all";
@@ -36,6 +38,7 @@ export default function Button({
         onMouseEnter={onMouseEnter}
       >
         {children}
+        {isProcessing && <BtnLoadingSpinner />}
       </button>
     );
   } else {
@@ -47,7 +50,7 @@ export default function Button({
         className={buttonStyles[`${type}`]}
         onMouseEnter={onMouseEnter}
       >
-        {children}
+        {children} {isProcessing && <BtnLoadingSpinner />}
       </button>
     );
   }
