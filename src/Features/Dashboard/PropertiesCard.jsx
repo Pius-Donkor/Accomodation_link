@@ -49,6 +49,8 @@ export default function PropertiesCard({ property }) {
           {status === "pending" ? (
             <>
               <Button
+                disable={isUpdating}
+                isProcessing={isUpdating}
                 onclick={() =>
                   handleUpdateProperty({ status: "rejected" }, "rejected")
                 }
@@ -57,6 +59,8 @@ export default function PropertiesCard({ property }) {
                 Reject
               </Button>
               <Button
+                disable={isUpdating}
+                isProcessing={isUpdating}
                 onclick={() =>
                   handleUpdateProperty({ status: "accepted" }, "approved")
                 }
@@ -68,6 +72,8 @@ export default function PropertiesCard({ property }) {
           ) : (
             (status === "rejected" && (
               <Button
+                disable={isUpdating}
+                isProcessing={isUpdating}
                 onclick={() =>
                   handleUpdateProperty({ status: "accepted" }, "approved")
                 }
@@ -78,6 +84,8 @@ export default function PropertiesCard({ property }) {
             )) ||
             (status === "accepted" && (
               <Button
+                disable={isUpdating}
+                isProcessing={isUpdating}
                 onclick={() =>
                   handleUpdateProperty({ status: "rejected" }, "rejected")
                 }
@@ -90,7 +98,13 @@ export default function PropertiesCard({ property }) {
 
           <ModalLittle>
             <ModalLittle.OpenModalLittle openName={`rentStatus${id}`}>
-              <Button type="green">Set Rental status</Button>
+              <Button
+                disable={isUpdating}
+                isProcessing={isUpdating}
+                type="green"
+              >
+                Set Rental status
+              </Button>
             </ModalLittle.OpenModalLittle>
             <ModalLittle.ModalLittleWindow
               position="absolute bottom-[-3.3rem] right-2  "
@@ -98,6 +112,8 @@ export default function PropertiesCard({ property }) {
             >
               <div className="flex flex-col gap-1">
                 <Button
+                  disable={isUpdating}
+                  isProcessing={isUpdating}
                   onclick={() =>
                     handleUpdateProperty(
                       {
@@ -111,6 +127,8 @@ export default function PropertiesCard({ property }) {
                   <FaHouseLock className="mr-1 text-lg" /> Rented
                 </Button>
                 <Button
+                  disable={isUpdating}
+                  isProcessing={isUpdating}
                   onclick={() =>
                     handleUpdateProperty(
                       {
