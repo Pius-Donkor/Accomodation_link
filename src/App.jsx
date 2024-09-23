@@ -20,7 +20,7 @@ import AdminDashboard from "./Pages/AdminDashboard";
 import Dashboard from "./Features/Dashboard/Dashboard";
 import Users from "./Features/Dashboard/Users";
 import Properties from "./Features/Dashboard/Properties";
-import Analytics from "./Features/Dashboard/analytics";
+import Prediction from "./Pages/Prediction";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -56,6 +56,7 @@ function App() {
                 <Route path="edituser" element={<EditUser />} />
               </Route>
               <Route path="/chats" element={<Chat />} />
+              <Route path="/prediction/:id" element={<Prediction />} />
               <Route path="/signup" element={<SignUp />} />
               <Route path="/forgotpassword" element={<ForgotPassword />} />
               <Route path="/login" element={<SignIn />} />
