@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import useGetUser from "../User/useGetUser";
 import useDeleteRating from "./useDeleteRating";
+import toast from "react-hot-toast";
 
 const ratingProps = [
   {
@@ -47,6 +48,9 @@ const RatingButton = ({ rateProperty, isRating, propertyId, ratings }) => {
 
   function handleRating(rateValue) {
     console.log(rateValue);
+    if (!userData.userId) {
+      return toast.error("only authorized users can rate a property");
+    }
     rateProperty(
       {
         ratingId: oldRattingId || null,
