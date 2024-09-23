@@ -20,11 +20,7 @@ const Layout = ({ children, userData }) => {
   return (
     <div className=" flex  min-h-screen bg-gray-100  ">
       <aside className="fixed left-0 top-0 flex h-[100dvh] w-64 flex-col items-center bg-slate-200 shadow-lg ">
-        <img
-          src="/public/webLogo.png"
-          alt="logo"
-          className="-ml-4 -mt-8 w-full"
-        />
+        <img src="/webLogo.png" alt="logo" className="-ml-4 -mt-8 w-full" />
 
         <nav className="inline-flex w-[90%] flex-col items-center  rounded-md bg-slate-300 shadow-md ">
           <Link
