@@ -101,7 +101,7 @@ export default function PropertiesCard({ property, allowCrud = true }) {
             rateProperty={rateProperty}
             isRating={isRating}
             ratings={ratings}
-            propertyId={property.id}
+            propertyId={property?.id}
           />
 
           <p className="flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] px-2 py-[0.1rem] text-lg md:text-2xl lg:text-base">
