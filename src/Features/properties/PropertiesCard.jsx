@@ -18,11 +18,13 @@ import useDeleteProperty from "./useDeleteProperty";
 import RatingButton from "../Ratings/Ratingbutton";
 import useGetRatings from "../Ratings/useGetRatings";
 import useSetRatings from "../Ratings/useSetRatings";
+import { useNavigate } from "react-router-dom";
 // import useGetUser from "../User/useGetUser";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
   // const [liked, setLiked] = useState(false);
   // const [tempLiked, setTempLiked] = useState(false);
+  const navigate = useNavigate();
   const { deleteListing, isDeleting } = useDeleteProperty();
   const { ratings = [], ratingsLoading } = useGetRatings(property?.id);
   const { isRating, rateProperty } = useSetRatings();
@@ -32,7 +34,7 @@ export default function PropertiesCard({ property, allowCrud = true }) {
   );
 
   return (
-    <div className="flex h-[38rem] w-[22rem] flex-col items-center gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl md:w-[70%] lg:w-[22rem]">
+    <div className="relative flex h-[38rem] w-[22rem] flex-col items-center gap-4 rounded-md border-2 border-solid border-slate-200 bg-[#f9faff] p-4 shadow-xl md:w-[70%] lg:w-[22rem]">
       <div className="relative h-[50%] w-[100%] rounded-md bg-slate-500">
         <Swiper
           modules={[Navigation, Pagination]}
@@ -124,6 +126,14 @@ export default function PropertiesCard({ property, allowCrud = true }) {
             />
           )}
         </div>
+      </div>
+      <div className="absolute top-1 z-40 shadow-lg">
+        <Button
+          type="nav"
+          onclick={() => navigate(`/prediction/${property?.id}`)}
+        >
+          Predict price
+        </Button>
       </div>
     </div>
   );
