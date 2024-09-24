@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetProperty from "../Features/properties/useGetProperty";
+import PageLoading from "../UI/PageLoading";
 
 const Prediction = () => {
   const { id } = useParams();
@@ -44,6 +45,7 @@ const Prediction = () => {
 
   return (
     <div className="container mx-auto p-6">
+      {propertyLoading && <PageLoading />}
       <div className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow-lg">
         <h2 className="mb-4 text-2xl font-bold">{listing?.name}</h2>
 
