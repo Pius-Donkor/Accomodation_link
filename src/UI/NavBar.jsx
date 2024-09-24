@@ -3,14 +3,18 @@ import { LiaSearchSolid } from "react-icons/lia";
 import { IoReorderThreeOutline } from "react-icons/io5";
 import { FaTimes } from "react-icons/fa";
 import { LuUserCircle } from "react-icons/lu";
+import { IoChatboxEllipses } from "react-icons/io5";
 import Button from "./Button";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
+import useGetAuthUser from "../Features/User/useGetAuthUser";
 export default function NavBar() {
   const windowWidth = useRef(window.innerWidth);
   const isSmallScreen = windowWidth.current < 768;
   const [isSCMenuOpen, setIsSCMenuOpen] = useState(false);
+  const { isUser } = useGetAuthUser();
   const navigate = useNavigate();
+  console.log(isUser);
   // console.log(isSmallScreen, windowWidth);
   return (
     <nav className=" fixed z-[9999] flex w-[100%]  justify-between bg-slate-200 px-2 py-2 md:items-center md:px-14 md:py-0 ">
@@ -46,7 +50,7 @@ export default function NavBar() {
           role="button"
           className="mt-20  w-fit rounded-full bg-green-50 px-1 py-1 hover:bg-green-200 md:mt-0 "
         >
-          <img className="w-8" src="/chatIcon2.png" alt="icon" />
+          <IoChatboxEllipses className="text-[2rem] text-green-600" />
         </span>
         {/* USER PAGE BUTTON */}
         <span
@@ -54,16 +58,18 @@ export default function NavBar() {
           role="button"
           className="mt-20  w-fit rounded-full bg-green-50 px-1 py-1 hover:bg-green-200 md:mt-0 "
         >
-          <LuUserCircle className="text-[2rem]" />
+          <LuUserCircle className="text-[2rem] text-green-600 " />
         </span>
-        <div className=" flex gap-4   ">
-          <Button type={"transparent"} link={"login"}>
-            Login
-          </Button>
-          <Button link={"signup"} type={"colored"}>
-            SignUp
-          </Button>
-        </div>
+        {!isUser && (
+          <div className=" flex gap-4   ">
+            <Button type={"transparent"} link={"login"}>
+              Login
+            </Button>
+            <Button link={"signup"} type={"colored"}>
+              SignUp
+            </Button>
+          </div>
+        )}
       </div>
     </nav>
   );
