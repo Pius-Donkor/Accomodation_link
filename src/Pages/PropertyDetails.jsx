@@ -17,6 +17,7 @@ import useGetUser from "../Features/User/useGetUser";
 import useGetOwner from "../Features/User/useGetOwner";
 import toast from "react-hot-toast";
 import HomeBack from "../UI/HomeBack";
+import PageLoading from "../UI/PageLoading";
 
 export default function PropertyDetails() {
   const { id } = useParams();
@@ -73,8 +74,7 @@ export default function PropertyDetails() {
     }
   }
 
-  if (propertyLoading)
-    return <p className=" mt-[10rem] text-7xl ">loading...</p>;
+  if (propertyLoading) return <PageLoading />;
   if (propertyError) return <PageError errorMessage={propertyError.message} />;
 
   return (
