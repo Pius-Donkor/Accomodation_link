@@ -9,13 +9,16 @@ import toast from "react-hot-toast";
 import ModalLittle from "./ModalLittle";
 import EditProfileBtn from "./EditProfileBtn";
 import ProfileImageForm from "../Features/User/ProfileImageForm";
+import useGetAuthUser from "../Features/User/useGetAuthUser";
 export default function SideNav() {
   const { userData = {}, isLoading, error } = useGetUser();
+  const { setIsUser } = useGetAuthUser();
   const navigate = useNavigate();
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const isSmallScreen = useRef(window.innerWidth).current < 1024;
   function handleLogout() {
     logout();
+    setIsUser(null);
     toast.success("you have been logged out successfully");
     navigate("/");
   }
