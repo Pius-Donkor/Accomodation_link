@@ -25,5 +25,5 @@ export default function useGetAuthUser() {
     return () => unsubscribe();
   }, []);
 
-  return { authUserId, isUserVerified, isUser, isLoading };
+  return { authUserId, isUserVerified, isUser, isLoading, setIsUser };
 }
