@@ -15,6 +15,7 @@ const Dashboard = () => {
   const { sortedProperties } = useFilterSort();
   const totalUsersNum = allUsers?.length;
   const propertiesLength = sortedProperties?.length;
+
   return (
     <div className="flex flex-col  gap-4 text-slate-800 ">
       <h1 className="mb-4 text-2xl font-semibold ">Dashboard Overview</h1>
