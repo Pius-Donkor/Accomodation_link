@@ -34,12 +34,17 @@ const Prediction = () => {
         },
       );
 
+      // Check if the response is ok (status in the range 200-299)
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
+      }
+
       const data = await response.json();
       setPrediction(data);
-      setLoading(false);
     } catch (error) {
       console.error("Error fetching future price:", error);
-      setLoading(false);
+    } finally {
+      setLoading(false); // Ensure loading state is set back to false
     }
   };
 
@@ -47,42 +52,46 @@ const Prediction = () => {
     <div className="container mx-auto p-6">
       {propertyLoading && <PageLoading />}
       <div className="mx-auto max-w-xl rounded-lg bg-white p-8 shadow-lg">
-        <h2 className="mb-4 text-2xl font-bold">{listing?.name}</h2>
+        <h2 className="mb-4 text-2xl font-bold">
+          {listing?.name || "Property"}
+        </h2>
 
-        {/* Listing? Images */}
+        {/* Listing Images */}
         <div className="mb-4">
           {listing?.image?.map((img, index) => (
             <img
               key={index}
               src={img}
-              alt={listing?.name}
+              alt={listing?.name || "Property image"}
               className="mb-4 w-full rounded-md"
             />
           ))}
         </div>
 
-        {/* Listing? Description */}
-        <p className="mb-4">{listing?.description}</p>
+        {/* Listing Description */}
+        <p className="mb-4">
+          {listing?.description || "No description available."}
+        </p>
 
-        {/* Display other listing? data */}
+        {/* Other Listing Data */}
         <ul className="mb-4 ml-5 list-disc">
           <li>
-            <strong>Location:</strong> {listing?.location}
+            <strong>Location:</strong> {listing?.location || "N/A"}
           </li>
           <li>
-            <strong>Price:</strong> {listing?.price}
+            <strong>Price:</strong> {listing?.price || "N/A"}
           </li>
           <li>
-            <strong>Size:</strong> {listing?.size}
+            <strong>Size:</strong> {listing?.size || "N/A"}
           </li>
           <li>
-            <strong>Bedrooms:</strong> {listing?.bedrooms}
+            <strong>Bedrooms:</strong> {listing?.bedrooms || "N/A"}
           </li>
           <li>
-            <strong>Bathrooms:</strong> {listing?.bathrooms}
+            <strong>Bathrooms:</strong> {listing?.bathrooms || "N/A"}
           </li>
           <li>
-            <strong>Year Built:</strong> {listing?.year_built}
+            <strong>Year Built:</strong> {listing?.year_built || "N/A"}
           </li>
         </ul>
 
