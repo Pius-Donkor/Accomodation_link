@@ -8,7 +8,7 @@ const Prediction = () => {
   const [futureYear, setFutureYear] = useState("2030");
   const [loading, setLoading] = useState(false);
   const [prediction, setPrediction] = useState(null);
-
+  console.log(loading);
   const {
     property: listing,
     propertyError,
@@ -40,6 +40,8 @@ const Prediction = () => {
       }
 
       const data = await response.json();
+      console.log("hellllllloooo");
+      console.log(data);
       setPrediction(data);
     } catch (error) {
       console.error("Error fetching future price:", error);
@@ -127,7 +129,7 @@ const Prediction = () => {
           <div className="mt-6 rounded-md bg-gray-100 p-4">
             <h3 className="text-xl font-bold">Prediction Result:</h3>
             <p className="text-lg">
-              Predicted Price for {futureYear}: ${prediction.price}
+              Predicted Price for {futureYear}: ${prediction.estimated_price}
             </p>
           </div>
         )}
