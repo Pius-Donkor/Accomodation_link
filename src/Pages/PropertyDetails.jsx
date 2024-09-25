@@ -7,6 +7,9 @@ import { IoChatbubblesOutline } from "react-icons/io5";
 import { LuGitPullRequestDraft } from "react-icons/lu";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaMapMarkedAlt } from "react-icons/fa";
+import { FaPhoneVolume } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
+import { FaRegUser } from "react-icons/fa";
 import SingleDetail from "../UI/SingleDetail";
 import Accordion from "../UI/Accordion";
 import AccordionChild from "../UI/AccordionChild";
@@ -18,6 +21,8 @@ import useGetOwner from "../Features/User/useGetOwner";
 import toast from "react-hot-toast";
 import HomeBack from "../UI/HomeBack";
 import PageLoading from "../UI/PageLoading";
+import Modal from "../UI/Modal";
+import RentRequestForm from "../UI/RentRequestForm";
 
 export default function PropertyDetails() {
   const { id } = useParams();
@@ -87,9 +92,22 @@ export default function PropertyDetails() {
         <div
           className={` flex flex-col gap-8 md:flex-row ${isSameUser && "opacity-20"} `}
         >
-          <Button type="reddish" disable={isSameUser}>
-            <LuGitPullRequestDraft className=" text-slate-50" /> Request to rent
-          </Button>
+          <Modal>
+            <Modal.Open openName={"rentRequest"}>
+              <Button type="reddish" disable={isSameUser}>
+                <LuGitPullRequestDraft className=" text-slate-50" /> Request to
+                rent
+              </Button>
+            </Modal.Open>
+            <Modal.Window openName={"rentRequest"}>
+              <RentRequestForm
+                property={{ ...property, docId: id }}
+                propertyOwner={propertyOwner}
+                requestingUser={userData}
+              />
+            </Modal.Window>
+          </Modal>
+
           <Button
             type="transparentRed"
             onClick={handleCreateChat}
@@ -108,6 +126,18 @@ export default function PropertyDetails() {
           <span className=" flex gap-1">
             <FaLocationDot className="text-[#b33479]  " />
             {property.location}
+          </span>
+          <span className=" flex gap-1">
+            <FaPhoneVolume className="text-[#b33479]  " />
+            {propertyOwner?.contact}
+          </span>
+          <span className=" flex gap-1">
+            <MdEmail className="text-[#b33479]  " />
+            {propertyOwner?.email}
+          </span>
+          <span className=" flex gap-1">
+            <FaRegUser className="text-[#b33479]  " />
+            {propertyOwner?.userName}
           </span>
         </div>
         <p className="mr-4 flex flex-wrap items-center justify-center gap-1 text-xl md:justify-start ">
