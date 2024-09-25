@@ -2,6 +2,7 @@ import React, {
   cloneElement,
   createContext,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import { MdOutlineClose } from "react-icons/md";
@@ -42,8 +43,11 @@ function Window({ children, openName: open }) {
   );
 }
 
-function Open({ children, openName, isButton = true }) {
+function Open({ children, openName, isButton = true, preOpened = false }) {
   const { open } = useContext(ModalContext);
+  useEffect(() => {
+    if (preOpened) open(openName);
+  }, []);
   if (isButton)
     return cloneElement(children, { onClick: () => open(openName) });
   return <div>{cloneElement(children, { onClick: () => open(openName) })}</div>;
