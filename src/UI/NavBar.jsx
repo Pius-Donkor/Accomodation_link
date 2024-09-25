@@ -8,11 +8,15 @@ import Button from "./Button";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
 import useGetAuthUser from "../Features/User/useGetAuthUser";
+import RedDot from "./RedDot";
+import { useRentRequestContext } from "../contexts/RentRequestContext";
 export default function NavBar() {
   const windowWidth = useRef(window.innerWidth);
   const isSmallScreen = windowWidth.current < 768;
   const [isSCMenuOpen, setIsSCMenuOpen] = useState(false);
   const { isUser } = useGetAuthUser();
+  const { userHasRequests } = useRentRequestContext();
+  console.log(userHasRequests);
   const navigate = useNavigate();
   console.log(isUser);
   // console.log(isSmallScreen, windowWidth);
@@ -56,8 +60,9 @@ export default function NavBar() {
         <span
           onClick={() => navigate("user")}
           role="button"
-          className="mt-20  w-fit rounded-full bg-green-50 px-1 py-1 hover:bg-green-200 md:mt-0 "
+          className="relative  mt-20 w-fit rounded-full bg-green-50 px-1 py-1 hover:bg-green-200 md:mt-0 "
         >
+          {userHasRequests && <RedDot padSize="p-2" />}
           <LuUserCircle className="text-[2rem] text-green-600 " />
         </span>
         {!isUser && (
