@@ -180,13 +180,27 @@ export async function getPropertyOwner(ownerId) {
     });
     // console.log(user);
     // console.log(user);
-    const [{ userName, contact, location, chatIDs, documentId }] = user;
+    const [
+      {
+        userName,
+        contact,
+        location,
+        chatIDs,
+        documentId,
+        email,
+        userId,
+        rentRequests,
+      },
+    ] = user;
     return {
       userName,
       contact,
       location,
       chatIDs: chatIDs?.length ? chatIDs : [],
       documentId,
+      email,
+      userId,
+      rentRequests,
     };
   } catch (error) {
     console.log(error);
