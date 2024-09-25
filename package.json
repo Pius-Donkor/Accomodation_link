@@ -11,6 +11,7 @@
     "server": "json-server --watch db.json --port 5001"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@tanstack/react-query": "^5.37.1",
     "@tanstack/react-query-devtools": "^5.37.1",
     "firebase": "^10.12.0",
