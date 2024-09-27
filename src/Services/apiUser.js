@@ -190,6 +190,8 @@ export async function getPropertyOwner(ownerId) {
         email,
         userId,
         rentRequests,
+        role,
+        tenantTo,
       },
     ] = user;
     return {
@@ -201,6 +203,8 @@ export async function getPropertyOwner(ownerId) {
       email,
       userId,
       rentRequests,
+      role,
+      tenantTo,
     };
   } catch (error) {
     console.log(error);
