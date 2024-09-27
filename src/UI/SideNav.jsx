@@ -1,6 +1,6 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Button from "./Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useGetUser from "../Features/User/useGetUser";
 import { MdEmail } from "react-icons/md";
 import { FaUser } from "react-icons/fa";
@@ -16,6 +16,25 @@ export default function SideNav() {
   const navigate = useNavigate();
   const [sideBarOpen, setSideBarOpen] = useState(false);
   const isSmallScreen = useRef(window.innerWidth).current < 1024;
+
+  const [activePage, setActivePage] = useState("mylistings");
+  const location = useLocation();
+  useEffect(() => {
+    if (
+      location.pathname.slice(location.pathname.lastIndexOf("/") + 1) === "user"
+    )
+      return;
+    setActivePage(
+      location.pathname.slice(location.pathname.lastIndexOf("/") + 1),
+    );
+  }, [location]);
+
+  function checkPageActivity(pathname) {
+    return activePage === pathname
+      ? "bg-slate-300 text-green-950"
+      : "text-green-50";
+  }
+
   function handleLogout() {
     logout();
     setIsUser(null);
@@ -80,24 +99,29 @@ export default function SideNav() {
         )}
       </div>
       <div className=" mt-4 flex flex-col items-center gap-12 ">
-        <ul className="flex w-full flex-col items-center gap-4 px-1">
-          <li className="group w-full py-1 text-center transition-colors duration-300 hover:bg-[#ffffff1e] ">
+        <nav className="inline-flex w-[90%] flex-col items-center  rounded-md bg-slate-400 shadow-md ">
+          {(userData?.role?.includes("property_owner") ||
+            userData?.role?.includes("admin")) && (
             <Link
-              className=" w-fit bg-[#ffffff1e] px-2 py-1 text-center text-[1.15rem] text-slate-50 transition group-hover:bg-transparent group-hover:px-[5rem] "
               to="mylistings"
+              className={` w-full rounded-md border-b border-b-slate-100 py-2 text-center ${checkPageActivity("mylistings")}  transition-colors hover:bg-slate-300 hover:text-green-950 `}
             >
-              My listings
+              Listings
             </Link>
-          </li>
-          <li className="group w-full py-1 text-center transition-colors duration-300 hover:bg-[#ffffff1e] ">
-            <Link
-              className=" w-fit bg-[#ffffff1e] px-2 py-1 text-center text-[1.15rem] text-slate-50 transition group-hover:bg-transparent group-hover:px-[5rem] "
-              to="edituser"
-            >
-              Edit User
-            </Link>
-          </li>
-        </ul>
+          )}
+          <Link
+            to="edituser"
+            className={`w-full rounded-md border-b border-b-slate-100 py-2 text-center ${checkPageActivity("edituser")}   transition-colors hover:bg-slate-300 hover:text-green-950`}
+          >
+            Edit Users Details
+          </Link>
+          <Link
+            to="allrequests"
+            className={`w-full rounded-md py-2 text-center ${checkPageActivity("allrequests")}  transition-colors hover:bg-slate-300 hover:text-green-950`}
+          >
+            All Requests
+          </Link>
+        </nav>
         <div className="flex flex-col gap-2">
           <Button onClick={handleLogout}>Logout</Button>
           {userData?.role === "admin" && (
