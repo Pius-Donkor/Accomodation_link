@@ -10,6 +10,7 @@ export default function useGetOwner(id) {
   } = useQuery({
     queryFn: () => getPropertyOwner(id),
     queryKey: ["user", id],
+    enabled: Boolean(id),
   });
   // console.log(propertyOwner);
   // console.log(authUserId);
