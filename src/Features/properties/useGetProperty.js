@@ -8,7 +8,8 @@ export default function useGetProperty(id) {
     error: propertyError,
   } = useQuery({
     queryFn: () => getProperty(id),
-    queryKey: ["property"],
+    queryKey: ["property", id],
+    enabled: Boolean(id),
   });
 
   return { property, propertyLoading, propertyError };
