@@ -47,7 +47,7 @@ function Open({ children, openName, isButton = true, preOpened = false }) {
   const { open } = useContext(ModalContext);
   useEffect(() => {
     if (preOpened) open(openName);
-  }, []);
+  }, [preOpened]);
   if (isButton)
     return cloneElement(children, { onClick: () => open(openName) });
   return <div>{cloneElement(children, { onClick: () => open(openName) })}</div>;
