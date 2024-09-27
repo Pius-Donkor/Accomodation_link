@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import useGetProperty from "../Features/properties/useGetProperty";
 import PageLoading from "../UI/PageLoading";
+import PageError from "../UI/PageError";
 
 const Prediction = () => {
   const { id } = useParams();
@@ -40,7 +41,7 @@ const Prediction = () => {
       }
 
       const data = await response.json();
-      console.log("hellllllloooo");
+
       console.log(data);
       setPrediction(data);
     } catch (error) {
@@ -49,7 +50,7 @@ const Prediction = () => {
       setLoading(false); // Ensure loading state is set back to false
     }
   };
-
+  if (propertyError) return <PageError errorMessage={propertyError.message} />;
   return (
     <div className="container mx-auto p-6">
       {propertyLoading && <PageLoading />}
