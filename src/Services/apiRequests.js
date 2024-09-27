@@ -65,13 +65,55 @@ export async function createUpdateRentRequest({
     throw new Error(error.message);
   }
 }
-
-export async function receiveRequest({ requestId, status }) {
+// property owner receiving a request
+export async function receiveRequest({
+  requestId,
+  status,
+  propertyId,
+  tenantId,
+  tenantDocId,
+  date,
+  oldRents,
+  oldRole,
+  propertyOwnerId,
+  oldTenantTo,
+}) {
   const updates = {};
+
   try {
-    updates["/rentalRequests/" + requestId + "/status"] = status;
-    await update(ref(database), updates);
+    // If status is "confirmed"
+    if (status === "confirmed") {
+      updates[`/rentalRequests/${requestId}/status`] = status;
+      await update(ref(database), updates);
+
+      // Update the property to indicate it has been rented
+      const propertiesRef = doc(db, "properties", propertyId);
+      await updateDoc(propertiesRef, {
+        rentStatus: "rented",
+        rentedBy: {
+          id: tenantId,
+          dateRented: date,
+        },
+      });
+
+      // Update tenant's document with new rental info
+      const tenantRef = doc(db, "users", tenantDocId);
+      await updateDoc(tenantRef, {
+        rentals: oldRents?.length ? [...oldRents, propertyId] : [propertyId],
+        role: oldRole.includes("property_owner")
+          ? "property_owner/tenant"
+          : "tenant",
+        tenantTo: oldTenantTo?.length
+          ? [...new Set([...oldTenantTo, propertyOwnerId])]
+          : [propertyOwnerId],
+      });
+    } else {
+      // For non-confirmed status, just update the status
+      updates[`/rentalRequests/${requestId}/status`] = status;
+      await update(ref(database), updates);
+    }
   } catch (error) {
-    throw new Error("could not update the request");
+    console.error("Error updating request:", error);
+    throw new Error(`Could not update the request: ${error.message}`);
   }
 }
