@@ -4,6 +4,7 @@ import { useRentRequestContext } from "../contexts/RentRequestContext";
 import useGetUser from "../Features/User/useGetUser";
 import RequestCard from "../UI/RequestCard";
 import RentRequest from "../UI/RentRequest";
+import TenantLandlordCard from "../UI/TenantLandlordCard";
 
 export default function AllUserRequests() {
   const [requestStatus, setRequestStatus] = useState("sent");
@@ -50,40 +51,42 @@ export default function AllUserRequests() {
           </Button>
         </div>
         {/* mini bar */}
-        <div className="flex gap-2">
-          <Button
-            type="transparentRed"
-            onClick={() => {
-              setConfirmationStatus("all");
-            }}
-          >
-            All
-          </Button>
-          <Button
-            type="blue"
-            onClick={() => {
-              setConfirmationStatus("pending");
-            }}
-          >
-            Pending
-          </Button>
-          <Button
-            type="green"
-            onClick={() => {
-              setConfirmationStatus("confirmed");
-            }}
-          >
-            Confirmed
-          </Button>
-          <Button
-            type="reddish"
-            onClick={() => {
-              setConfirmationStatus("rejected");
-            }}
-          >
-            Rejected
-          </Button>
-        </div>
+        {requestStatus !== "tenant-to" && requestStatus !== "landlord-to" && (
+          <div className="flex gap-2">
+            <Button
+              type="transparentRed"
+              onClick={() => {
+                setConfirmationStatus("all");
+              }}
+            >
+              All
+            </Button>
+            <Button
+              type="blue"
+              onClick={() => {
+                setConfirmationStatus("pending");
+              }}
+            >
+              Pending
+            </Button>
+            <Button
+              type="green"
+              onClick={() => {
+                setConfirmationStatus("confirmed");
+              }}
+            >
+              Confirmed
+            </Button>
+            <Button
+              type="reddish"
+              onClick={() => {
+                setConfirmationStatus("rejected");
+              }}
+            >
+              Rejected
+            </Button>
+          </div>
+        )}
       </nav>
       {/* Details */}
       {allUserRequests?.length ? (
@@ -104,8 +107,26 @@ export default function AllUserRequests() {
               )}
             />
           )}
-          {requestStatus === "tenant-to"}
-          {requestStatus === "landlord-to"}
+          {requestStatus === "tenant-to" && (
+            <TenantLandlordToComponent
+              requestStatus={requestStatus}
+              requests={allUserRequests.filter(
+                (request) =>
+                  request.requestFromId === userData?.userId &&
+                  request.status === "confirmed",
+              )}
+            />
+          )}
+          {requestStatus === "landlord-to" && (
+            <TenantLandlordToComponent
+              requestStatus={requestStatus}
+              requests={allUserRequests.filter(
+                (request) =>
+                  request.requestToId === userData?.userId &&
+                  request.status === "confirmed",
+              )}
+            />
+          )}
         </div>
       ) : (
         ""
@@ -153,4 +174,21 @@ function ReceiveComponent({ confirmationStatus, requests = [] }) {
         />
       );
     });
+}
+
+function TenantLandlordToComponent({ requests, requestStatus }) {
+  return (
+    <div className="flex w-full flex-col ">
+      <h1 className=" text-xl text-slate-100 ">
+        {requestStatus === "tenant-to"
+          ? "You are a Tenant to :"
+          : "You are a Landlord to :"}
+      </h1>
+      <div className="flex w-full flex-wrap justify-center gap-2 ">
+        {requests.map((request) => (
+          <TenantLandlordCard request={request} requestStatus={requestStatus} />
+        ))}
+      </div>
+    </div>
+  );
 }
