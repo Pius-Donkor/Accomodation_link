@@ -7,7 +7,7 @@ export default function RentRequestsContainer({
   setTempRentRequests,
 }) {
   return (
-    <div className="flex h-fit w-fit flex-col ">
+    <div className="flex h-[28rem] w-fit flex-col overflow-y-hidden ">
       {tempRentRequest.length
         ? tempRentRequest.map((request) => (
             <RentRequest
