@@ -127,7 +127,7 @@ const RentRequest = ({
                 </button>
                 <button
                   className="rounded bg-red-500 px-6 py-2 text-white hover:bg-red-600"
-                  onClick={() => handleAction("rejected")}
+                  onClick={() => handleRespondToRequest("rejected")}
                 >
                   Reject
                 </button>
@@ -192,6 +192,12 @@ const RentRequest = ({
             The rent request for <strong>{property.name}</strong> has been{" "}
             <strong>rejected</strong>.
           </p>
+          <button
+            className="rounded bg-green-500 px-6 py-2 text-white hover:bg-green-600"
+            onClick={() => onCloseModal()}
+          >
+            Okay
+          </button>
         </div>
       )}
 
@@ -204,6 +210,12 @@ const RentRequest = ({
             The rent request for <strong>{property.name}</strong> is left for
             later review.
           </p>
+          <button
+            className="rounded bg-green-500 px-6 py-2 text-white hover:bg-green-600"
+            onClick={() => onCloseModal()}
+          >
+            Okay
+          </button>
         </div>
       )}
     </div>
