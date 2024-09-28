@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 import useGetProperty from "../Features/properties/useGetProperty";
-import useResPropertyRent from "../Features/properties/useResPropertyRent";
-import useGetUser from "../Features/User/useGetUser";
-import useSendEmail from "../hooks/useSendEmail";
 import useGetOwner from "../Features/User/useGetOwner";
 import RegularCarousel from "./RegularCarousel";
 import RentRequest from "./RentRequest";
