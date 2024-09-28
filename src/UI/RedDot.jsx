@@ -6,7 +6,7 @@ export default function RedDot({
 }) {
   return (
     <span
-      className={` absolute ${position} rounded-full bg-red-400 ${padSize}  `}
+      className={` absolute ${position} animate-ping rounded-full bg-red-400 ${padSize}  `}
     ></span>
   );
 }
