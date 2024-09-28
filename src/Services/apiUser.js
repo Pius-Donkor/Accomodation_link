@@ -192,6 +192,7 @@ export async function getPropertyOwner(ownerId) {
         rentRequests,
         role,
         tenantTo,
+        profileImage,
       },
     ] = user;
     return {
@@ -205,6 +206,7 @@ export async function getPropertyOwner(ownerId) {
       rentRequests,
       role,
       tenantTo,
+      profileImage,
     };
   } catch (error) {
     console.log(error);
