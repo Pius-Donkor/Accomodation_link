@@ -4,6 +4,7 @@ import { useRentRequestContext } from "../contexts/RentRequestContext";
 import useGetUser from "../Features/User/useGetUser";
 import RequestCard from "../UI/RequestCard";
 import TenantLandlordCard from "../UI/TenantLandlordCard";
+import EmptyMessage from "../UI/EmptyMessage";
 
 export default function AllUserRequests() {
   const [requestStatus, setRequestStatus] = useState("sent");
@@ -162,42 +163,58 @@ export default function AllUserRequests() {
 }
 
 function SendComponent({ confirmationStatus, requests = [] }) {
+  if (!requests.length)
+    return <EmptyMessage message={"You have not received any request"} />;
   if (confirmationStatus === "all")
-    return requests.map((request) => (
-      <RequestCard key={request.id} request={request} />
-    ));
-  return requests
-    .filter((request) => request.status === confirmationStatus)
-    .map((request) => <RequestCard key={request.id} request={request} />);
+    return (
+      <RequestsCoverComponent title={"Request you have Sent "}>
+        {requests.map((request) => (
+          <RequestCard key={request.id} request={request} />
+        ))}
+      </RequestsCoverComponent>
+    );
+  return (
+    <RequestsCoverComponent title={"Request you have Sent :"}>
+      {requests
+        .filter((request) => request.status === confirmationStatus)
+        .map((request) => (
+          <RequestCard key={request.id} request={request} />
+        ))}
+    </RequestsCoverComponent>
+  );
 }
 
 function ReceiveComponent({ confirmationStatus, requests = [] }) {
+  if (!requests.length)
+    return <EmptyMessage message={"You have not received any request"} />;
+
   if (confirmationStatus === "all")
-    return requests.map((request) => (
-      <RequestCard
-        type="currentUser"
-        key={request.id}
-        isPendingReceivedRequest={request.status === "pending"}
-        request={request}
-      />
-    ));
+    return (
+      <RequestsCoverComponent title={"Request you have Received :"}>
+        {requests.map((request) => (
+          <RequestCard
+            type="currentUser"
+            key={request.id}
+            isPendingReceivedRequest={request.status === "pending"}
+            request={request}
+          />
+        ))}
+      </RequestsCoverComponent>
+    );
 
   return (
-    <div className="flex w-full flex-col ">
-      <h1 className=" text-xl text-slate-100 ">Received rent requests</h1>
-      <div className="flex w-full flex-wrap justify-center gap-2 ">
-        {requests
-          .filter((request) => request.status === confirmationStatus)
-          .map((request) => (
-            <RequestCard
-              type="currentUser"
-              isPendingReceivedRequest={request.status === "pending"}
-              key={request.id}
-              request={request}
-            />
-          ))}
-      </div>
-    </div>
+    <RequestsCoverComponent title={"Request you have Received :"}>
+      {requests
+        .filter((request) => request.status === confirmationStatus)
+        .map((request) => (
+          <RequestCard
+            type="currentUser"
+            isPendingReceivedRequest={request.status === "pending"}
+            key={request.id}
+            request={request}
+          />
+        ))}
+    </RequestsCoverComponent>
   );
 }
 
@@ -210,6 +227,15 @@ function TenantLandlordToComponent({ requests, requestStatus }) {
           : "You are a Landlord to :"
       }
     >
+      {!requests.length && (
+        <EmptyMessage
+          message={
+            requestStatus === "tenant-to"
+              ? "You are not a tenant to anyone"
+              : "You are not a tenant to anyone"
+          }
+        />
+      )}
       {requests.map((request) => (
         <TenantLandlordCard request={request} requestStatus={requestStatus} />
       ))}
@@ -220,7 +246,7 @@ function TenantLandlordToComponent({ requests, requestStatus }) {
 function RequestsCoverComponent({ children, title }) {
   return (
     <div className="flex w-full flex-col ">
-      <h1 className=" text-xl text-slate-100 ">{title}</h1>
+      <h1 className=" mb-4 text-xl text-slate-100 ">{title}</h1>
       <div className="flex w-full flex-wrap justify-center gap-2 ">
         {children}
       </div>
