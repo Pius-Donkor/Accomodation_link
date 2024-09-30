@@ -22,3 +22,24 @@ export function validatePhoneNumber(phoneNumber) {
   const regex = /^\+?(\d.*){3,}$/;
   return regex.test(phoneNumber);
 }
+
+
+function cleanAndFormatCurrency(value, locale = 'en-US', currency = 'GHS') {
+  // Remove any characters that are not digits, commas, or decimals
+  let cleanedValue = value.replace(/[^\d.-]/g, '');
+
+  // Convert the cleaned string to a number
+  let amount = parseFloat(cleanedValue);
+
+  if (isNaN(amount)) {
+    throw new Error('Invalid number format');
+  }
+
+  // Format the number as currency
+  return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+}
+
+// Example usage
+// console.log(cleanAndFormatCurrency('GHS 123,456.789')); // Output: GHS 123,456.79
+// console.log(cleanAndFormatCurrency('$123,456.789', 'en-US', 'USD')); // Output: $123,456.79
+// console.log(cleanAndFormatCurrency('£12,345.67', 'en-GB', 'GBP')); // Output: £12,345.67
