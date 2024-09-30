@@ -12,6 +12,7 @@ const initialState = {
     max: 0,
   },
   rentType: "",
+  searchedLocation: "",
 };
 
 // Reducer function
@@ -37,6 +38,11 @@ function reducer(state, action) {
       return {
         ...state,
         rentType: action.payload,
+      };
+    case "SET_SEARCHED_LOCATION":
+      return {
+        ...state,
+        searchedLocation: action.payload,
       };
     default:
       return state;
