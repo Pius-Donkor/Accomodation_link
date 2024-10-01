@@ -8,14 +8,16 @@ import RentRequestsContainer from "./RentRequestsContainer";
 
 export default function Main({ children }) {
   const [openModal, setOpenModal] = useState(false);
+  const [rentCount, setRentCount] = useState(0);
+  const [tempRentRequest, setTempRentRequests] = useState([]);
   const { displayOptionsBar } = useDisplayOptionsBar();
   const { userNewRentRequests } = useRentRequestContext();
-  const [tempRentRequest, setTempRentRequests] = useState([]);
   useEffect(() => {
-    if (tempRentRequest.length) return;
+    if (tempRentRequest.length || rentCount >= 1) return;
     setTempRentRequests(userNewRentRequests);
+    setRentCount(rentCount + 1);
     setOpenModal(Boolean(userNewRentRequests.length));
-  }, [userNewRentRequests, tempRentRequest]);
+  }, [userNewRentRequests, tempRentRequest, rentCount]);
 
   return (
     <main className=" relative flex h-[100vh] w-full flex-col bg-slate-200  p-4 lg:w-[80%] ">
