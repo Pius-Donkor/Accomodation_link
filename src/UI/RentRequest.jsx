@@ -10,7 +10,7 @@ import useSendEmail from "../hooks/useSendEmail";
 import useGetUser from "../Features/User/useGetUser";
 import toast from "react-hot-toast";
 const RentRequest = ({
-  onAction,
+  noPending = false,
   onCloseModal = () => {},
   request,
   setTempRentRequests = () => {},
@@ -72,7 +72,6 @@ const RentRequest = ({
 
   const handleAction = (action) => {
     setStatus(action);
-    onAction(action); // Trigger the callback for further logic
   };
 
   const handlePrint = () => {
@@ -80,15 +79,32 @@ const RentRequest = ({
   };
   function handleOkay() {
     console.log("start");
-    setTempRentRequests((requests) => {
-      console.log("running");
-      const filteredRequests = requests.filter((request) => request.id !== id);
-      console.log(filteredRequests);
-      if (!filteredRequests.length) {
-        onCloseModal();
-      }
-      return filteredRequests;
-    });
+    if (noPending) {
+      setTempRentRequests((requests) => {
+        // console.log("running");
+        const changedRequests = requests.map((request) => {
+          if (request.id === id) return { ...request, status: status };
+          return request;
+        });
+        console.log(changedRequests);
+        if (!changedRequests.length) {
+          onCloseModal();
+        }
+        return changedRequests;
+      });
+    } else {
+      setTempRentRequests((requests) => {
+        // console.log("running");
+        const filteredRequests = requests.filter(
+          (request) => request.id !== id,
+        );
+        console.log(filteredRequests);
+        if (!filteredRequests.length) {
+          onCloseModal();
+        }
+        return filteredRequests;
+      });
+    }
   }
 
   return (
@@ -131,12 +147,14 @@ const RentRequest = ({
                 >
                   Reject
                 </button>
-                <button
-                  className="rounded bg-gray-300 px-6 py-2 text-gray-800 hover:bg-gray-400"
-                  onClick={() => handleAction("pending")}
-                >
-                  Leave for Later
-                </button>
+                {!noPending && (
+                  <button
+                    className="rounded bg-gray-300 px-6 py-2 text-gray-800 hover:bg-gray-400"
+                    onClick={() => handleAction("pending")}
+                  >
+                    Leave for Later
+                  </button>
+                )}
               </div>
             </div>
             <div className="size-[20rem] bg-slate-100 ">
@@ -212,7 +230,7 @@ const RentRequest = ({
           </p>
           <button
             className="rounded bg-green-500 px-6 py-2 text-white hover:bg-green-600"
-            onClick={() => onCloseModal()}
+            onClick={() => handleOkay()}
           >
             Okay
           </button>
