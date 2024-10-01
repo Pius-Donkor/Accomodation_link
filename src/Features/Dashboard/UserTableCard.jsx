@@ -9,7 +9,7 @@ import { FaUserCheck } from "react-icons/fa6";
 import useUpdateUserStatus from "./useUpdateUserStatus";
 import toast from "react-hot-toast";
 
-export default function UserTableCard({ user }) {
+export default function UserTableCard({ user, onClick }) {
   const { isUpdateError, isUpdating, updateUserStatus } = useUpdateUserStatus();
   console.log(user.userId);
   function handleUserAction(status) {
@@ -27,7 +27,7 @@ export default function UserTableCard({ user }) {
   }
 
   return (
-    <TableRow>
+    <TableRow onClick={onClick}>
       <TableData hasBoldText={true}>{user.userName}</TableData>
       <TableData>{user.email}</TableData>
       <TableData>{user.role}</TableData>
