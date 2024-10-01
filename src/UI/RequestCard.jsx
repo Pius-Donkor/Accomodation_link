@@ -9,12 +9,13 @@ export default function RequestCard({
   request,
   type = "owner",
   isPendingReceivedRequest = false,
+
+  setTempRentRequests = () => {},
 }) {
   const { propertyId, price_offered, requestFromId, requestToId, status } =
     request;
   const { property, propertyLoading, propertyError } =
     useGetProperty(propertyId);
-
   // this time we used the useOwner hook to load te data of the tenant instead of the landlord/propertyOwner
   const {
     propertyOwner,
@@ -23,7 +24,14 @@ export default function RequestCard({
   } = useGetOwner(type === "owner" ? requestToId : requestFromId);
 
   if (isLoadingTenant || propertyLoading) return <PageLoading />;
-  if (isPendingReceivedRequest) return <RentRequest request={request} />;
+  if (isPendingReceivedRequest)
+    return (
+      <RentRequest
+        noPending={true}
+        request={request}
+        setTempRentRequests={setTempRentRequests}
+      />
+    );
   return (
     <div className="flex h-[10rem] w-fit rounded-lg bg-slate-200 p-2 shadow-lg shadow-[#000000d0] ">
       <div className="h-full w-[11rem]  ">
