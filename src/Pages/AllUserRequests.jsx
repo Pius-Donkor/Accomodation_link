@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../UI/Button";
 import { useRentRequestContext } from "../contexts/RentRequestContext";
 import useGetUser from "../Features/User/useGetUser";
@@ -10,7 +10,19 @@ export default function AllUserRequests() {
   const [requestStatus, setRequestStatus] = useState("sent");
   const [confirmationStatus, setConfirmationStatus] = useState("all");
   const { allUserRequests } = useRentRequestContext();
+  const [tempRentRequests, setTempRentRequests] = useState([]);
   const { userData } = useGetUser();
+  useEffect(() => {
+    if (!userData || !allUserRequests) return;
+    if (tempRentRequests.length) return;
+    console.log("alllllllllllllllllll");
+    console.log(tempRentRequests);
+    setTempRentRequests(
+      allUserRequests?.filter(
+        (request) => request.requestToId === userData?.userId,
+      ),
+    );
+  }, [allUserRequests, userData]);
 
   function handleActiveReqStatus(status) {
     if (requestStatus === status) return "animate-pulse bg-slate-200";
@@ -129,9 +141,8 @@ export default function AllUserRequests() {
           {requestStatus === "received" && (
             <ReceiveComponent
               confirmationStatus={confirmationStatus}
-              requests={allUserRequests.filter(
-                (request) => request.requestToId === userData?.userId,
-              )}
+              setTempRentRequests={setTempRentRequests}
+              requests={tempRentRequests}
             />
           )}
           {requestStatus === "tenant-to" && (
@@ -184,7 +195,12 @@ function SendComponent({ confirmationStatus, requests = [] }) {
   );
 }
 
-function ReceiveComponent({ confirmationStatus, requests = [] }) {
+function ReceiveComponent({
+  confirmationStatus,
+  requests = [],
+
+  setTempRentRequests,
+}) {
   if (!requests.length)
     return <EmptyMessage message={"You have not received any request"} />;
 
@@ -197,6 +213,7 @@ function ReceiveComponent({ confirmationStatus, requests = [] }) {
             key={request.id}
             isPendingReceivedRequest={request.status === "pending"}
             request={request}
+            setTempRentRequests={setTempRentRequests}
           />
         ))}
       </RequestsCoverComponent>
