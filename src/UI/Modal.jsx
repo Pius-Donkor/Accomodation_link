@@ -43,14 +43,34 @@ function Window({ children, openName: open }) {
   );
 }
 
-function Open({ children, openName, isButton = true, preOpened = false }) {
+function Open({
+  children,
+  openName,
+  isButton = true,
+  preOpened = false,
+  onExternalAction = () => {},
+}) {
   const { open } = useContext(ModalContext);
   useEffect(() => {
     if (preOpened) open(openName);
   }, [preOpened]);
   if (isButton)
-    return cloneElement(children, { onClick: () => open(openName) });
-  return <div>{cloneElement(children, { onClick: () => open(openName) })}</div>;
+    return cloneElement(children, {
+      onClick: () => {
+        open(openName);
+        onExternalAction();
+      },
+    });
+  return (
+    <div>
+      {cloneElement(children, {
+        onClick: () => {
+          open(openName);
+          onExternalAction();
+        },
+      })}
+    </div>
+  );
 }
 
 Modal.Open = Open;
