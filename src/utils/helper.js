@@ -23,20 +23,28 @@ export function validatePhoneNumber(phoneNumber) {
   return regex.test(phoneNumber);
 }
 
+export function cleanAndFormatCurrency(
+  value,
+  locale = "en-US",
+  currency = "GHS",
+) {
+  // Ensure the value is a string before replacing characters
+  let stringValue = String(value);
 
-function cleanAndFormatCurrency(value, locale = 'en-US', currency = 'GHS') {
   // Remove any characters that are not digits, commas, or decimals
-  let cleanedValue = value.replace(/[^\d.-]/g, '');
+  let cleanedValue = stringValue.replace(/[^\d.-]/g, "");
 
   // Convert the cleaned string to a number
   let amount = parseFloat(cleanedValue);
 
   if (isNaN(amount)) {
-    throw new Error('Invalid number format');
+    throw new Error("Invalid number format");
   }
 
   // Format the number as currency
-  return new Intl.NumberFormat(locale, { style: 'currency', currency }).format(amount);
+  return new Intl.NumberFormat(locale, { style: "currency", currency }).format(
+    amount,
+  );
 }
 
 // Example usage
