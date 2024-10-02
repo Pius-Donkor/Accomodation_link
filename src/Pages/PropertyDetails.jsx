@@ -23,6 +23,7 @@ import HomeBack from "../UI/HomeBack";
 import PageLoading from "../UI/PageLoading";
 import Modal from "../UI/Modal";
 import RentRequestForm from "../UI/RentRequestForm";
+import { cleanAndFormatCurrency } from "../utils/helper";
 
 export default function PropertyDetails() {
   const { id } = useParams();
@@ -179,7 +180,10 @@ export default function PropertyDetails() {
         />
         <SingleDetail title={"Rules"} value={property.rules} type="long" />
         <div className=" flex flex-grow flex-wrap gap-8 ">
-          <SingleDetail title={"Price"} value={property.price} />
+          <SingleDetail
+            title={"Price"}
+            value={cleanAndFormatCurrency(property.price)}
+          />
           <SingleDetail title={"Rating"} value={property.rating} />
           <SingleDetail title={"Year_built"} value={property.year_built} />
           <SingleDetail title={"Size"} value={property.size} />
