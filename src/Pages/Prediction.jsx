@@ -6,6 +6,7 @@ import PageError from "../UI/PageError";
 import RegularCarousel from "../UI/RegularCarousel";
 import BtnLoadingSpinner from "../UI/BtnLoadingSpinner";
 import HomeBack from "../UI/HomeBack";
+import { cleanAndFormatCurrency } from "../utils/helper";
 
 const Prediction = () => {
   const { id } = useParams();
@@ -84,7 +85,8 @@ const Prediction = () => {
               <strong>Location:</strong> {listing?.location || "N/A"}
             </li>
             <li>
-              <strong>Price:</strong> {listing?.price || "N/A"}
+              <strong>Price:</strong>{" "}
+              {cleanAndFormatCurrency(listing?.price) || "N/A"}
             </li>
             <li>
               <strong>Size:</strong> {listing?.size || "N/A"}
@@ -142,7 +144,7 @@ const Prediction = () => {
                 <p className="text-lg ">
                   Predicted Price for {futureYear}:{"  "}
                   <span className="font-bold text-green-600 ">
-                    ${prediction.estimated_price}
+                    {cleanAndFormatCurrency(prediction.estimated_price)}
                   </span>
                 </p>
               </div>
