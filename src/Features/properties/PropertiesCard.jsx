@@ -19,6 +19,7 @@ import RatingButton from "../Ratings/Ratingbutton";
 import useGetRatings from "../Ratings/useGetRatings";
 import useSetRatings from "../Ratings/useSetRatings";
 import { useNavigate } from "react-router-dom";
+import { cleanAndFormatCurrency } from "../../utils/helper";
 // import useGetUser from "../User/useGetUser";
 
 export default function PropertiesCard({ property, allowCrud = true }) {
@@ -60,11 +61,12 @@ export default function PropertiesCard({ property, allowCrud = true }) {
       {/* Card details */}
       <div className="flex w-[100%] flex-col gap-3">
         <div className="flex w-[100%] justify-between">
-          <h1 className="text-xl font-bold md:text-3xl lg:text-lg">
+          <h1 className="truncate text-xl font-bold md:text-xl lg:text-lg">
             {property.name}
           </h1>
+
           <p className="text-xl font-bold md:text-3xl lg:text-lg">
-            {property.price}
+            {cleanAndFormatCurrency(property.price)}
           </p>
         </div>
         <div className="flex justify-center gap-8">
@@ -77,7 +79,7 @@ export default function PropertiesCard({ property, allowCrud = true }) {
             {property.bathrooms}
           </span>
           <span className="flex items-center justify-center gap-1 rounded-3xl bg-[#e3f5e3] p-2 md:text-2xl lg:text-base">
-            Size: {property.size}
+            Size: {property.size}sqft
           </span>
         </div>
         <div className="flex items-center justify-center gap-12 ">
