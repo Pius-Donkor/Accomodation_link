@@ -5,6 +5,7 @@ import useReqPropertyRent from "../Features/properties/useReqPropertyRent";
 import toast from "react-hot-toast";
 import PageLoading from "./PageLoading";
 import useSendEmail from "../hooks/useSendEmail";
+import { cleanAndFormatCurrency } from "../utils/helper";
 
 export default function RentRequestForm({
   property,
@@ -60,7 +61,7 @@ export default function RentRequestForm({
           sendEmail({
             to_name: propertyOwner.username,
             from_name: requestingUser.userName,
-            message: `${requestingUser.userName} has sent you a request to rent your property "${property.name}" visit our website with you check it out`,
+            message: `${requestingUser.userName} has sent you a request to rent your property "${property.name}" visit our website https://accomodation-link.vercel.app/ to check it out `,
             to_email: propertyOwner.email,
             from_email: requestingUser.email,
           });
@@ -85,7 +86,10 @@ export default function RentRequestForm({
         <div className="mt-6 flex flex-col items-center gap-4">
           <p className=" font-bold">
             Actual Price :
-            <span className="text-green-600"> GHC{property.price}</span>
+            <span className="text-green-600">
+              {" "}
+              {cleanAndFormatCurrency(property.price)}
+            </span>
           </p>
 
           <form
@@ -94,7 +98,7 @@ export default function RentRequestForm({
           >
             <div className="mt flex flex-col items-center  justify-center">
               <label className=" font-bold" htmlFor="offeredPrice">
-                Offered Price (GHC) :
+                Offered Price (GHS) :
               </label>
               <input
                 value={offeredPrice}
