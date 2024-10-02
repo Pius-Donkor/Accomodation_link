@@ -18,6 +18,7 @@ import {
   setDoc,
   doc,
   updateDoc,
+  documentId,
 } from "firebase/firestore";
 import { auth, db, storage } from "./firebase";
 import {
@@ -32,7 +33,7 @@ export async function userSignUp(signUpData) {
     email,
     password,
     userId,
-    documentId,
+
     contact,
     role,
     userName,
@@ -133,7 +134,7 @@ export async function getAllUsers() {
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.id, " => ", doc.data());
-    users.push({ ...doc.data(), userId: doc.id });
+    users.push({ ...doc.data(), documentId: doc.id });
   });
 
   return users;
