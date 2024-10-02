@@ -102,7 +102,9 @@ export async function receiveRequest({
         rentals: oldRents?.length ? [...oldRents, propertyId] : [propertyId],
         role: oldRole.includes("property_owner")
           ? "property_owner/tenant"
-          : "tenant",
+          : oldRole.includes("admin")
+            ? "admin"
+            : "tenant",
         tenantTo: oldTenantTo?.length
           ? [...new Set([...oldTenantTo, propertyOwnerId])]
           : [propertyOwnerId],
