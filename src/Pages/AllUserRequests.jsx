@@ -235,21 +235,29 @@ function ReceiveComponent({
   );
 }
 
-function TenantLandlordToComponent({ requests, requestStatus }) {
+export function TenantLandlordToComponent({
+  noTitle = false,
+  requests,
+  requestStatus,
+}) {
   return (
     <RequestsCoverComponent
       title={
-        requestStatus === "tenant-to"
-          ? "You are a Tenant to :"
-          : "You are a Landlord to :"
+        (!noTitle &&
+          (requestStatus === "tenant-to"
+            ? "You are a Tenant to :"
+            : "You are a Landlord to :")) ||
+        ""
       }
     >
       {!requests.length && (
         <EmptyMessage
           message={
-            requestStatus === "tenant-to"
-              ? "You are not a tenant to anyone"
-              : "You are not a tenant to anyone"
+            (!noTitle &&
+              (requestStatus === "tenant-to"
+                ? "You are not a tenant to anyone"
+                : "You are not a tenant to anyone")) ||
+            ""
           }
         />
       )}
