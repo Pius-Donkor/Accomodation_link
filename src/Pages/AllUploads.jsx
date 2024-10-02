@@ -3,13 +3,9 @@ import { storage, db } from "../Services/firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, setDoc, doc, updateDoc } from "firebase/firestore";
 import useGetProperties from "../Features/properties/useGetProperties";
+import { moneyToNumber } from "../utils/helper";
 const type = ["home rent", "hostel rent"];
-const ids = [
-  "YtZTwc6rdRVMgfxFvLrIBWVWn802",
-  "f8Sd3zEoHpbTPTKXN0lF99PWB4d2",
-  "ksVrUwbr8rf30NzVkituLkRIZdu1",
-  "tk39t7Z5JZaa2yPBfhpBXCyFkdl1",
-];
+
 export default function AllUploads() {
   /*  const [images, setImages] = useState([]);
   const [imageURLs, setImageURLs] = useState([]);
@@ -40,7 +36,8 @@ export default function AllUploads() {
 
         // Set the "capital" field of the city 'DC'
         await updateDoc(washingtonRef, {
-          userId: ids[Math.floor(Math.random() * 4)],
+          price: moneyToNumber(allProperties[i].price),
+          size: moneyToNumber(allProperties[i].size),
         });
         console.log(i + 1 + " / " + allProperties.length);
       }
