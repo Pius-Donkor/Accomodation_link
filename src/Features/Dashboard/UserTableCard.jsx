@@ -27,8 +27,10 @@ export default function UserTableCard({ user, onClick }) {
   }
 
   return (
-    <TableRow onClick={onClick}>
-      <TableData hasBoldText={true}>{user.userName}</TableData>
+    <TableRow>
+      <TableData isClickable={true} onClick={onClick} hasBoldText={true}>
+        {user.userName}
+      </TableData>
       <TableData>{user.email}</TableData>
       <TableData>{user.role}</TableData>
       <TableData>{user.location}</TableData>
