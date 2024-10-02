@@ -57,7 +57,7 @@ const RentRequest = ({
             sendEmail({
               to_name: tenant.userName,
               from_name: propertyOwner.userName,
-              message: `your request to rent "${property.name}" from ${propertyOwner.userName} has been  ${status} ${status === "confirmed" ? "successfuly" : "unfortunately"} `,
+              message: `your request to rent "${property.name}" from ${propertyOwner.userName} has been  ${status} ${status === "confirmed" ? "successfuly" : "unfortunately"}. visit our site for more information https://accomodation-link.vercel.app/ `,
               to_email: tenant.email,
               from_email: propertyOwner.email,
             });
