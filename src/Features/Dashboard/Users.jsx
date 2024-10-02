@@ -9,11 +9,13 @@ import TableData from "../../UI/TableData";
 import useGetAllUsers from "../User/useGetAllUsers";
 import UserTableCard from "./UserTableCard";
 import Modal from "../../UI/Modal";
+import UserDetail from "./UserDetail";
 
 const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { allUsers, error, isLoading } = useGetAllUsers();
   const [modalOpenName, setModalOpenName] = useState(null);
+  const [selectedUser, setSelectedUser] = useState(null);
   const filteredUsers =
     allUsers?.filter((user) =>
       user?.userName.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -65,9 +67,10 @@ const Users = () => {
                   <Modal.Open
                     key={user.userId}
                     openName={`user${user.userId}`}
-                    onExternalAction={() =>
-                      setModalOpenName(`user${user.userId}`)
-                    }
+                    onExternalAction={() => {
+                      setModalOpenName(`user${user.userId}`);
+                      setSelectedUser(user);
+                    }}
                   >
                     <UserTableCard user={user} />
                   </Modal.Open>
@@ -79,7 +82,7 @@ const Users = () => {
           </TableBody>
         </Table>
         <Modal.Window openName={modalOpenName}>
-          <p>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</p>
+          <UserDetail user={selectedUser} />
         </Modal.Window>
       </Modal>
     </div>
