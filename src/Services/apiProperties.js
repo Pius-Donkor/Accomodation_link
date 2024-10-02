@@ -8,6 +8,8 @@ import {
   serverTimestamp,
   deleteDoc,
   updateDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import {
   ref,
@@ -46,6 +48,33 @@ export async function getProperty(id) {
   property = querySnapshot.data();
   // console.log(property);
   return property;
+}
+
+export async function getUsersProperties(userId) {
+  try {
+    console.log(userId);
+    const q = query(
+      collection(db, "properties"),
+      where("userId", "==", userId),
+    );
+    let properties = [];
+    const querySnapshot = await getDocs(q);
+    // console.log(querySnapshot, q);
+    if (querySnapshot.empty)
+      throw new Error(
+        "sorry , properties cannot be obtained please check your internet connection ",
+      );
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      properties.push({ ...doc.data(), documentId: doc.id });
+      // console.log(doc.id, " => ", doc.data());
+    });
+    // console.log(user);
+    return properties;
+  } catch (error) {
+    console.log(error);
+    throw new Error(error.message);
+  }
 }
 
 export async function uploadImages(images) {
