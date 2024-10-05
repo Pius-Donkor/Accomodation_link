@@ -17,7 +17,7 @@ function RentRequestProvider({ children }) {
     : [];
   const allUserRequests = rentRequests.length
     ? rentRequests?.filter((request) =>
-        userData?.rentRequests.includes(request.id),
+        userData?.rentRequests?.includes(request.id),
       )
     : [];
   let userHasRequests = Boolean(userNewRentRequests.length);
