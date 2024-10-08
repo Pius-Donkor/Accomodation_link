@@ -15,7 +15,7 @@ export default function UserTableCard({ user, onClick }) {
   function handleUserAction(status) {
     updateUserStatus(
       {
-        id: user.userId,
+        id: user.documentId,
         status: status,
       },
       {
