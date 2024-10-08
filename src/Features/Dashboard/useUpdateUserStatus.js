@@ -10,9 +10,9 @@ export default function useUpdateUserStatus() {
     mutate: updateUserStatus,
   } = useMutation({
     mutationFn: (data) => updateUserStatusApi(data),
-    mutationKey: ["properties"],
+    mutationKey: ["users"],
     onSuccess: () => {
-      queryClient.invalidateQueries(["properties"]);
+      queryClient.invalidateQueries(["users"]);
     },
     onError: (error) => {
       toast.error(
