@@ -28,11 +28,12 @@ export function cleanAndFormatCurrency(
   locale = "en-US",
   currency = "GHS",
 ) {
+  console.log(value, typeof value);
   // Ensure the value is a string before replacing characters
   let stringValue = String(value);
 
   // Remove any characters that are not digits, commas, or decimals
-  let cleanedValue = stringValue.replace(/[^\d.-]/g, "");
+  let cleanedValue = stringValue?.replace(/[^\d.-]/g, "");
 
   // Convert the cleaned string to a number
   let amount = parseFloat(cleanedValue);
