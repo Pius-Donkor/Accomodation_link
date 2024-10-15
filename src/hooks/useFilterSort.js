@@ -86,11 +86,11 @@ export default function useFilterSort(isUser, forAdminSection = false) {
   } else if (sortParameter === "low-price") {
     MediumSortedProperties = filteredProperties
       .slice()
-      .sort((a, b) => moneyToNumber(a.price) - moneyToNumber(b.price));
+      .sort((a, b) => a.price - b.price);
   } else if (sortParameter === "high-price") {
     MediumSortedProperties = filteredProperties
       .slice()
-      .sort((a, b) => moneyToNumber(b.price) - moneyToNumber(a.price));
+      .sort((a, b) => b.price - a.price);
   } else if (sortParameter === "recent") {
     MediumSortedProperties = filteredProperties
       .slice()
