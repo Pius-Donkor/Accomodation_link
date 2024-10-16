@@ -60,8 +60,8 @@ export default function useFilterSort(isUser, forAdminSection = false) {
   ) {
     filteredProperties = propertiesType.slice().filter((property) => {
       const priceInRange =
-        (!priceRange.min || moneyToNumber(property.price) >= priceRange.min) &&
-        (!priceRange.max || moneyToNumber(property.price) <= priceRange.max);
+        (!priceRange.min || property.price >= priceRange.min) &&
+        (!priceRange.max || property.price <= priceRange.max);
       const ratingInRange =
         (!rating.min || property.averageRating >= rating.min) &&
         (!rating.max || property.averageRating <= rating.max);
